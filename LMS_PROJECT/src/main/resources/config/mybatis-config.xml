@@ -4,8 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   <typeAliases>
-  	<typeAlias type="com.example.movie.model.entity.member.Member" alias="member"/>
-  	<typeAlias type="com.example.movie.model.entity.movie.Movie" alias="movie"/>
-  	<typeAlias type="com.example.movie.model.entity.movie.Review" alias="review"/>
+  	<typeAlias type="com.project.lms.model.entity.member.Member" alias="member"/>
   </typeAliases>
 </configuration>
