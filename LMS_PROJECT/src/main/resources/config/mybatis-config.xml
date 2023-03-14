@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases>
+  	<typeAlias type="com.example.movie.model.entity.member.Member" alias="member"/>
+  	<typeAlias type="com.example.movie.model.entity.movie.Movie" alias="movie"/>
+  	<typeAlias type="com.example.movie.model.entity.movie.Review" alias="review"/>
+  </typeAliases>
+</configuration>
