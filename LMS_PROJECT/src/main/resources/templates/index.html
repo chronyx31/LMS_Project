@@ -1,10 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Main Page]</title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/header.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#footers").load("/footer.html");
+        });
+		setInterval(slider_next, 3000); // 3000밀리초(3초)마다 slider_next 함수 호출
+        // document.querySelector('.control_next').addEventListener('click', function(){
+        //   console.log('이벤트 리스너 안됨'); ---> 왜 안될까?
+        //   // for (i=1;i<5;i++) {
+        //   //   if (document.querySelector('#slide'+i+'').checked) {
+        //   //     document.querySelector('#slide'+(i+1)+'').attributes('checked',true);
+        //   //     return;
+        //   //   }
+        //   // }
+        // });
 
+        function slider_next () {
+          for (let i=1;i<5;i++) {
+              if ($('#Slide'+i).is(':checked')) {
+                if (i == 4) {
+                  $('#Slide'+(i)).attr('checked', false);
+                  $('#Slide'+(i-3)).attr('checked', true);
+                  return;
+                };
+                $('#Slide'+(i)).attr('checked', false);
+                $('#Slide'+(i+1)).attr('checked', true);
+                return;
+              }
+            }
+        }
+
+        function slider_prev () {
+          for (let i=1;i<5;i++) {
+              if ($('#Slide'+i).is(':checked')) {
+                if (i == 1) {
+                  $('#Slide'+(i)).attr('checked', false);
+                  $('#Slide'+(i+3)).attr('checked', true);
+                  return;
+                };
+                $('#Slide'+(i)).attr('checked', false);
+                $('#Slide'+(i-1)).attr('checked', true);
+                return;
+              }
+            }
+        }
+
+    </script>
+    <style>
+    </style>
+</head>
+<header>
+    <div class="topmenu upper">
+		<div class="home"><a href="#">logo</a></div>
+		<span th:if="${session.loginMember}">
+			<div class="member"><a href="#">로그아웃</a></div>
+		</span>
+		<span th:unless="${session.loginMember}">
+			<div class="member"><a href="#">회원가입</a></div>
+			<div class="member"><a href="#">로그인</a></div>
+		</span>
+    </div>
+    <nav class="topmenu">
+        <ul>
+          <li><a href="#">소개</a></li>
+          <li><a href="#">공지사항</a></li>
+          <li><a href="#">과목</a>
+            <ul class="submenu">
+              <li><a href="#">JAVA</a></li>
+              <li><a href="#">JAVASCRIPT</a></li>
+              <li><a href="#">Python</a></li>
+              <li><a href="#">HTML5</a></li>
+              <li><a href="#">CSS</a></li>
+            </ul>
+          </li>
+          <li><a href="#">고객센터</a>
+            <ul class="submenu">
+              <li><a href="#">자주 묻는 질문</a></li>
+              <li><a href="#">문의 게시판</a></li>
+              <li><a href="#">이용약관</a></li>
+              <li><a href="#">개인정보 취급방침</a></li>
+            </ul>
+          </li>
+          <li><a href="#">마이페이지</a>
+            <ul class="submenu">
+              <li><a href="#">내정보</a></li>
+              <li><a href="#">내강의</a></li>
+              <li><a href="#">장바구니</a></li>
+              <li th:if="${session.loginMember}"><a href="#">로그아웃</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+</header>
+
+<div id="slider-wrapper">
+    <div class="inner-wrapper">
+      <input type="button" class="control_next" value=">" onclick="slider_next()">
+      <input type="button" class="control_prev" value="<" onclick="slider_prev()">
+      <input checked type="radio" name="slide" class="control" id="Slide1" />
+      <label for="Slide1" id="s1"></label>
+      <input type="radio" name="slide" class="control" id="Slide2" />
+      <label for="Slide2" id="s2"></label>
+      <input type="radio" name="slide" class="control" id="Slide3" />
+      <label for="Slide3" id="s3"></label>
+      <input type="radio" name="slide" class="control" id="Slide4" />
+      <label for="Slide4" id="s4"></label>
+      <div class="overflow-wrapper">
+        <a class="slide" href=""><img src="http://placehold.it/940x470" /></a>
+        <a class="slide" href=""><img src="http://placehold.it/940x470" /></a>
+        <a class="slide" href=""><img src="http://placehold.it/940x470" /></a>
+        <a class="slide" href=""><img src="http://placehold.it/940x470" /></a>
+      </div>
+    </div>
+  </div>
+<br><br><br>
+<div class="main_box">
+  <div class="main_notice">
+    <table>
+      <tr>
+        <th><a href="#">공지사항</a></th>
+      </tr>
+      <tr>
+        <td><a href="#">공지1</a></td>
+      </tr>
+      <tr>
+        <td><a href="#">공지2</a></td>
+      </tr>
+      <tr>
+        <td><a href="#">공지3</a></td>
+      </tr>
+      <tr>
+        <td><a href="#">공지4</a></td>
+      </tr>
+      <tr>
+        <td><a href="#" th:text="${name}">공지5</a></td>
+      </tr>
+    </table>
+  </div>
+  <div class="main_banner"><a href="#"><div>자주묻는질문</div></a></div>
+  <div class="main_banner"><a href="#"><div>문의 게시판</div></a></div>
+</div>
+
+<br>
+<br>
+
+<footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>
