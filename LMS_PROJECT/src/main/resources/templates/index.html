@@ -14,7 +14,7 @@
         });
 		setInterval(slider_next, 3000); // 3000밀리초(3초)마다 slider_next 함수 호출
         // document.querySelector('.control_next').addEventListener('click', function(){
-        //   console.log('이벤트 리스너 안됨'); ---> 왜 안될까?
+        //   console.log('이벤트 리스너 안됨'); ---> 왜 안될까? 인터프리터 언어라서 html이 로드되기 전에 스크립트가 실행되서 안됐던 것.
         //   // for (i=1;i<5;i++) {
         //   //   if (document.querySelector('#slide'+i+'').checked) {
         //   //     document.querySelector('#slide'+(i+1)+'').attributes('checked',true);
