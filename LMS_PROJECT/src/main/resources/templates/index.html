@@ -59,13 +59,13 @@
 </head>
 <header>
     <div class="topmenu upper">
-		<div class="home"><a href="#">logo</a></div>
+		<div class="home"><a href="/">logo</a></div>
 		<span th:if="${session.loginMember}">
-			<div class="member"><a href="#">로그아웃</a></div>
+			<div class="member"><a href="/logout">로그아웃</a></div>
 		</span>
 		<span th:unless="${session.loginMember}">
-			<div class="member"><a href="#">회원가입</a></div>
-			<div class="member"><a href="#">로그인</a></div>
+			<div class="member"><a href="/members/join">회원가입</a></div>
+			<div class="member"><a href="/members/login">로그인</a></div>
 		</span>
     </div>
     <nav class="topmenu">
@@ -94,7 +94,7 @@
               <li><a href="#">내정보</a></li>
               <li><a href="#">내강의</a></li>
               <li><a href="#">장바구니</a></li>
-              <li th:if="${session.loginMember}"><a href="#">로그아웃</a></li>
+              <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
             </ul>
           </li>
         </ul>
@@ -129,19 +129,19 @@
         <th><a href="#">공지사항</a></th>
       </tr>
       <tr>
-        <td><a href="#">공지1</a></td>
+        <td><a href="#">공지글1</a></td>
       </tr>
       <tr>
-        <td><a href="#">공지2</a></td>
+        <td><a href="#">공지글2</a></td>
       </tr>
       <tr>
-        <td><a href="#">공지3</a></td>
+        <td><a href="#">공지글3</a></td>
       </tr>
       <tr>
-        <td><a href="#">공지4</a></td>
+        <td><a href="#">공지글4</a></td>
       </tr>
       <tr>
-        <td><a href="#" th:text="${name}">공지5</a></td>
+        <td><a href="#">공지글5</a></td>
       </tr>
     </table>
   </div>

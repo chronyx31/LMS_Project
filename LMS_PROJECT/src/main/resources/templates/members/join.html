@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Join]</title>
+    <link rel="stylesheet" href="/header.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#footers").load("/footer.html");
+        });
+    </script>
+    <style>
+    </style>
+</head>
+<header>
+    <div class="topmenu upper">
+		<div class="home"><a href="/">logo</a></div>
+		<span th:if="${session.loginMember}">
+			<div class="member"><a href="/logout">로그아웃</a></div>
+		</span>
+		<span th:unless="${session.loginMember}">
+			<div class="member"><a href="/members/join">회원가입</a></div>
+			<div class="member"><a href="/members/login">로그인</a></div>
+		</span>
+    </div>
+    <nav class="topmenu">
+        <ul>
+          <li><a href="#">소개</a></li>
+          <li><a href="#">공지사항</a></li>
+          <li><a href="#">과목</a>
+            <ul class="submenu">
+              <li><a href="#">JAVA</a></li>
+              <li><a href="#">JAVASCRIPT</a></li>
+              <li><a href="#">Python</a></li>
+              <li><a href="#">HTML5</a></li>
+              <li><a href="#">CSS</a></li>
+            </ul>
+          </li>
+          <li><a href="#">고객센터</a>
+            <ul class="submenu">
+              <li><a href="#">자주 묻는 질문</a></li>
+              <li><a href="#">문의 게시판</a></li>
+              <li><a href="#">이용약관</a></li>
+              <li><a href="#">개인정보 취급방침</a></li>
+            </ul>
+          </li>
+          <li><a href="#">마이페이지</a>
+            <ul class="submenu">
+              <li><a href="#">내정보</a></li>
+              <li><a href="#">내강의</a></li>
+              <li><a href="#">장바구니</a></li>
+              <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+</header>
+	<h1>[ 회원가입 ]</h1>
+	<form action="/members/join" th:method="post" th:object="${members}">
+		<div th:if="${#fields.hasGlobalErrors()}">
+			<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+		</div>
+		<table>
+			<tr>
+				<th>아이디</th>
+				<td>
+					<input type="text" th:field="*{member_id}">
+					<div th:class="field-error" th:errors="*{member_id}"></div>
+				</td>
+			</tr>
+			<tr>
+				<th>패스워드</th>
+				<td>
+					<input type="password" th:field="*{member_password}">
+					<div th:class="field-error" th:errors="*{member_password}">
+				</td>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td>
+					<input type="text" th:field="*{member_name}">
+					<div th:class="field-error" th:errors="*{member_name}">
+				</td>
+			</tr>
+			<tr>
+				<th>이메일</th>
+				<td>
+					<input type="email" th:field="*{member_email}">
+					<div th:class="field-error" th:errors="*{member_email}">
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호 찾기 질문</th>
+				<td>
+					<input type="text" th:field="*{password_question}">
+					<div th:class="field-error" th:errors="*{password_question}">
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호 찾기 답</th>
+				<td>
+					<input type="text" th:field="*{password_answer}">
+					<div th:class="field-error" th:errors="*{password_answer}">
+				</td>
+			</tr>
+		</table>
+		<div>
+			<input type="submit" value="가입하기">
+			<input type="reset" value="취소">
+		</div>
+	</form>
+<footer id="footers">여기에 footer 위치</footer>
+</body>
+</html>
