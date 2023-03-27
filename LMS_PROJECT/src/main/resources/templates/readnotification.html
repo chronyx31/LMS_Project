@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[Login]</title>
+    <title>[Main Page]</title>
+    <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="/header.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
@@ -28,12 +29,12 @@
     </div>
     <nav class="topmenu">
         <ul>
-          <li><a href="#">소개</a></li>
-          <li><a href="#">공지사항</a></li>
-          <li><a href="#">과목</a>
+          <li><a href="/introduce">소개</a></li>
+          <li><a href="/notification">공지사항</a></li>
+          <li><a href="/subject">과목</a>
             <ul class="submenu">
-              <li><a href="#">JAVA</a></li>
-              <li><a href="#">HTML</a></li>
+              <li><a href="/subject?subject_name='JAVA'">JAVA</a></li>
+              <li><a href="">HTML</a></li>
               <li><a href="#">DATABASE</a></li>
               <li><a href="#">PYTHON</a></li>
             </ul>
@@ -55,32 +56,28 @@
         </ul>
       </nav>
 </header>
-	<h1>[ 로그인 ]</h1>
-	<form action="" method="post" th:object="${loginForm}">
-		<table>
+
+<h1>[ 공지사항 읽기 ]</h1>
+	<form>
+		<table th:object="${notification}">
 			<tr>
-				<th>아이디</th>
-				<td>
-					<input type="text" th:field="*{member_id}">
-					<div th:errorClass="field-error" th:errors="*{member_id}"></div>
-				</td>
+				<th>제목</th>
+				<td th:text="*{notification_title}"></td>
 			</tr>
 			<tr>
-				<th>비밀번호</th>
-				<td>
-					<input type="password" th:field="*{member_password}">
-					<div th:errorClass="field-error" th:errors="*{member_password}"></div>
-				</td>
+				<th>내용</th>
+				<td th:text="*{notification_contents}"></td>
 			</tr>
+			<tr>
+				<th>작성자</th>
+				<td th:text="*{writer}"></td>
+			</tr>
+			<tr>
+			<td colspan="2">
+				<input type="button" onclick="location.href='/notification'" value="목록으로">
+			</td>
+		</tr>
 		</table>
-		<div th:if="${#fields.hasGlobalErrors()}">
-			<p th:class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
-		</div>
-		<input type="submit" value="로그인">
-		<input type="reset" value="취소">
-		<input type="button" value="회원가입">	
-		<input type="button" value="아이디 찾기">
-		<input type="button" value="비밀번호 찾기">
 	</form>
 <footer id="footers">여기에 footer 위치</footer>
 </body>

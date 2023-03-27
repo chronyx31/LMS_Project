@@ -11,6 +11,74 @@
         $(document).ready(function() {
             $("#footers").load("/footer.html");
         });
+        
+        let isIdChecked = false;
+        function formCheck(){
+        	checkId();
+        	
+        	if(!isIdChecked){
+        		alert("아이디 중복 확인을 해주세요");
+        		return false;
+        	}
+        	
+        	let member_id = $("#member_id").val();
+        	if(member_id.length < 4 || member_id.length > 20){
+        		alert("아이디는 4 ~ 20 사이여야 합니다");
+        		return false;
+        	}
+        	
+        	let member_password = $("#member_password").val();
+        	if(member_password.length < 4 || member_password.length > 20){
+        		alert("패스워드는 4 ~ 20 사이여야 합니다");
+        		return false;
+        	}
+        	
+        	let member_name = $("#member_name").val();
+        	if(member_name.length < 2 || member_name.length > 50){
+        		alert("이름은 2 ~ 50자리 사이여야 합니다");
+        		return false;
+        	}
+        	
+        	let member_email = $("#member_email").val();
+        	if(member_email.length < 4 || member_email.length > 50){
+        		alert("이메일은 4 ~ 50자리 사이여야 합니다");
+        		return false;
+        	}
+        	return true;
+        }
+        
+        function checkId() {
+    		let member_id = $("#member_id").val();
+    		
+    		$.ajax({
+    			url: "/members/checkId",
+    			data: {"member_id": member_id},
+    			success: function(data, success, xhr) {
+    				console.log("success 호출");
+    				console.log(data);
+    				console.log(success);
+    				console.log(xhr);
+    				console.log(typeof(data));
+    				if (data != "") {
+    					console.log("이미 사용중인 아이디 입니다.");
+    					isIdChecked = false;
+    					$("#checkId").text("이미 사용중인 아이디 입니다.");
+    				} else {
+    					console.log("사용 가능한 아이디 입니다.");
+    					isIdChecked = true;
+    					$("#checkId").text("사용 가능한 아이디 입니다.");
+    				}
+    			},
+    			error: function(xhr, status, error) {
+    				console.log("error 호출");
+    				console.log(xhr);
+    				console.log(status);
+    				console.log(error);
+    			}
+    		});
+    		
+    	}
+        
     </script>
     <style>
     </style>
@@ -33,10 +101,9 @@
           <li><a href="#">과목</a>
             <ul class="submenu">
               <li><a href="#">JAVA</a></li>
-              <li><a href="#">JAVASCRIPT</a></li>
-              <li><a href="#">Python</a></li>
-              <li><a href="#">HTML5</a></li>
-              <li><a href="#">CSS</a></li>
+              <li><a href="#">HTML</a></li>
+              <li><a href="#">DATABASE</a></li>
+              <li><a href="#">PYTHON</a></li>
             </ul>
           </li>
           <li><a href="#">고객센터</a>
@@ -44,14 +111,12 @@
               <li><a href="#">자주 묻는 질문</a></li>
               <li><a href="#">문의 게시판</a></li>
               <li><a href="#">이용약관</a></li>
-              <li><a href="#">개인정보 취급방침</a></li>
             </ul>
           </li>
           <li><a href="#">마이페이지</a>
             <ul class="submenu">
               <li><a href="#">내정보</a></li>
               <li><a href="#">내강의</a></li>
-              <li><a href="#">장바구니</a></li>
               <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
             </ul>
           </li>
@@ -59,7 +124,7 @@
       </nav>
 </header>
 	<h1>[ 회원가입 ]</h1>
-	<form action="/members/join" th:method="post" th:object="${members}">
+	<form action="/members/join" th:method="post" th:object="${members}" onsubmit="return formCheck()">
 		<div th:if="${#fields.hasGlobalErrors()}">
 			<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
 		</div>
@@ -67,7 +132,9 @@
 			<tr>
 				<th>아이디</th>
 				<td>
-					<input type="text" th:field="*{member_id}">
+					<input type="text" th:errorClass="field-error" th:field="*{member_id}">
+					<input type="button" value="아이디 중복확인" onclick="checkId()">
+					<span id="checkId"></span>
 					<div th:class="field-error" th:errors="*{member_id}"></div>
 				</td>
 			</tr>

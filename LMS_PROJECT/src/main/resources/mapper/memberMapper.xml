@@ -26,7 +26,7 @@
 			#{password_answer}
 		)
 	</insert>
-	<!-- 아이디로 아이디 찾기 -->
+	<!-- 아이디로 계정 찾기 -->
 	<select id="findMemberById" resultType="member">
 		select * from member
 		where member_id = #{member_id}

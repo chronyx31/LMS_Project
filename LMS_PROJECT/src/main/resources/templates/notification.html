@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[Login]</title>
+    <title>[Main Page]</title>
+    <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="/header.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
@@ -28,12 +29,12 @@
     </div>
     <nav class="topmenu">
         <ul>
-          <li><a href="#">소개</a></li>
-          <li><a href="#">공지사항</a></li>
-          <li><a href="#">과목</a>
+          <li><a href="/introduce">소개</a></li>
+          <li><a href="/notification">공지사항</a></li>
+          <li><a href="/subject">과목</a>
             <ul class="submenu">
-              <li><a href="#">JAVA</a></li>
-              <li><a href="#">HTML</a></li>
+              <li><a href="/subject?subject_name='JAVA'">JAVA</a></li>
+              <li><a href="">HTML</a></li>
               <li><a href="#">DATABASE</a></li>
               <li><a href="#">PYTHON</a></li>
             </ul>
@@ -55,33 +56,35 @@
         </ul>
       </nav>
 </header>
-	<h1>[ 로그인 ]</h1>
-	<form action="" method="post" th:object="${loginForm}">
-		<table>
-			<tr>
-				<th>아이디</th>
-				<td>
-					<input type="text" th:field="*{member_id}">
-					<div th:errorClass="field-error" th:errors="*{member_id}"></div>
-				</td>
-			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td>
-					<input type="password" th:field="*{member_password}">
-					<div th:errorClass="field-error" th:errors="*{member_password}"></div>
-				</td>
-			</tr>
-		</table>
-		<div th:if="${#fields.hasGlobalErrors()}">
-			<p th:class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
-		</div>
-		<input type="submit" value="로그인">
-		<input type="reset" value="취소">
-		<input type="button" value="회원가입">	
-		<input type="button" value="아이디 찾기">
-		<input type="button" value="비밀번호 찾기">
-	</form>
+
+<h1>[ 공지사항 ]</h1>
+<form method="get" action="notification">
+    <input type="text" name="title_part">
+    <input type="submit" value="제목으로 검색">
+</form>
+	<div th:text="|currentPage: ${navi.currentPage}|"></div>
+	<div th:text="|pagePerGroup: ${navi.pagePerGroup}|"></div>
+
+<table>
+	<tr>
+		<th>제목</th>
+		<th>작성자</th>
+	</tr>
+	<tr th:each="notification : ${notifications}">
+		<td><a th:text="${notification.notification_title}" th:href="@{/readnotice/{notification_no}(notification_no=${notification.notification_no})}"></a></td>
+		<td th:text="${notification.writer}"></td>
+	</tr>
+</table>
+<div>
+	<a th:href="@{notification(page=${navi.currentPage - navi.pagePerGroup}, title_part=${title_part})}"><<</a>&nbsp;&nbsp;
+	<a th:href="@{notification(page=${navi.currentPage - 1}, title_part=${title_part})}"><</a>&nbsp;&nbsp;
+	<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+		<a th:href="@{notification(page=${counter}, title_part=${title_part})}" th:text="${counter}"></a>
+	</th:block>&nbsp;&nbsp;
+	<a th:href="@{notification(page=${navi.currentPage + 1}, title_part=${title_part})}">></a>&nbsp;&nbsp;
+	<a th:href="@{notification(page=${navi.currentPage + navi.pagePerGroup}, title_part=${title_part})}">>></a>&nbsp;&nbsp;
+</div>
+
 <footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

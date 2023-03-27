@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.lms.repository.NotificationMapper">
+
+	<!-- 전체 글 갯수 검색 ( 페이징 처리 용 ) -->
+	<select id="getTotal" resultType="int">
+		select count(*) from notification noti, sub_category cate
+		<where>
+			noti.subject_no = cate.category_no 
+			<if test="category_name != null and category_name != ''">
+				and cate.category_name = #{category_name}
+			</if>
+			<if test="title_part != null and title_part != ''">
+				and notification_title like '%' || #{title_part} || '%'
+			</if>
+		</where>
+	</select>
+
+	<!-- 전체 글 검색 -->
+	<select id="getAllNotifications" resultType="notification">
+		select * from notification noti, sub_category cate
+		<where>
+			noti.subject_no = cate.category_no
+			<if test="category_name != null and category_name != ''">
+				and cate.category_name = #{category_name}
+			</if>
+			<if test="title_part != null and title_part != ''">
+				and notification_title like '%' || #{title_part} || '%'
+			</if>
+		</where>
+	</select>
+
+	<!-- 게시글 검색 notification_no는 PK이므로 단 하나의 값만 나온다. 그러므로 더 많은 조건은 필요 없다. -->
+	<select id="findNotificationByNo" resultType="notification">
+		select * from notification where notification_no = #{notification_no}
+	</select>
+
+	 
+</mapper>

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.lms.model.dto.member.MemberLoginForm;
 import com.project.lms.model.entity.member.Member;
@@ -42,15 +44,18 @@ public class MemberController {
 	public String join(@Validated @ModelAttribute("members") MemberJoinForm joinForm,
 			BindingResult result) {
 		log.info("joinForm: {}", joinForm);
+		// 유효성 검사
 		if (result.hasErrors()) {
 			return "members/join";
 		}
 		Member findMember = memberMapper.findMemberById(joinForm.getMember_id());
+		// 아이디 중복검사
 		log.info("findMember: {}",findMember);
 		if (findMember != null) {
 			result.reject("joinFail", "이미 사용중인 아이디 입니다.");
 			return "member/join";
 		}
+		// 회원가입
 		memberMapper.joinMember(MemberJoinForm.toMember(joinForm));
 		return "redirect:/";
 	}
@@ -69,9 +74,11 @@ public class MemberController {
 			HttpServletResponse response, HttpServletRequest request,
 			@RequestParam(defaultValue = "/") String redirectURL) {
 		log.info("loginForm: {}", loginForm);
+		// 유효성 검사
 		if (result.hasErrors()) {
 			return "members/login";
 		}
+		// 비밀번호 확인
 		Member findMember = memberMapper.findMemberById(loginForm.getMember_id());
 		if (findMember != null && findMember.getMember_password().equals(loginForm.getMember_password())) {
 			log.info("로그인 성공");
@@ -86,5 +93,19 @@ public class MemberController {
 		}
 		return "redirect:" + redirectURL;
 	}
+	
+	@ResponseBody
+	@GetMapping("checkId")
+	public ResponseEntity<String> checkId(@RequestParam String member_id){
+		// AJAX사용을 위한 아이디 중복검사
+		log.info("member_id: {}",member_id);
+		Member findMember = memberMapper.findMemberById(member_id);
+		if(findMember == null) {
+			return ResponseEntity.ok(null);
+		}
+		return ResponseEntity.ok(findMember.getMember_id());
+	}
+	
+
 
 }
