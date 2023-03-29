@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.lms.repository.SubjectMapper">
+
+	<!-- 전체 글 갯수 검색 ( 페이징 처리 용 ) -->
+	<select id="getTotal" resultType="int">
+		select count(*) from subject sub, sub_category cate
+		<where>
+			sub.category = cate.category_no
+			<!-- 메인페이지에 나오는 "MAIN"을 지우기 위한 구문. 메인페이지의 글들을 찾을 때에는 문제가 있을 수 있음 -->
+			and sub.category != 1
+			<if test="category_name != null and category_name != ''">
+				and cate.category_name = #{category_name}
+			</if>
+			<if test="title_part != null and title_part != ''">
+				and notification_title like '%' || #{title_part} || '%'
+			</if>
+		</where>
+	</select>
+
+	<!-- 전체 글 검색 -->
+	<select id="getAllSubjects" resultType="subject">
+		select * from subject sub, sub_category cate
+		<where>
+			sub.category = cate.category_no
+			<!-- 메인페이지에 나오는 "MAIN"을 지우기 위한 구문. 메인페이지의 글들을 찾을 때에는 문제가 있을 수 있음 -->
+			and sub.category != 1
+			<if test="category_name != null and category_name != ''">
+				and cate.category_name = #{category_name}
+			</if>
+			<if test="title_part != null and title_part != ''">
+				and notification_title like '%' || #{title_part} || '%'
+			</if>
+		</where>
+		order by subject_no desc
+	</select>
+
+	<!-- 게시글 검색 subject_no는 PK이므로 단 하나의 값만 나온다. 그러므로 더 많은 조건은 필요 없다. -->
+	<select id="findSubjectByNo" resultType="subject">
+		select * from subject where subject_no = #{subject_no}
+	</select>
+
+	<select id="getSubject_name" resultType="string"></select>
+</mapper>

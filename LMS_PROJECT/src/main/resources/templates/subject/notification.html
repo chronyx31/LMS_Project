@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[질문게시판]</title>
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#footers").load("/footer.html");
+        });
+    </script>
+</head>
+<body>
+<header>
+    <div class="topmenu upper">
+		<div class="home"><a href="/">logo</a></div>
+		<span th:if="${session.loginMember}">
+			<div class="member"><a href="/logout">로그아웃</a></div>
+		</span>
+		<span th:unless="${session.loginMember}">
+			<div class="member"><a href="/members/join">회원가입</a></div>
+			<div class="member"><a href="/members/login">로그인</a></div>
+		</span>
+    </div>
+    <nav class="topmenu">
+        <ul>
+          <li><a href="/introduce">소개</a></li>
+          <li><a href="/notification">공지사항</a></li>
+          <li><a href="/subject">과목</a>
+            <ul class="submenu">
+              <li><a href="/subject?category_name=JAVA">JAVA</a></li>
+              <li><a href="/subject?category_name=HTML">HTML</a></li>
+              <li><a href="/subject?category_name=DATABASE">DATABASE</a></li>
+              <li><a href="/subject?category_name=PYTHON">PYTHON</a></li>
+            </ul>
+          </li>
+          <li><a href="/faq">고객센터</a>
+            <ul class="submenu">
+              <li><a href="/fnq">자주 묻는 질문</a></li>
+              <li><a href="/qna">문의 게시판</a></li>
+              <li><a href="/policy">이용약관</a></li>
+            </ul>
+          </li>
+          <li><a href="/members/mypage">마이페이지</a>
+            <ul class="submenu">
+              <li><a href="members/mypage">내정보</a></li>
+              <li><a href="members/mylecture">내강의</a></li>
+              <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+</header>
+	<div class="container">
+		<div class=side_wrap>
+			<h2>
+				<span>과목</span>[[${subject.subject_title}]]
+			</h2>
+			<div class="side_menu">
+				<dl>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/notification(subject_no=${subject.subject_no})}">공지사항</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/lecture(subject_no=${subject.subject_no})}">강의게시판</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/assignment(subject_no=${subject.subject_no})}">과제게시판</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/qna(subject_no=${subject.subject_no})}">질문게시판</a>
+					</dt>
+				</dl>
+			</div>
+		</div>
+		<div class="contents">
+			<h1>[ 공지 게시판 - 리스트 ]</h1>
+<!-- 			<table>
+				<tr>
+					<th>질문 번호</th>
+					<th>과목 번호</th>
+					<th>제목</th>
+					<th>내용</th>
+					<th>작성자</th>
+					<th>작성 시간</th>
+				</tr>
+				<tr th:each="qna : ${boards}">
+					<td th:text="${qnaStat.count}"></td>
+					<td th:text="${qna.subject_no}"></td>
+					<td><a th:text="${qna.qna_title}"
+						th:href="@{/qna/read/{qna_no}(qna_no=${qna.qna_no})}"></a></td>
+					<td th:text="${qna.qna_contents}"></td>
+					<td th:text="${qna.writer}"></td>
+					<td th:text="${qna.qna_date}"></td>
+				</tr>
+			</table> -->
+		</div>
+	</div>
+</body>
+</html>
