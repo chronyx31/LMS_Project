@@ -5,6 +5,14 @@
 <configuration>
   <typeAliases>
   	<typeAlias type="com.project.lms.model.entity.member.Member" alias="member"/>
+  	<typeAlias type="com.project.lms.model.entity.member.Attendance" alias="attendance"/>
+  	<typeAlias type="com.project.lms.model.entity.member.MyLecture" alias="mylecture"/>
+  	<typeAlias type="com.project.lms.model.entity.member.Teacher" alias="teacher"/>
+  	<typeAlias type="com.project.lms.model.entity.subject.Subject" alias="subject"/>
   	<typeAlias type="com.project.lms.model.entity.board.Notification" alias="notification"/>
+  	<typeAlias type="com.project.lms.model.entity.board.QNA" alias="qna"/>
+  	<typeAlias type="com.project.lms.model.entity.board.Lecture" alias="lecture"/>
+  	<typeAlias type="com.project.lms.model.entity.board.Reply" alias="reply"/>
+  	<typeAlias type="com.project.lms.model.entity.board.Assignment" alias="assignment"/>
   </typeAliases>
 </configuration>

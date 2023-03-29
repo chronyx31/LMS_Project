@@ -6,9 +6,13 @@
 
 	<!-- 전체 글 갯수 검색 ( 페이징 처리 용 ) -->
 	<select id="getTotal" resultType="int">
-		select count(*) from notification noti, sub_category cate
+		select count(*) from notification noti, subject sub, sub_category cate
 		<where>
-			noti.subject_no = cate.category_no 
+			noti.subject_no = sub.subject_no
+			and sub.category = cate.category_no
+			<if test="subject_no != null and category_name != ''">
+				and noti.subject_no = #{subject_no}
+			</if>
 			<if test="category_name != null and category_name != ''">
 				and cate.category_name = #{category_name}
 			</if>
@@ -20,9 +24,13 @@
 
 	<!-- 전체 글 검색 -->
 	<select id="getAllNotifications" resultType="notification">
-		select * from notification noti, sub_category cate
+		select * from notification noti, subject sub, sub_category cate
 		<where>
-			noti.subject_no = cate.category_no
+			noti.subject_no = sub.subject_no
+			and sub.category = cate.category_no
+			<if test="subject_no != null and category_name != ''">
+				and noti.subject_no = #{subject_no}
+			</if>
 			<if test="category_name != null and category_name != ''">
 				and cate.category_name = #{category_name}
 			</if>
@@ -30,6 +38,7 @@
 				and notification_title like '%' || #{title_part} || '%'
 			</if>
 		</where>
+		order by notification_no desc
 	</select>
 
 	<!-- 게시글 검색 notification_no는 PK이므로 단 하나의 값만 나온다. 그러므로 더 많은 조건은 필요 없다. -->

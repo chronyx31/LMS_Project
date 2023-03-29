@@ -85,6 +85,7 @@ public class MemberController {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("loginMember", findMember);
+			// 세션 유효기간 설정(초단위)
 			session.setMaxInactiveInterval(3000);
 		} else {
 			log.info("로그인 실패");

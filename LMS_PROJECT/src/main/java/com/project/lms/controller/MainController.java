@@ -33,7 +33,8 @@ public class MainController {
 		log.info(title_part);
 		log.info("category_name: {}", category_name);
 		// 검색조건 없으면 title_part는 null이 나온다. 카테고리 이름으로 총 갯수 검색
-		int total = notificationMapper.getTotal(title_part, category_name);
+		// subject_no를 넣어서 과목을 특정한다. "MAIN"인 과목은 하나 밖에 안나오므로 null이라도 문제 없다.
+		int total = notificationMapper.getTotal(title_part, category_name, null);
 		// 글이 없을 경우 total이 0으로 나오므로 페이지 카운트가 이상하게 나오기 때문에 total을 1로 만들어 처리를 하거나
 		// 0일경우 페이지 선택이 안나오도록 html에서 처리할 필요가 있다고 봄.
 		if (total < 1) {
@@ -45,7 +46,7 @@ public class MainController {
 		model.addAttribute("navi", navi);
 		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
 		// 페이징 처리를 적용하여 전체 글 가져오기
-		List<Notification> notifications = notificationMapper.getAllNotifications(rb, title_part, category_name);
+		List<Notification> notifications = notificationMapper.getAllNotifications(rb, title_part, category_name, null);
 		log.info("notifications:{}", notifications);
 		model.addAttribute("notifications", notifications);
 		// 공지사항 카테고리를 고정하기 위한 속성

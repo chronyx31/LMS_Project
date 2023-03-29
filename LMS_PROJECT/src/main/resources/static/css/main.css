@@ -175,26 +175,36 @@
     color: white;
     background: #30A6E6;
   }
-  .main_box a {
-    text-decoration: none;
-    color: white;
-  }
-  .main_notice {
-    width: 40%;
-    float: left;
-    padding: 0 5% 0 0;
-    background: #30A6E6;
-  }
-  .main_notice table {
-    display: inline-block;
-  }
-  .main_notice td {
-    background: black;
-  }
-  .main_banner {
-    width: 40%;
-    height: 10vh;
-    float: right;
-    padding: 0 0 0 5%;
-    box-sizing: border-box;
-  }
+.main_box a {
+  text-decoration: none;
+  color: white;
+}
+.main_notice {
+  width: 40%;
+  float: left;
+  padding: 0 5% 0 0;
+  background: #30A6E6;
+}
+.main_notice table {
+  display: inline-block;
+}
+.main_notice td {
+  background: black;
+}
+.main_banner {
+  width: 40%;
+  height: 10vh;
+  float: right;
+  padding: 0 0 0 5%;
+  box-sizing: border-box;
+}
+  
+.noticetitle {
+	display: block;
+
+}
+.noticeheader {
+	display: block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
