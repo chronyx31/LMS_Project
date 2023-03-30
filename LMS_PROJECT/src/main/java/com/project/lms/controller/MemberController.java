@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.lms.model.dto.member.MemberJoinForm;
 import com.project.lms.model.dto.member.MemberLoginForm;
 import com.project.lms.model.entity.member.Member;
-import com.project.lms.model.dto.member.MemberJoinForm;
 import com.project.lms.repository.MemberMapper;
 
 import lombok.RequiredArgsConstructor;

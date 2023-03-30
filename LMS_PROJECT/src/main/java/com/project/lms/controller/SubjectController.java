@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.project.lms.model.entity.board.Notification;
 import com.project.lms.model.entity.subject.Subject;
 import com.project.lms.repository.NotificationMapper;
 import com.project.lms.repository.SubjectMapper;
