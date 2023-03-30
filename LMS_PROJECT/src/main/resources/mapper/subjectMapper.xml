@@ -15,7 +15,7 @@
 				and cate.category_name = #{category_name}
 			</if>
 			<if test="title_part != null and title_part != ''">
-				and notification_title like '%' || #{title_part} || '%'
+				and subject_title like '%' || #{title_part} || '%'
 			</if>
 		</where>
 	</select>
@@ -31,7 +31,7 @@
 				and cate.category_name = #{category_name}
 			</if>
 			<if test="title_part != null and title_part != ''">
-				and notification_title like '%' || #{title_part} || '%'
+				and subject_title like '%' || #{title_part} || '%'
 			</if>
 		</where>
 		order by subject_no desc

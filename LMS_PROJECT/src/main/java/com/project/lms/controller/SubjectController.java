@@ -58,10 +58,7 @@ public class SubjectController {
 //		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 //		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
 //		List<Notification> subjects = notificationMapper.getAllNotifications(rb, title_part, category_name, subject_no);
-//		log.info("subjects: {}",subjects);
-//		
-//		model.addAttribute("category_name", category_name);
-//		model.addAttribute("title_part", title_part);
+
 		Subject subject = subjectMapper.findSubjectByNo(subject_no);		
 		log.info("subject : {}", subject);
 		model.addAttribute("subject", subject);
