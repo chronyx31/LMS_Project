@@ -53,7 +53,7 @@ public class MainController {
 		model.addAttribute("category_name", category_name);
 		// 페이징 처리시 검색결과를 고정하기 위한 속성
 		model.addAttribute("title_part", title_part);
-		return "notification";
+		return "main/notification";
 	}
 	
 	@GetMapping("readnotice/{notification_no}")
@@ -63,6 +63,6 @@ public class MainController {
 		// 그러므로 문자열이나 없는 숫자의 잘못된 접근으로 인한 오류는 error로 페이지를 처리할 수 있음
 		Notification notification = notificationMapper.findNotificationByNo(notification_no);
 		model.addAttribute("notification", notification);
-		return "readnotification";
+		return "main/readnotification";
 	}
 }

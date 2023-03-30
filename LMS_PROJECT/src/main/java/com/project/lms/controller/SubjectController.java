@@ -68,6 +68,6 @@ public class SubjectController {
 		model.addAttribute("category_name", category_name);
 		model.addAttribute("title_part", title_part);
 		
-		return "subject/notification";
+		return "subject/notification/notification";
 	}
 }
