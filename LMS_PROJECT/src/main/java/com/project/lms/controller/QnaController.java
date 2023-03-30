@@ -11,5 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/subject")
 @RequiredArgsConstructor
 public class QnaController {
-	
+	public void test() {
+		
+	}
 }
