@@ -13,6 +13,7 @@
 .topmenu {
     background: #30A6E6;
     clear: both;
+    height: 40px;
 }
 .topmenu ul, .menu li {
     margin: 0;

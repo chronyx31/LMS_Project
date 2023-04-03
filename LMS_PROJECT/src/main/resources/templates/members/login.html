@@ -28,33 +28,35 @@
     </div>
     <nav class="topmenu">
         <ul>
-          <li><a href="#">소개</a></li>
-          <li><a href="#">공지사항</a></li>
-          <li><a href="#">과목</a>
+          <li><a href="/introduce">소개</a></li>
+          <li><a href="/notification">공지사항</a></li>
+          <li><a href="/subject">과목</a>
             <ul class="submenu">
-              <li><a href="#">JAVA</a></li>
-              <li><a href="#">HTML</a></li>
-              <li><a href="#">DATABASE</a></li>
-              <li><a href="#">PYTHON</a></li>
+              <li><a href="/subject?category_name=JAVA">JAVA</a></li>
+              <li><a href="/subject?category_name=HTML">HTML</a></li>
+              <li><a href="/subject?category_name=DATABASE">DATABASE</a></li>
+              <li><a href="/subject?category_name=PYTHON">PYTHON</a></li>
             </ul>
           </li>
-          <li><a href="#">고객센터</a>
+          <li><a href="/faq">고객센터</a>
             <ul class="submenu">
-              <li><a href="#">자주 묻는 질문</a></li>
-              <li><a href="#">문의 게시판</a></li>
-              <li><a href="#">이용약관</a></li>
+              <li><a href="/fnq">자주 묻는 질문</a></li>
+              <li><a href="/qna">문의 게시판</a></li>
+              <li><a href="/policy">이용약관</a></li>
             </ul>
           </li>
-          <li><a href="#">마이페이지</a>
+          <li><a href="/members/mypage">마이페이지</a>
             <ul class="submenu">
-              <li><a href="#">내정보</a></li>
-              <li><a href="#">내강의</a></li>
+              <li><a href="/members/myinfo">내정보</a></li>
+              <li><a href="/members/modifypass">암호변경</a></li>
+              <li><a href="/members/mylecture">내강의</a></li>
               <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
             </ul>
           </li>
         </ul>
       </nav>
 </header>
+
 	<h1>[ 로그인 ]</h1>
 	<form action="" method="post" th:object="${loginForm}">
 		<table>

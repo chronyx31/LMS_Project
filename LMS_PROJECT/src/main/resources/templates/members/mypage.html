@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[ SUBJECT ]</title>
+    <title>[My Page]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/sidebar.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -15,24 +14,20 @@
         });
     </script>
     <style>
-    	a {
-    		text-decoration: none;
-    	}
-    	.sub_container{
-    		display: flex;
-    		flex-wrap: wrap;
-    	}
+    .mypage_table {
+    	display: table;
+    	table-layout: fixed;
+    	width: 100%;
     	
-    	.sub_container a{
-    		text-decoration: none;
-    	}
-    	.sub_banner{
-    		border: 1px solid;
-    		background-color: blue;
-    		color: white;
-    		width: 100px;
-    		height: 150px;
-    	}
+    }
+    .mypage-info{
+    	display: table-cell;
+    	padding: 0 5%;
+    	text-align: center;
+    	height: 7em;
+    	line-height: 7em;
+    	
+    }
     </style>
 </head>
 <header>
@@ -76,45 +71,18 @@
         </ul>
       </nav>
 </header>
+<div class="contents-container">
+	<span th:if="${session.loginMember}" > <!-- interceptor 적용하면 없어도 됨 -->
+		<h2 style="text-align: center; width: 100%;">[[${session.loginMember.member_name}]] 님 환영합니다.</h2>
+	</span>
+	<div class="mypage_table">
+		<div class="mypage-info"><a href="/members/myinfo"><div>내정보</div></a></div>
+		<div class="mypage-info"><a href="/members/modifypass"><div>암호변경</div></a></div>
+		<div class="mypage-info"><a href="/members/mylecture"><div>내강의</div></a></div>
+		<div class="mypage-info"><a class="mypage-link" href="/logout"><div>로그아웃</div></a></div>
+</div>
+</div>
 
-	<div class="container">
-		<div class=side_wrap>
-			<h2><a href="/subject">과목</a></h2>
-			<div class="side_menu">
-				<dl>
-					<dt>
-						<a href="/subject?category_name=JAVA">JAVA</a>
-					</dt>
-					<dt>
-						<a href="/subject?category_name=HTML">HTML</a>
-					</dt>
-					<dt>
-						<a href="/subject?category_name=DATABASE">DATABASE</a>
-					</dt>
-					<dt>
-						<a href="/subject?category_name=PYTHON">PYTHON</a>
-					</dt>
-				</dl>
-			</div>
-		</div>
-		<div class="contents">
-			<h1> 강의 <span th:if="${category_name} != null and ${category_name} != ''"> - [[${category_name}]] </span> </h1>
-			<form>
-				<input type="text" name="title_part">
-				<input type="submit" value="제목검색">
-			</form>
-			<div class="sub_container">
-				<div th:each="subject : ${subjects}">
-					<a th:href="@{/subject/{subject_no}/notification(subject_no=${subject.subject_no})}">
-						<div class="sub_banner" th:text="${subject.subject_title}">
-							과목 배너 부분 타임리프로 처리를 한다.
-						</div>
-					</a>
-				</div>
-			</div>
-				 <div> 페이징 처리용 div 블럭</div>
-		</div>
-	</div>
 <footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .container {
-	width: 1080px;	
+	width: 90%;	
 	margin: 30px auto;
 	overflow: hidden;
 	display: table;
@@ -22,6 +22,10 @@
     color: #fff;
     font-size: 22px;
     line-height: 24px;
+}
+
+.side_wrap h2 a {
+	color: white;
 }
 
 .side_wrap h2 span {

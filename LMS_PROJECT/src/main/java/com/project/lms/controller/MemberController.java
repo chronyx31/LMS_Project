@@ -106,7 +106,5 @@ public class MemberController {
 		}
 		return ResponseEntity.ok(findMember.getMember_id());
 	}
-	
-
 
 }

@@ -49,14 +49,16 @@
           </li>
           <li><a href="/members/mypage">마이페이지</a>
             <ul class="submenu">
-              <li><a href="members/mypage">내정보</a></li>
-              <li><a href="members/mylecture">내강의</a></li>
+              <li><a href="/members/myinfo">내정보</a></li>
+              <li><a href="/members/modifypass">암호변경</a></li>
+              <li><a href="/members/mylecture">내강의</a></li>
               <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
             </ul>
           </li>
         </ul>
       </nav>
 </header>
+
 	<div class="container">
 		<div class=side_wrap>
 			<h2>
@@ -102,5 +104,7 @@
 			</table> -->
 		</div>
 	</div>
+	
+	<footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

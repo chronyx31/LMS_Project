@@ -40,14 +40,14 @@
 			and member_email = #{member_email}
 	</select>
 	<!-- 개인정보 수정 -->
-	<update id="updateMember">
+	<update id="modifyMember">
 		update member
 		<set>
-			<if test="member_password != null"> member_password = #{member_password},</if>
-			<if test="member_name != null"> member_name = #{member_name},</if>
-			<if test="member_email != null"> member_email = #{member_email},</if>
-			<if test="password_question != null"> password_question = #{password_question},</if>
-			<if test="password_answer != null"> password_answer = #{password_answer}</if>
+			<if test='member_password != null and member_password !=""'> member_password = #{member_password},</if>
+			<if test='member_name != null and member_name != ""'> member_name = #{member_name},</if>
+			<if test='member_email != null and member_email !=""'> member_email = #{member_email},</if>
+			<if test='password_question != null and password_question!=""'> password_question = #{password_question},</if>
+			<if test='password_answer != null and password_answer!=""'> password_answer = #{password_answer}</if>
 		</set>
 		where member_no = #{member_no}
 	</update>

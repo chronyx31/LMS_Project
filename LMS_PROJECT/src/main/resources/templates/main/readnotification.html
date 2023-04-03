@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[Main Page]</title>
+    <title th:text="${notification.notification_title}">aa</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -48,8 +48,9 @@
           </li>
           <li><a href="/members/mypage">마이페이지</a>
             <ul class="submenu">
-              <li><a href="members/mypage">내정보</a></li>
-              <li><a href="members/mylecture">내강의</a></li>
+              <li><a href="/members/myinfo">내정보</a></li>
+              <li><a href="/members/modifypass">암호변경</a></li>
+              <li><a href="/members/mylecture">내강의</a></li>
               <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
             </ul>
           </li>

@@ -43,15 +43,16 @@ public class HomeController {
 		return "index";
 	}
 	
+	// 로그아웃
 	@GetMapping("logout")
 	public String logout(HttpServletResponse response, 
 						 HttpServletRequest request) {
-	// 세션 로그아웃
-	HttpSession session = request.getSession();
-	if (session != null) {
-		session.invalidate();
-	}
-	
-	return "redirect:/";
+		// 세션 로그아웃
+		HttpSession session = request.getSession();
+		if (session != null) {
+			session.invalidate();
+		}
+		
+		return "redirect:/";
 	}
 }
