@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${notification.notification_title}">[ Notification ]</title>
+    <title>[ QNA ]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -58,28 +58,29 @@
       </nav>
 </header>
 
-<h1>[ 공지사항 읽기 ]</h1>
-	<form>
-		<table th:object="${notification}">
-			<tr>
-				<th>제목</th>
-				<td th:text="*{notification_title}"></td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td th:text="*{notification_contents}"></td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td th:text="*{writer}"></td>
-			</tr>
-			<tr>
-			<td colspan="2">
-				<input type="button" onclick="location.href='/notification'" value="목록으로">
+<h1>[ QNA 작성 ]</h1>
+<form action="/writeQna" method="post" th:object="${writeQna}">
+	<table>
+		<tr>
+			<th>제목</th>
+			<td>
+				<input type="text" th:field="*{qna_title}">
+				<div th:class="field-error" th:errors="*{qna_title}"></div>
 			</td>
 		</tr>
-		</table>
-	</form>
+		<tr>
+			<th>내용</th>
+			<td>
+				<textarea th:field="*{qna_contents}" cols="50" rows="15"></textarea>
+				<div th:class="field-error" th:errors="*{qna_contents}"></div>
+			</td>
+		</tr>
+	</table>
+	<input type="button" onclick="location.href='/qna'" value="목록으로">
+	<input type="submit" value="등록하기">
+	<input type="reset" value="취소">
+</form>
+
 <footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

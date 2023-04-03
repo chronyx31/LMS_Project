@@ -72,11 +72,6 @@
     <input type="text" name="title_part">
     <input type="submit" value="제목검색">
 </form>
-<!-- 아래는 페이지 확인용. 테스트 후 삭제필요 -->
-	<div th:text="|currentPage: ${navi.currentPage}|"></div>
-	<div th:text="|pagePerGroup: ${navi.pagePerGroup}|"></div>
-<!-- 위는 페이지 확인용. 테스트 후 삭제필요 -->
-
 <table>
 	<tr>
 		<th>번호</th>
@@ -84,11 +79,12 @@
 		<th>작성자</th>
 	</tr>
 	<tr th:each="notification : ${notifications}">
-		<td th:text="${notificationStat.count}"></td>
+		<td th:text="${notificationStat.count}+${navi.countPerPage*(navi.currentPage-1)}"></td>
 		<td><a th:text="${notification.notification_title}" th:href="@{/readnotice/{notification_no}(notification_no=${notification.notification_no})}"></a></td>
 		<td th:text="${notification.writer}"></td>
 	</tr>
 </table>
+
 <div>
 	<th:block th:if="${navi.currentPage} > 1">
 		<a th:href="@{notification(page=${navi.currentPage - navi.pagePerGroup}, title_part=${title_part})}"><<</a>&nbsp;&nbsp;

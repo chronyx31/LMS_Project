@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.lms.repository.ReplyMapper">
+
+	<!-- 전체 글 갯수 검색 ( 페이징 처리 용 ) -->
+	<select id="getTotal" resultType="int">
+		select count(*) from reply
+		<where>
+			<if test='qna_no != null and qna_no != ""'>
+			qna_no = #{qna_no}
+			</if>
+		</where>
+	</select>
+
+	<!-- 전체 글 검색 -->
+	<select id="getAllReplies" resultType="reply">
+		select * from reply
+		<where>
+			<if test='qna_no != null and qna_no != ""'>
+				qna_no = #{qna_no}
+			</if>
+		</where>
+		order by reply_no desc
+	</select> 
+</mapper>

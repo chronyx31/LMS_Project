@@ -10,13 +10,13 @@
 		<where>
 			noti.subject_no = sub.subject_no
 			and sub.category = cate.category_no
-			<if test="subject_no != null and category_name != ''">
+			<if test='subject_no != null and subject_no != ""'>
 				and noti.subject_no = #{subject_no}
 			</if>
-			<if test="category_name != null and category_name != ''">
+			<if test='category_name != null and category_name != ""'>
 				and cate.category_name = #{category_name}
 			</if>
-			<if test="title_part != null and title_part != ''">
+			<if test='title_part != null and title_part != ""'>
 				and notification_title like '%' || #{title_part} || '%'
 			</if>
 		</where>
@@ -28,13 +28,13 @@
 		<where>
 			noti.subject_no = sub.subject_no
 			and sub.category = cate.category_no
-			<if test="subject_no != null and category_name != ''">
+			<if test='subject_no != null and subject_no != ""'>
 				and noti.subject_no = #{subject_no}
 			</if>
-			<if test="category_name != null and category_name != ''">
+			<if test='category_name != null and category_name != ""'>
 				and cate.category_name = #{category_name}
 			</if>
-			<if test="title_part != null and title_part != ''">
+			<if test='title_part != null and title_part != ""'>
 				and notification_title like '%' || #{title_part} || '%'
 			</if>
 		</where>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.lms.repository.QnaMapper">
+	
+	<select id="getTotal" resultType="int">
+		select count(*) from qna qna, subject sub, sub_category cate
+		<where>
+			qna.subject_no = sub.subject_no
+			and sub.category = cate.category_no
+			<if test='subject_no != null and subject_no != ""'>
+				and noti.subject_no = #{subject_no}
+			</if>
+			<if test='category_name != null and category_name != ""'>
+				and cate.category_name = #{category_name}
+			</if>
+			<if test='title_part != null and title_part != ""'>
+				and qna_title like '%' || #{title_part} || '%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="getAllQnas" resultType="qna">
+		select * from qna qna, sub_category cate
+		<where>
+			qna.subject_no = cate.category_no
+			<if test='category_name != null and category_name != ""'>
+				and cate.category_name = #{category_name}
+			</if>
+			<if test='title_part != null and title_part != ""'>
+				and qna_title like '%' || #{title_part} || '%'
+			</if>
+		</where>
+		order by qna.qna_no desc
+	</select>
+	
+	<select id="findQnaByNo" resultType="qna">
+		select * from qna where qna_no = #{qna_no}
+	</select>
+	
+	<insert id="writeQna">
+		<selectKey keyProperty="qna_no" resultType="long" order="BEFORE">
+			select seq_subject.nextval from dual
+		</selectKey>
+		insert into qna (
+			qna_no,
+			subject_no,
+			qna_title,
+			qna_contents,
+			writer
+		) values (
+			#{qna_no},
+			#{subject_no},
+			#{qna_title},
+			#{qna_contents},
+			#{writer}
+		)
+	</insert>
+
+	<update id="updateQna">
+		update qna set
+			qna_title = #{qna_title},
+			qna_contents = #{qna_contents}
+		where qna_no = #{qna_no}
+	</update>
+	<delete id="deleteQna">
+		delete from qna where qna_no = #{qna_no}
+	</delete>
+</mapper>
