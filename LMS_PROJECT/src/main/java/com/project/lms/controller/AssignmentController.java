@@ -11,14 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("subject")
-public class LectureController {
-	
-	// 기본 경로
-	@GetMapping("{subject_no}/lecture")
-	public String goToLectrueBoard(@PathVariable Long subject_no) {
-		
-		return "subject/lecture/lecture";
+@RequestMapping("/subject")
+public class AssignmentController {
+
+	// 기본경로
+	@GetMapping("{subject_no}/assignment")
+	public String goToQna(@PathVariable Long subject_no) {
+		return "subject/assignment/assignment";
 	}
 
 }
