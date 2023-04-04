@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.lms.model.entity.board.Notification;
 import com.project.lms.model.entity.subject.Subject;
 import com.project.lms.repository.NotificationMapper;
 import com.project.lms.repository.SubjectMapper;
@@ -53,14 +54,19 @@ public class SubjectController {
 			@RequestParam(required = false) String title_part,
 			@RequestParam(required = false) String category_name,
 			Model model) {
-//		int total = notificationMapper.getTotal(title_part, category_name, subject_no);
-//		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
-//		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
-//		List<Notification> subjects = notificationMapper.getAllNotifications(rb, title_part, category_name, subject_no);
+		log.info("subject_no : {}", subject_no);
+		log.info("title_part : {}", title_part);
+		log.info("category_name : {}", category_name);
+		
+		// 공지사항글 페이징 처리용 객체 생성
+		int total = notificationMapper.getTotal(title_part, category_name, subject_no);
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
+		List<Notification> notifications = notificationMapper.getAllNotifications(rb, title_part, category_name, subject_no);
 
-		Subject subject = subjectMapper.findSubjectByNo(subject_no);		
-		log.info("subject : {}", subject);
+		Subject subject = subjectMapper.findSubjectByNo(subject_no);
 		model.addAttribute("subject", subject);
+		model.addAttribute("notifications", notifications);
 		model.addAttribute("category_name", category_name);
 		model.addAttribute("title_part", title_part);
 		

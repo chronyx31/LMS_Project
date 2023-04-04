@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -159,43 +160,28 @@ public class MainController {
 	public String update(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@PathVariable Long qna_no, Model model) {
 		QNA qna = qnaMapper.findQnaByNo(qna_no);
+		
+		// 작성자 확인
 		if (qna.getWriter().equals(loginMember.getMember_id())) {
 			model.addAttribute("qna", qna);
-			log.info("updateQna이동");
-			return "updateqna";
+			return "main/updateqna";
 		}
 		return "redirect:/qna";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	// 질문 글 수정
-	@PostMapping("updateQna/{qna_no}")
+	@PostMapping("updateQna")
 	public String updateQna(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@PathVariable("qna_no") Long qna_no,
 			@ModelAttribute QNA qna,
 			Model model) {
-		log.info("updateQna 실행");
-		QNA findQna = qnaMapper.findQnaByNo(qna_no);
+		log.info("qna: {}", qna);
+		QNA findQna = qnaMapper.findQnaByNo(qna.getQna_no());
 		
+		// 작성자 확인
 		if (loginMember.getMember_id().equals(findQna.getWriter())) {
-			log.info("updateQna의 if절 실행");
 			findQna.setQna_title(qna.getQna_title());
 			findQna.setQna_contents(qna.getQna_contents());
 			qnaMapper.updateQna(findQna);
-			log.info("updateQna의 Mapper완료");
-			return "redirect:/readqna/" + qna_no;
+			return "redirect:/readqna/" + qna.getQna_no();
 		}
 	
 	return "redirect:/qna";
@@ -205,12 +191,13 @@ public class MainController {
 	@PostMapping("deleteQna/{qna_no}")
 	public String deleteQna(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@PathVariable Long qna_no) {
-		log.info("삭제 메소드 실행");
+		
+		// 글 찾고 작성자가 맞으면 삭제 실행
 		QNA findQna = qnaMapper.findQnaByNo(qna_no);
 		if (findQna != null && loginMember.getMember_id().equals(findQna.getWriter())) {
 			qnaMapper.deleteQna(qna_no);
-			log.info("삭제 메소드의 if절 실행");
 		}
 		return "redirect:/qna";
 	}
+
 }
