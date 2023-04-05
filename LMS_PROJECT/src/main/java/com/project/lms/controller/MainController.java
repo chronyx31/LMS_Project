@@ -67,6 +67,8 @@ public class MainController {
 		// 공지사항 카테고리를 고정하기 위한 속성
 		model.addAttribute("category_name", category_name);
 		// 페이징 처리시 검색결과를 고정하기 위한 속성
+		// @RequestParam, @PathVariable을 써서 받을 경우 model에 추가하지 않아도
+		// HTML에서 타임리프 문법으로 찾으면( ${} ) 인식을 한다. model로 추가하지 않아도 자동으로 추가하는 듯 하다.
 		model.addAttribute("title_part", title_part);
 		return "main/notification";
 	}
