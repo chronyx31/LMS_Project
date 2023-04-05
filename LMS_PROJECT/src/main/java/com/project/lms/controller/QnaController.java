@@ -166,7 +166,7 @@ public class QnaController {
 		if (findQna != null && loginMember.getMember_id().equals(findQna.getWriter())) {
 			qnaMapper.deleteQna(qna_no);
 		}
-		return "redirect:/qna";
+		return "redirect:/subject/"+subject_no+"/qna/";
 	}
 
 }
