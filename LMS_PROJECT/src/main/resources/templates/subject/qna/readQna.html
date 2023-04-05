@@ -14,17 +14,8 @@
         });
     </script>
     <style>
-    .pageCounter {
-    	text-decoration: none;
-    	color: black;
-    }
-    .active {
-    	font-weight: bold;
-    	color: blue;
-    }
     </style>
 </head>
-<header>
 <header>
     <div class="topmenu upper">
 		<div class="home"><a href="/">logo</a></div>
@@ -67,24 +58,58 @@
       </nav>
 </header>
 
-<h1>[ 문의글 수정 ]</h1>
-<form action="/updateQna" method="post" th:object="${qna}">
-	<input type="hidden" th:field="*{qna_no}">
-	<table>
-		<tr>
-			<th>제목</th>
-			<td><input type="text" th:field="*{qna_title}"></td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td><textarea th:field="*{qna_contents}" cols="50" rows="15"></textarea></td>
-		</tr>
-	</table>
-	<input type="button" onclick="location.href='/qna'" value="목록으로">
-	<input type="submit" value="등록하기">
-	<input type="reset" value="취소">
-</form>
+<h1>[ 질문게시판 - 읽기 ]</h1>
+	<form th:action="@{/subject/{subject_no}/qna/delete/{qna_no}(subject_no=${subject_no}, qna_no=${qna_no})}" method="post">
+		<table th:object="${qna}">
+			<tr>
+				<th>제목</th>
+				<td th:text="*{qna_title}"></td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td th:text="*{qna_contents}"></td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td th:text="*{writer}"></td>
+			</tr>
+		</table>
+		<a th:if="${session.loginMember != null}">
+			<th:block th:if="${session.loginMember.member_id == qna.writer}">
+				<input type="button" th:onclick="|location.href='/subject/${subject_no}/qna/update/${qna_no}'|" value="수정하기"> 
+				<input type="submit" value="삭제하기">
+			</th:block>
+		</a>
+		<table>
+			<tr>
+				<th>댓글</th>
+				<th>작성자</th>
+			</tr>
+			<tr th:each="reply : ${replies}">
+				<td th:text="${reply.reply_contents}"></td>
+				<td th:text="${reply.writer}"></td>
+			</tr>
+		</table>
+			<div>
+				<th:block th:if="${navi.currentPage > 1}">
+			  		<a th:href="@{{qna_no}(qna_no=${qna.qna_no}, page=${navi.currentPage - navi.pagePerGroup})}"><<</a>&nbsp;&nbsp;
+			  		<a th:href="@{{qna_no}(qna_no=${qna.qna_no}, page=${navi.currentPage - 1})}"><</a>&nbsp;&nbsp;
+  				</th:block>
 
+				<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+  					<a th:href="@{{qna_no}(qna_no=${qna.qna_no}, page=${counter})}" th:text="${counter}" th:classappend="${navi.currentPage == counter} ? 'current'"></a>
+				</th:block>&nbsp;&nbsp; 
+				
+				<th:block th:if="${navi.currentPage < navi.totalPageCount}">
+					<a th:href="@{{qna_no}(qna_no=${qna.qna_no}, page=${navi.currentPage + 1}, title_part=${title_part})}">></a>&nbsp;&nbsp;
+					<a th:href="@{{qna_no}(qna_no=${qna.qna_no}, page=${navi.currentPage + navi.pagePerGroup})}">>></a>&nbsp;&nbsp;
+				</th:block>
+			</div>
+			
+			<tr>
+				<td colspan="2"><input type="button" th:onclick="|location.href='@{/subject/{subject_no}/qna(subject_no=${subject_no})}'|" value="목록으로"></td>
+			</tr>
+	</form>
 
 <footer id="footers">여기에 footer 위치</footer>
 </body>

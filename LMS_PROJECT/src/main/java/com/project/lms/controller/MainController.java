@@ -171,8 +171,7 @@ public class MainController {
 	// 질문 글 수정
 	@PostMapping("updateQna")
 	public String updateQna(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@ModelAttribute QNA qna,
-			Model model) {
+			@ModelAttribute QNA qna, Model model) {
 		log.info("qna: {}", qna);
 		QNA findQna = qnaMapper.findQnaByNo(qna.getQna_no());
 		
