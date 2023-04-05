@@ -11,7 +11,7 @@
 			qna.subject_no = sub.subject_no
 			and sub.category = cate.category_no
 			<if test='subject_no != null and subject_no != ""'>
-				and noti.subject_no = #{subject_no}
+				and qna.subject_no = #{subject_no}
 			</if>
 			<if test='category_name != null and category_name != ""'>
 				and cate.category_name = #{category_name}
@@ -24,9 +24,13 @@
 
 	<!-- 전체 글 가져오기 ( 페이징 처리 포함 ) -->
 	<select id="getAllQnas" resultType="qna">
-		select * from qna qna, sub_category cate
+		select * from qna qna, subject sub, sub_category cate
 		<where>
-			qna.subject_no = cate.category_no
+			qna.subject_no = sub.subject_no
+			and sub.category = cate.category_no
+			<if test='subject_no != null and subject_no != ""'>
+				and qna.subject_no = #{subject_no}
+			</if>
 			<if test='category_name != null and category_name != ""'>
 				and cate.category_name = #{category_name}
 			</if>
