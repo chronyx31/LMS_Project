@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[Join]</title>
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/sign.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -124,63 +126,50 @@
         </ul>
       </nav>
 </header>
-
-	<h1>[ 회원가입 ]</h1>
-	<form action="/members/join" th:method="post" th:object="${members}" onsubmit="return formCheck()">
-		<div th:if="${#fields.hasGlobalErrors()}">
-			<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
-		</div>
-		<table>
-			<tr>
-				<th>아이디</th>
-				<td>
-					<input type="text" th:errorClass="field-error" th:field="*{member_id}">
-					<input type="button" value="아이디 중복확인" onclick="checkId()">
-					<span id="checkId"></span>
+	<div class="member-page">
+		<div class="form">
+			<h1>[ 회원가입 ]</h1>
+			<form action="/members/join" th:method="post" th:object="${members}" onsubmit="return formCheck()">
+				<div th:if="${#fields.hasGlobalErrors()}">
+					<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+				</div>
+				<div>
+					<input type="text" th:field="*{member_id}" placeholder="아이디" />
+					<button type="button" onclick="checkId()">아이디 중복 확인</button>
+					<br>
+					<br>
+					<div id="checkId"></div>
 					<div th:class="field-error" th:errors="*{member_id}"></div>
-				</td>
-			</tr>
-			<tr>
-				<th>패스워드</th>
-				<td>
-					<input type="password" th:field="*{member_password}">
-					<div th:class="field-error" th:errors="*{member_password}">
-				</td>
-			</tr>
-			<tr>
-				<th>이름</th>
-				<td>
-					<input type="text" th:field="*{member_name}">
-					<div th:class="field-error" th:errors="*{member_name}">
-				</td>
-			</tr>
-			<tr>
-				<th>이메일</th>
-				<td>
-					<input type="email" th:field="*{member_email}">
-					<div th:class="field-error" th:errors="*{member_email}">
-				</td>
-			</tr>
-			<tr>
-				<th>비밀번호 찾기 질문</th>
-				<td>
-					<input type="text" th:field="*{password_question}">
-					<div th:class="field-error" th:errors="*{password_question}">
-				</td>
-			</tr>
-			<tr>
-				<th>비밀번호 찾기 답</th>
-				<td>
-					<input type="text" th:field="*{password_answer}">
-					<div th:class="field-error" th:errors="*{password_answer}">
-				</td>
-			</tr>
-		</table>
-		<div>
-			<input type="submit" value="가입하기">
-			<input type="reset" value="취소">
+				</div>
+				<br>
+				<div>
+					<input type="password" th:field="*{member_password}" placeholder="패스워드" />
+					<div th:class="field-error" th:errors="*{member_password}" />
+				</div>
+				<div>
+					<input type="text" th:field="*{member_name}" placeholder="이름" />
+					<div th:class="field-error" th:errors="*{member_name}" />
+				</div>
+				<div>
+					<input type="email" th:field="*{member_email}" placeholder="이메일" />
+					<div th:class="field-error" th:errors="*{member_email}" />
+				</div>
+				<div>
+					<input type="text" th:field="*{password_question}" placeholder="패스워드 찾기 질문" />
+					<div th:class="field-error" th:errors="*{password_question}" />
+				</div>
+				<div>
+					<input type="text" th:field="*{password_answer}" placeholder="패스워드 찾기 질문 답" />
+					<div th:class="field-error" th:errors="*{password_answer}" />
+				</div>
+				<div>
+					<button type="submit">가입하기</button>
+				<br>
+				<br>
+				</div>
+			</form>
 		</div>
-	</form>
+	</div>
 <footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

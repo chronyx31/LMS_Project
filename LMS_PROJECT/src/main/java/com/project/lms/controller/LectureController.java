@@ -1,5 +1,7 @@
 package com.project.lms.controller;
 
+import java.util.List;
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.lms.model.entity.board.Lecture;
 import com.project.lms.model.entity.subject.Subject;
 import com.project.lms.repository.LectureMapper;
 import com.project.lms.repository.SubjectMapper;
@@ -40,15 +43,20 @@ public class LectureController {
 			total = 1;
 		}
 
+		// subject를 읽기 위해서 불러오기
+		Subject subject = subjectMapper.findSubjectByNo(subject_no);
+		log.info("subject:{}", subject); 
+		model.addAttribute("subject", subject);
+
 		// 페이징 처리를 위한 navigator 객체 생성
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		model.addAttribute("navi", navi);
 		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
 
-		// subject를 읽기 위해서 불러오기
-		Subject subject = subjectMapper.findSubjectByNo(subject_no);
-		log.info("subject:{}", subject); 
-		model.addAttribute("subject", subject);
+		// 페이징 처리한 전체 글
+		List<Lecture> lectures = lectureMapper.getAllLectures(rb, title_part, subject_no);
+		model.addAttribute("lectures", lectures);
+
 		return "subject/lecture/lecture";
 	}
 

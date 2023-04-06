@@ -1,216 +1,213 @@
 @charset "UTF-8";
 
-body {
-  margin: 0;
-  font-family: verdana;
-}
-.clearfix {
-  overflow: auto;
-  zoom: 1;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-}
-
-
-.link-footer {
-	padding: 0px;
-}
-
-.menu {
-  list-style-type: none;
-  margin: 0;
-  padding: 25px 0px 25px 0px;
-  float: right;
-}
-
-.menuitem {
-  display: inline-block;
-  padding: 0px 20px 0px 0px;
-}
-
-.menuitem a {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  text-transform: uppercase;
-  padding: 0px 0px 30px 0px;
-}
-
-#bottom {
-  text-align: center;
-}
-
-#aboutus {
-  color: white;
-  font-size: 60px;
-  text-align: center;
-  padding: 120px 0 0 0;
-  text-transform: capitalize;
-}
-
-#gettoknowus {
-  color: #a0b4bd;
-  text-transform: uppercase;
-  font-size: 40px;
-  text-align: center;
-  padding: 0px 0 12px 0;
-  margin-top: 10%;
-}
-
-.services {
-  float: left;
-  width: 33.334%;
-  display: block;
-  padding: 80px 20px 80px 20px;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-.services:first-child {
-  padding-left: 0;
-}
-
-.services:last-child {
-  padding-right: 0;
-}
-
-.serviceicon {
-  display: inline-block;
-  float: left;
-  color: #34a1dc;
-  padding: 0px 10px 0 0;
-}
-
-.servicetitle {
-  color: black;
-  padding: 0 10px 10px 0;
-}
-
-.serviceinformation {
-  color: #b3b3b3;
-  font-size: 14px;
-  line-height: 170%;
-}
-
-#phone {
-  width: 40%;
-}
-
-#presentation {
-  background-color: #f9f9f9;
-  padding: 100px 0 100px 0;
-}
-
-#we-are-huge {
-  width: 60%;
-  padding: 0 0 0 50px;
-  display: block;
-  box-sizing: border-box;
-  float: right;
-  text-align: left;
-}
-
-h1 {
-  text-transform: uppercase;
-  color: #2e2e2e;
-  padding: 0 0 50px 0;
-}
-
-p {
-  color: #b3b3b3;
-  line-height: 170%;
-  padding: 0 0 50px 0;
-}
-
-.button a {
-  border: solid #31aae1;
-  color: white;
-  width: 20%;
-  padding: 10px;
-  text-align: center;
-  background-color: #31aae1;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-#team {
-  padding: 80px 0 80px 0;
-}
-
-#team h1 {
-  text-align: center;
-  padding: 0 0 0 0;
-}
-
-#team h2 {
-  text-align: center;
-  padding: 0 0 0px 0;
-  font-size: 15px;
-  color: #b3b3b3;
-}
-
-.team-member {
-  width: 50%;
-  display: block;
-  float: left;
-  padding: 50px 50px 0px 50px;
-  box-sizing: border-box;
-}
-
-.team-member:first-child {
-  border-right: #b3b3b3 solid 1px;
-}
-
-.profile-icon {
-  width: 30%;
-  float: left;
-  text-align: center;
-}
+	body {
+		margin: 0;
+		font-family: verdana;
+	}
+	.clearfix {
+		overflow: auto;
+		zoom: 1;
+	}
+	
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		position: relative;
+	}
 
 
+	.link-footer {
+		padding: 0px;
+	}
 
-.employeeprofile {
-  float: center;
-  width: 100%;
-  text-align: center;
-}
+	.menu {
+		list-style-type: none;
+		margin: 0;
+		padding: 25px 0px 25px 0px;
+		float: right;
+	}
 
-.icon {
-  color: white;
-  padding: 10px;
-}
+	.menuitem {
+		display: inline-block;
+		padding: 0px 20px 0px 0px;
+	}
 
-.icon i {
-  padding: 5px;
-  border-radius: 50%;
-  display: inline-block;
-  height: 20px;
-  line-height: 20px;
-  width: 20px;
-  background-color: #2eade0;
-}
+	.menuitem a {
+		color: white;
+		font-weight: bold;
+		text-decoration: none;
+		text-transform: uppercase;
+		padding: 0px 0px 30px 0px;
+	}
 
-.name {
-  color: black;
-  padding: 0 10px -10px 0;
-}
+	#bottom {
+		text-align: center;
+	}
 
-.function {
-  color: #2eade0;
-}
+	#aboutus {
+		color: white;
+		font-size: 60px;
+		text-align: center;
+		padding: 120px 0 0 0;
+		text-transform: capitalize;
+	}
 
-.functiondescription {
-  color: #b3b3b3;
-  font-size: 14px;
-  line-height: 170%;
-}
+	#gettoknowus {
+		color: #a0b4bd;
+		text-transform: uppercase;
+		font-size: 40px;
+		text-align: center;
+		padding: 0px 0 12px 0;
+		margin-top: 10%;
+	}
 
-#row1 {
-  border-bottom: #b3b3b3 solid 1px;
-  padding: 80px 0 0 0;
-}
+	.services {
+		float: left;
+		width: 33.334%;
+		display: block;
+		padding: 80px 20px 80px 20px;
+		box-sizing: border-box;
+		text-align: center;
+	}
 
+	.services:first-child {
+		padding-left: 0;
+	}
+
+	.services:last-child {
+	padding-right: 0;
+	}
+
+	.serviceicon {
+		display: inline-block;
+		float: left;
+		color: #34a1dc;
+		padding: 0px 10px 0 0;
+	}
+
+	.servicetitle {
+		color: black;
+		padding: 0 10px 10px 0;
+	}
+
+	.serviceinformation {
+		color: #b3b3b3;
+		font-size: 14px;
+		line-height: 170%;
+	}
+
+	#phone {
+		width: 40%;
+	}
+
+	#presentation {
+		background-color: #f9f9f9;
+		padding: 100px 0 100px 0;
+	}
+
+	#we-are-huge {
+		width: 60%;
+		padding: 0 0 0 50px;
+		display: block;
+		box-sizing: border-box;
+		float: right;
+		text-align: left;
+	}
+
+	h1 {
+		text-transform: uppercase;
+		color: #2e2e2e;
+		padding: 0 0 50px 0;
+	}
+
+	p {
+		color: #b3b3b3;
+		line-height: 170%;
+		padding: 0 0 50px 0;
+	}
+
+	.button a {
+		border: solid #31aae1;
+		color: white;
+		width: 20%;
+		padding: 10px;
+		text-align: center;
+		background-color: #31aae1;
+		text-transform: uppercase;
+		text-decoration: none;
+	}
+
+	#team {
+		padding: 80px 0 80px 0;
+	}
+
+	#team h1 {
+		text-align: center;
+		padding: 0 0 0 0;
+	}
+
+	#team h2 {
+		text-align: center;
+		padding: 0 0 0px 0;
+		font-size: 15px;
+		color: #b3b3b3;
+	}
+
+	.team-member {
+		width: 50%;
+		display: block;
+		float: left;
+		padding: 50px 50px 0px 50px;
+		box-sizing: border-box;
+	}
+
+	.team-member:first-child {
+		border-right: #b3b3b3 solid 1px;
+	}
+
+	.profile-icon {
+		width: 30%;
+		float: left;
+		text-align: center;
+	}
+
+	.employeeprofile {
+		float: center;
+		width: 100%;
+		text-align: center;
+	}
+
+	.icon {
+		color: white;
+		padding: 10px;
+	}
+
+	.icon i {
+		padding: 5px;
+		border-radius: 50%;
+		display: inline-block;
+		height: 20px;
+		line-height: 20px;
+		width: 20px;
+		background-color: #2eade0;
+	}
+
+	.name {
+		color: black;
+		padding: 0 10px -10px 0;
+	}
+
+	.function {
+	color: #2eade0;
+	}
+
+	.functiondescription {
+	color: #b3b3b3;
+	font-size: 14px;
+	line-height: 170%;
+	}
+
+	#row1 {
+		border-bottom: #b3b3b3 solid 1px;
+		padding: 80px 0 0 0;
+	}
