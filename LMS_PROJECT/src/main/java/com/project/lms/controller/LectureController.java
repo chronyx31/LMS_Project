@@ -45,7 +45,7 @@ public class LectureController {
 		model.addAttribute("navi", navi);
 		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
 
-		// subject를 읽기 위해서 불러옴
+		// subject를 읽기 위해서 불러오기
 		Subject subject = subjectMapper.findSubjectByNo(subject_no);
 		log.info("subject:{}", subject); 
 		model.addAttribute("subject", subject);
