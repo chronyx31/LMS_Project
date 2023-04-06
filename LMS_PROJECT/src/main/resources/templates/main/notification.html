@@ -72,31 +72,10 @@
       </nav>
 </header>
 
-<<<<<<< HEAD
 <body>
 <br><br><br><br>
 <div id="skybox"></div>
 <h1 class="Montserrat">공지사항</h1>
-=======
-<h1 th:text="${category_name}">[ 공지사항 ]</h1>
-<h1>[ 공지사항 ]</h1>
-<form method="get" action="notification">
-    <input type="text" name="title_part">
-    <input type="submit" value="제목검색">
-</form>
-<table>
-	<tr>
-		<th>번호</th>
-		<th>제목</th>
-		<th>작성자</th>
-	</tr>
-	<tr th:each="notification : ${notifications}">
-		<td th:text="${notificationStat.count}+${navi.countPerPage*(navi.currentPage-1)}"></td>
-		<td><a th:text="${notification.notification_title}" th:href="@{/readnotice/{notification_no}(notification_no=${notification.notification_no})}"></a></td>
-		<td th:text="${notification.writer}"></td>
-	</tr>
-</table>
->>>>>>> branch 'master' of https://github.com/chronyx31/LMS_Project.git
 
 <form method="get" action="notification">
     <div class="wrapper">
