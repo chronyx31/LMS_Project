@@ -4,29 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[Main Page]</title>
+    <title th:text="${qna.qna_title}">[ QNA ]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/default.css">
     <link rel="stylesheet" href="/css/script.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             $("#footers").load("/footer.html");
         });
     </script>
-    <style>
-    .pageCounter {
-    	text-decoration: none;
-    	color: black;
-    }
-    .active {
-    	font-weight: bold;
-    	color: blue;
-    }
-    </style>
     <link href='//fonts.googleapis.com/css?family=PT+Sans:400,700&subset=cyrillic' rel='stylesheet' type='text/css'>
 </head>
+<body>
+
 <header>
     <div class="topmenu upper">
 		<div class="home"><a href="/">logo</a></div>
@@ -53,7 +46,7 @@
           <li><a href="/fnq">고객센터</a>
             <ul class="submenu">
               <li><a href="/fnq">자주 묻는 질문</a></li>
-              <li><a href="/qna">문의 게시판</a></li>
+              <li><a href="/qna">문의사항</a></li>
               <li><a href="/policy">이용약관</a></li>
             </ul>
           </li>
@@ -69,8 +62,9 @@
       </nav>
 </header>
 
-	<br><br><br><br>
+<br><br><br><br>
 <div id="skybox"></div>
+<br>
 <h1 class="Montserrat">문의사항</h1>
 
 <div class="buttonOutForm">
@@ -126,7 +120,6 @@
 	  	<a class="btn" th:href="@{{qna_no}(qna_no=${qna.qna_no}, page=${navi.currentPage + navi.pagePerGroup})}">&gt;&gt;</a>
   	</th:block>
 </div>
-
 
 <footer id="footers">여기에 footer 위치</footer>
 </body>
