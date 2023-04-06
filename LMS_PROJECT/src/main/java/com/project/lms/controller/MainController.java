@@ -146,8 +146,9 @@ public class MainController {
 	// 질문 글 쓰기 ( 페이지 이동 )
 	@GetMapping("writeQna")
 	public String toWriteQna(Model model) {
+		log.info("write");
 		model.addAttribute("writeQna", new QnaWriteForm());
-		return "main/writeqna";
+		return "main/writeQna";
 	}
 
 	// 질문 글 쓰기
@@ -155,7 +156,7 @@ public class MainController {
 	public String writeQna(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@Validated @ModelAttribute("writeQna") QnaWriteForm write, BindingResult result) {
 		if (result.hasErrors()) {
-			return "main/writeqna";
+			return "main/writeQna";
 		}
 
 		// 과목번호와 작성자 추가 입력
