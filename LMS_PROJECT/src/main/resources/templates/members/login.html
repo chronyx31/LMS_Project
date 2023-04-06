@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[Login]</title>
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/sign.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -56,34 +58,27 @@
         </ul>
       </nav>
 </header>
-
-	<h1>[ 로그인 ]</h1>
-	<form action="" method="post" th:object="${loginForm}">
-		<table>
-			<tr>
-				<th>아이디</th>
-				<td>
-					<input type="text" th:field="*{member_id}">
-					<div th:errorClass="field-error" th:errors="*{member_id}"></div>
-				</td>
-			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td>
-					<input type="password" th:field="*{member_password}">
-					<div th:errorClass="field-error" th:errors="*{member_password}"></div>
-				</td>
-			</tr>
-		</table>
-		<div th:if="${#fields.hasGlobalErrors()}">
+<body>
+<div class="login-page">
+  <div class="form">
+    <form class="login-form" action="" method="post" th:object="${loginForm}">
+    <div>
+      <input type="text" th:field="*{member_id}" placeholder="아이디"/>
+      <div th:errorClass="field-error" th:errors="*{member_id}"></div>
+      </div>
+      <div>
+      <input type="password" th:field="*{member_password}" placeholder="패스워드"/>
+      <div th:errorClass="field-error" th:errors="*{member_password}"></div>
+      </div>
+      <div th:if="${#fields.hasGlobalErrors()}">
 			<p th:class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
 		</div>
-		<input type="submit" value="로그인">
-		<input type="reset" value="취소">
-		<input type="button" value="회원가입">	
-		<input type="button" value="아이디 찾기">
-		<input type="button" value="비밀번호 찾기">
-	</form>
+      <button type="submit">login</button>
+      <p class="message"><a href="/members/join">회원가입</a></p>
+      <p class="message"><a href="#">아이디</a>/<a href="#">비밀번호 찾기</a></p>
+    </form>
+  </div>
+</div>
 <footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

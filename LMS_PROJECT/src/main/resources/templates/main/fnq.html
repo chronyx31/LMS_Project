@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Main Page]</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/fnq.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#footers").load("/footer.html");
+        });
+    </script>
+    <style>
+    </style>
+</head>
+<header>
+    <div class="topmenu upper">
+		<div class="home"><a href="/">logo</a></div>
+		<span th:if="${session.loginMember}">
+			<div class="member"><a href="/logout">로그아웃</a></div>
+		</span>
+		<span th:unless="${session.loginMember}">
+			<div class="member"><a href="/members/join">회원가입</a></div>
+			<div class="member"><a href="/members/login">로그인</a></div>
+		</span>
+    </div>
+    <nav class="topmenu">
+        <ul>
+          <li><a href="/introduce">소개</a></li>
+          <li><a href="/notification">공지사항</a></li>
+          <li><a href="/subject">과목</a>
+            <ul class="submenu">
+              <li><a href="/subject?category_name=JAVA">JAVA</a></li>
+              <li><a href="/subject?category_name=HTML">HTML</a></li>
+              <li><a href="/subject?category_name=DATABASE">DATABASE</a></li>
+              <li><a href="/subject?category_name=PYTHON">PYTHON</a></li>
+            </ul>
+          </li>
+          <li><a href="/faq">고객센터</a>
+            <ul class="submenu">
+              <li><a href="/fnq">자주 묻는 질문</a></li>
+              <li><a href="/qna">문의 게시판</a></li>
+              <li><a href="/policy">이용약관</a></li>
+            </ul>
+          </li>
+          <li><a href="/members/mypage">마이페이지</a>
+            <ul class="submenu">
+              <li><a href="/members/myinfo">내정보</a></li>
+              <li><a href="/members/modifypass">암호변경</a></li>
+              <li><a href="/members/mylecture">내강의</a></li>
+              <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+</header>
+<form method="get" action="fnq">
+
+<br><br><br><br>
+<div id="skybox"></div>
+<h1 class="Montserrat">자주 묻는 질문</h1>
+
+    <div class="container">
+		<div class="main-content">
+			<div class="panel-wrapper">
+				<div class="panel-head">
+					이용료를 결제하려는데 계속 실패하는 경우
+				</div>
+				<div class="panel-body">
+					신용카드나 계좌이체는 가능하나, 법인카드 등 일부카드는 사용이 제한됩니다. 이 경우 문의게시판을 이용해 주세요.
+				</div>
+			</div>
+			<div class="panel-wrapper">
+				<div class="panel-head">
+					구매했던 강의가 전부 사라졌어요
+				</div>
+				<div class="panel-body">
+					로그인하신 계정이 구매하신 계정이 맞는지 확인해보시고 문제가 있다면 문의 게시판을 이용해 문의해주세요.
+				</div>
+			</div>
+			<div class="panel-wrapper">
+				<div class="panel-head">
+					정보수정할 수 있는 항목
+				</div>
+				<div class="panel-body">
+					정보수정을 할 수 있는 항목은 이름, 이메일, 비밀번호만 가능합니다.
+				</div>
+			</div>
+      <div class="panel-wrapper">
+				<div class="panel-head">
+					회원탈퇴가 하고 싶어요
+				</div>
+				<div class="panel-body">
+					회원탈퇴는 mypage에서 탈퇴를 누르시면 가능하오나, 탈퇴할 경우 모든 데이터가 사라지므로 주의해주세요.
+				</div>
+			</div>
+      <div class="panel-wrapper">
+				<div class="panel-head">
+					지금 듣고 있는 강의를 다른 계정으로 바꾸고 싶어요
+				</div>
+				<div class="panel-body">
+					계정 간 강의 이동 서비스를 제공하고 있지 않습니다. 죄송합니다.
+				</div>
+			</div>
+      <div class="panel-wrapper">
+				<div class="panel-head">
+					서비스 이용 중 오류가 발생해요
+				</div>
+				<div class="panel-body">
+					저희 홈페이지는 크롬 브라우저에 최적화가 되어있기에 크롬으로 이용하시면 원활하게 이용가능 하십니다.
+				</div>
+			</div>
+      <div class="panel-wrapper">
+				<div class="panel-head">
+					수강기한이 있나요?
+				</div>
+				<div class="panel-body">
+					저희 사이트는 수강기한이 없고 전부 무제한입니다.
+				</div>
+			</div>
+      <div class="panel-wrapper">
+				<div class="panel-head">
+					강의를 취소하고 싶어요
+				</div>
+				<div class="panel-body">
+					[과목>카테고리>수강취소]에서 강의를 취소할 수 있습니다.
+				</div>
+			</div>
+		</div>
+	</div>
+
+</form>
+
+<footer id="footers">여기에 footer 위치</footer>
+</body>
+</html>

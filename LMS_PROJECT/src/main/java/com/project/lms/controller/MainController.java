@@ -41,6 +41,18 @@ public class MainController {
 	String category_name = "MAIN";
 	Long subject_no = (long) 1;
 	
+	
+	
+	@GetMapping("introduce")
+	public String introduce() {
+		return "main/introduce";
+	}
+	@GetMapping("fnq")
+	public String fnq() {
+		return "main/fnq";
+	}
+	
+	
 	// 게시판 보기
 	@GetMapping("notification")
 	public String boardList(@RequestParam(defaultValue = "1") int page,

@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${notification.notification_title}">[ Notification ]</title>
+    <title>[Main Page]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="/css/script.css">
+    <link rel="stylesheet" href="/css/default.css">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -57,29 +61,29 @@
         </ul>
       </nav>
 </header>
-
-<h1>[ 공지사항 읽기 ]</h1>
-	<form>
-		<table th:object="${notification}">
-			<tr>
-				<th>제목</th>
-				<td th:text="*{notification_title}"></td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td th:text="*{notification_contents}"></td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td th:text="*{writer}"></td>
-			</tr>
-			<tr>
-			<td colspan="2">
-				<input type="button" onclick="location.href='/notification'" value="목록으로">
-			</td>
-		</tr>
-		</table>
-	</form>
+<br><br><br><br>
+<div id="skybox"></div>
+<h1 class="Montserrat">공지사항</h1>
+	<div th:object="${notification}">
+	<div class="content">
+    <div class="link">
+      <a target="_blank">
+        <h1 th:text="*{notification_title}"></h1>
+      </a>
+    </div>
+    <p class="script" th:text="*{notification_contents}"></p>
+    <div class="linka">
+        <a target="_blank">
+          <h5 th:text="*{writer}"></h5>
+        </a>
+      </div>
+  </div>
+  </div>
+	<div class="buttonOutForm">
+					<div class="buttonForm">
+       			 	<a onclick="location.href='/notification'">목록으로</a>
+  				</div>
+	</div>
 <footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>
