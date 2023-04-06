@@ -7,6 +7,7 @@
     <title>[ Modify Password ]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/sign.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
 		document.addEventListener("DOMContentLoaded", function(){
@@ -18,6 +19,7 @@
 
     </style>
 </head>
+<body>
 <header>
     <div class="topmenu upper">
 		<div class="home"><a href="/">logo</a></div>
@@ -59,43 +61,29 @@
         </ul>
       </nav>
 </header>
-<div class="contents-container">
-	<h1>[ 비밀번호 입력 ]</h1>
+<div class="member-page">
+	<div class="form">
+		<h1>[ 패스워드 정보 변경 ]</h1>
 		<form action="" method="post" th:object=${modify}>
-			<table>
-				<tr>
-					<th>아이디</th>
-					<td th:text="${session.loginMember.member_id}"></td>
-					<input type="hidden" name="member_no" th:value="${session.loginMember.member_no}">
-				</tr>
-				<tr>
-					<th>비밀번호</th>
-					<td>
-						<input type="password" th:field="*{member_password}">
-						<div th:errorClass="error" th:errors="*{member_password}">
-					</td>
-				</tr>
-				<tr>
-					<th>비밀번호 찾기 질문</th>
-					<td>
-						<input type="text" th:field="*{password_question}">
-						<div th:errorClass="error" th:errors="*{password_question}">					
-					</td>
-				</tr>
-				<tr>
-					<th>비밀번호 찾기 답</th>
-					<td>
-						<input type="text" th:field="*{password_answer}">
-						<div th:errorClass="error" th:errors="*{password_answer}">					
-					</td>
-				</tr>
-				<tr>
-					<th colspan="2"><input type="submit" value="확인"></th>
-				<tr>
-			</table>
-		</div>
+			<input type="hidden" name="member_no" th:value="${session.loginMember.member_no}" />
+			<div>
+				<input type="password" th:field="*{member_password}" placeholder="패스워드" />
+				<div th:errorClass="error" th:errors="*{member_password}" />
+			</div>
+			<div>
+				<input type="text" th:field="*{password_question}" placeholder="패스워드 찾기 질문" />
+				<div th:errorClass="error" th:errors="*{password_question}" />
+			</div>
+			<div>
+				<input type="text" th:field="*{password_answer}" placeholder="패스워드 찾기 질문 답" />
+				<div th:errorClass="error" th:errors="*{password_answer}" />
+			</div>
+			<button type="submit">등록</button>
+			<br>
 		</form>
+	</div>
 </div>
+
 <footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

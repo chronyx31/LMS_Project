@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[ Modify Password ]</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/default.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/sign.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
 		document.addEventListener("DOMContentLoaded", function(){
@@ -19,10 +21,8 @@
 				alert("비밀번호가 일치하지 않습니다. 다시한번 확인해 주세요");
 			}
     </script>
-    <style>
-
-    </style>
 </head>
+<body>
 <header>
     <div class="topmenu upper">
 		<div class="home"><a href="/">logo</a></div>
@@ -64,23 +64,18 @@
         </ul>
       </nav>
 </header>
-<div class="contents-container">
-	<h1>[ 비밀번호 입력 ]</h1>
+<div class="member-page">
+	<div class="form">
+		<h1>[ 비밀번호 입력 ]</h1>
 		<form action="" method="post">
-			<table>
-				<tr>
-					<th>아이디</th>
-					<td th:text="${session.loginMember.member_id}"></td>
-					<input type="hidden" name="id" th:value="${session.loginMember.member_id}">
-				</tr>
-				<tr>
-					<th>비밀번호</th>
-					<td><input type="password" name="password"></td>
-				</tr>
-				<tr>
-					<th colspan="2"><input type="submit" value="확인"></th>
-				<tr>
-			</table>
+			<div>
+				<input type="hidden" name="id" th:value="${session.loginMember.member_id}" />
+			</div>
+			<div>
+				<input type="password" name="password" placeholder="패스워드 입력" />
+			</div>
+				<button type="submit">확인</button>
+		</form>
 		<div th:unless="${error}">		
 			<script>
 				// plzCheckPass 함수 호출
@@ -93,7 +88,7 @@
 				notMatch();
 			</script>
 		</div>
-		</form>
+	</div>
 </div>
 <footer id="footers">여기에 footer 위치</footer>
 </body>

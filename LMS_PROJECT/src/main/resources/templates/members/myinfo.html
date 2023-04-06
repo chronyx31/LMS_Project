@@ -7,29 +7,15 @@
     <title>[My Info]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/sign.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             $("#footers").load("/footer.html");
         });
     </script>
-    <style>
-    .mypage_table {
-    	display: table;
-    	table-layout: fixed;
-    	width: 100%;
-    	
-    }
-    .mypage-info{
-    	display: table-cell;
-    	padding: 0 5%;
-    	text-align: center;
-    	height: 7em;
-    	line-height: 7em;
-    	
-    }
-    </style>
 </head>
+<body>
 <header>
     <div class="topmenu upper">
 		<div class="home"><a href="/">logo</a></div>
@@ -71,24 +57,25 @@
         </ul>
       </nav>
 </header>
-<div class="contents-container">
-	<h1>[ 내 정보 ]</h1>
-		<table th:object="${myinfo}">
-			<tr>
-				<th>아이디</th>
-				<td th:text="*{member_id}"></td>
-			</tr>
-			<tr>
-				<th>이름</th>
-				<td th:text="*{member_name}"></td>
-			</tr>
-			<tr>
-				<th>이메일</th>
-				<td th:text="*{member_email}"></td>
-			</tr>
-		</table>
-		<input type="button" value="회원정보 수정" onclick="location.href='/members/modifyinfo'">	
-		<input type="button" value="돌아가기" onclick="location.href='/members/mypage'">
+<div class="member-page">
+	<div class="form" th:object="${myinfo}">
+		<h1>[ 내 정보 ]</h1>
+		<div>
+			<sapn class="attr-name">아이디</span>
+			<input class="attr-space" type="text" th:placeholder="*{member_id}" disabled />
+		</div>
+		<div>
+			<span class="attr-name">이름</span>
+			<input class="attr-space" th:placeholder="*{member_name}" disabled />
+		</div>
+		<div>
+			<span class="attr-name">이메일</span>
+			<input class="attr-space" th:placeholder="*{member_email}" disabled />
+		</div>
+		<button type="button" onclick="location.href='/members/modifyinfo'">회원정보 수정</button>
+		<p></p>
+		<button type="button" onclick="location.href='/members/mypage'">돌아가기</button>
+	</div>
 </div>
 <footer id="footers">여기에 footer 위치</footer>
 </body>

@@ -7,6 +7,7 @@
     <title>[ Modify Information ]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/sign.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -14,22 +15,9 @@
         });
     </script>
     <style>
-    .mypage_table {
-    	display: table;
-    	table-layout: fixed;
-    	width: 100%;
-    	
-    }
-    .mypage-info{
-    	display: table-cell;
-    	padding: 0 5%;
-    	text-align: center;
-    	height: 7em;
-    	line-height: 7em;
-    	
-    }
     </style>
 </head>
+<body>
 <header>
     <div class="topmenu upper">
 		<div class="home"><a href="/">logo</a></div>
@@ -71,29 +59,28 @@
         </ul>
       </nav>
 </header>
-
-	<h1>[ 내 정보 수정 ]</h1>
-		<form action="" method="post">
-			<table th:object="${modifyinfo}">
-				<tr>
-					<th>아이디</th>
-					<td th:text="*{member_id}"></td>
-				</tr>
-				<tr>
-					<th>이름</th>
-					<td>
-						<input type="text" th:field="*{member_name}">
-					</td>
-				</tr>
-				<tr>
-					<th>이메일</th>
-					<td>
-					<input type="text" th:field="*{member_email}"></td>
-				</tr>
-			</table>
-			<input type="submit" value="회원정보 수정">	
-			<input type="button" value="돌아가기" onclick="location.href='/members/mypage'">
-		</form>
+<div class="member-page">
+	<form action="" method="post" th:object="${modifyinfo}">
+		<div class="form">
+			<h1>[ 내 정보 수정 ]</h1>
+			<div>
+				<sapn class="attr-name">아이디</span>
+				<input class="attr-space" type="text" th:field="*{member_id}" disabled />
+			</div>
+			<div>
+				<span class="attr-name">이름</span>
+				<input class="attr-space" th:field="*{member_name}" />
+			</div>
+			<div>
+				<span class="attr-name">이메일</span>
+				<input class="attr-space" th:field="*{member_email}" />
+			</div>
+			<button type="submit">회원정보 수정</button>	
+			<p></p>
+			<button type="button" onclick="location.href='/members/mypage'">돌아가기</button> 
+		</div>
+	</form>
+</div>
 <footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>
