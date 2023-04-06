@@ -73,6 +73,9 @@ public class QnaController {
 	// 글쓰기 폼으로 이동
 	@GetMapping("{subject_no}/qna/write")
 	public String write(@PathVariable("subject_no") Long subject_no, Model model) {
+		// subject 객체 생성
+		Subject subject = subjectMapper.findSubjectByNo(subject_no);
+		model.addAttribute("subject", subject);
 		// DTO 처리
 		model.addAttribute("writeQna", new QnaWriteForm(subject_no));
 		return "subject/qna/writeQna";
@@ -104,8 +107,10 @@ public class QnaController {
 			@PathVariable Long subject_no, @PathVariable Long qna_no, Model model) {
 
 		// 글을 읽기 위한 객체 생성
+		Subject subject = subjectMapper.findSubjectByNo(subject_no);
 		QNA readQna = qnaMapper.findQnaByNo(qna_no);
 		model.addAttribute("qna", readQna);
+		model.addAttribute("subject", subject);
 		int total = replyMapper.getTotal(qna_no);
 		if (total <1) {
 			total = 1;
@@ -127,6 +132,10 @@ public class QnaController {
 	@GetMapping("{subject_no}/qna/update/{qna_no}")
 	public String update(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@PathVariable Long subject_no, @PathVariable Long qna_no, Model model) {
+		
+		// 사이드바에서 과목명을 보여주기 위한 과목 객체 등록
+		Subject subject = subjectMapper.findSubjectByNo(subject_no);
+		model.addAttribute("subject", subject);
 		QNA qna = qnaMapper.findQnaByNo(qna_no);
 		// 작성자 확인
 		if (qna.getWriter().equals(loginMember.getMember_id())) {
