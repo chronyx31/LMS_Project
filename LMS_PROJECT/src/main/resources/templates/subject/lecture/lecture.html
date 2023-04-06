@@ -1,10 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[질문게시판]</title>
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#footers").load("/footer.html");
+        });
+    </script>
 </head>
 <body>
-강의 게시판 페이지
+<header>
+    <div class="topmenu upper">
+		<div class="home"><a href="/">logo</a></div>
+		<span th:if="${session.loginMember}">
+			<div class="member"><a href="/logout">로그아웃</a></div>
+		</span>
+		<span th:unless="${session.loginMember}">
+			<div class="member"><a href="/members/join">회원가입</a></div>
+			<div class="member"><a href="/members/login">로그인</a></div>
+		</span>
+    </div>
+    <nav class="topmenu">
+        <ul>
+          <li><a href="/introduce">소개</a></li>
+          <li><a href="/notification">공지사항</a></li>
+          <li><a href="/subject">과목</a>
+            <ul class="submenu">
+              <li><a href="/subject?category_name=JAVA">JAVA</a></li>
+              <li><a href="/subject?category_name=HTML">HTML</a></li>
+              <li><a href="/subject?category_name=DATABASE">DATABASE</a></li>
+              <li><a href="/subject?category_name=PYTHON">PYTHON</a></li>
+            </ul>
+          </li>
+          <li><a href="/faq">고객센터</a>
+            <ul class="submenu">
+              <li><a href="/fnq">자주 묻는 질문</a></li>
+              <li><a href="/qna">문의 게시판</a></li>
+              <li><a href="/policy">이용약관</a></li>
+            </ul>
+          </li>
+          <li><a href="/members/mypage">마이페이지</a>
+            <ul class="submenu">
+              <li><a href="/members/myinfo">내정보</a></li>
+              <li><a href="/members/modifypass">암호변경</a></li>
+              <li><a href="/members/mylecture">내강의</a></li>
+              <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+</header>
+
+	<div class="container">
+		<div class=side_wrap>
+			<h2>
+				<span>과목</span>[[${subject.subject_title}]]
+			</h2>
+			<div class="side_menu">
+				<dl>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/notification(subject_no=${subject.subject_no})}">공지사항</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/lecture(subject_no=${subject.subject_no})}">강의게시판</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/assignment(subject_no=${subject.subject_no})}">과제게시판</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/qna(subject_no=${subject.subject_no})}">질문게시판</a>
+					</dt>
+				</dl>
+			</div>
+		</div>
+		<div class="contents">
+			<h1>[ 공지사항 게시판 - 리스트 ]</h1>
+			<form method="get"> 
+				<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/notification/write(subject_no=${subject.subject_no})}'|" value="글 작성" />
+				<input type="text" name="title_part"/>
+				<input type="submit" value="제목으로 검색"/>
+			</form>
+			<table>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+				</tr>
+				<tr th:each="lecture : ${lectures}">
+					<td th:text="${lectureStat.count}+${navi.countPerPage*(navi.currentPage-1)}"></td>
+					<td><a th:text="${lecture.lecture_title}" th:href="@{/subject/{subject_no}/lecture/read/{lecture_no}(subject_no=${lecture.subject_no}, lecture_no=${lecture.lecture_no})}"></a></td>
+					<td th:text="${lecture.writer}"></td>
+				</tr>
+			</table>
+			
+			<div>
+				<th:block th:if="${navi.currentPage > 1}">
+			  		<a th:href="@{lecture(page=${navi.currentPage - navi.pagePerGroup}, title_part=${title_part})}"><<</a>&nbsp;&nbsp;
+			  		<a th:href="@{lecture(page=${navi.currentPage - 1}, title_part=${title_part})}"><</a>&nbsp;&nbsp;
+  				</th:block>
+
+				<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+  					<a th:href="@{lecture(page=${counter}, title_part=${title_part})}" th:text="${counter}" th:classappend="${navi.currentPage == counter} ? 'current'"></a>
+				</th:block>&nbsp;&nbsp; 
+				<th:block th:if="${navi.currentPage < navi.totalPageCount}"></th:block>
+				<th:block th:if="${navi.currentPage < navi.totalPageCount}">
+					<a th:href="@{lecture(page=${navi.currentPage + 1}, title_part=${title_part})}">></a>&nbsp;&nbsp;
+					<a th:href="@{lecture(page=${navi.currentPage + navi.pagePerGroup}, title_part=${title_part})}">>></a>&nbsp;&nbsp;
+				</th:block>
+			</div>
+		</div>
+	</div>
+	
+	<footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

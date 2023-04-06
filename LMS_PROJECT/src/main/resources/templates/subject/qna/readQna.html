@@ -97,6 +97,10 @@
 						<th>작성자</th>
 						<td th:text="*{writer}"></td>
 					</tr>
+					<tr>
+						<th>작성일</th>
+						<td th:text="*{qna_date}"></td>
+					</tr>
 				</table>
 				<a th:if="${session.loginMember != null}">
 					<th:block th:if="${session.loginMember.member_id == qna.writer}">
