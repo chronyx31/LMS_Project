@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[질문게시판]</title>
+    <title>[ QNA ]</title>
+    <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/default.css">
     <link rel="stylesheet" href="/css/sidebar.css">
-    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             $("#footers").load("/footer.html");
         });
     </script>
+    <style>
+    </style>
 </head>
-<body>
 <header>
     <div class="topmenu upper">
 		<div class="home"><a href="/">logo</a></div>
@@ -58,7 +58,6 @@
         </ul>
       </nav>
 </header>
-
 	<div class="container">
 		<div class=side_wrap>
 			<h2>
@@ -81,44 +80,32 @@
 				</dl>
 			</div>
 		</div>
-		<div class="contents">
-			<h1>[ 공지사항 게시판 - 리스트 ]</h1>
-			<form method="get"> 
-				<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/notification/write(subject_no=${subject.subject_no})}'|" value="글 작성" />
-				<input type="text" name="title_part"/>
-				<input type="submit" value="제목으로 검색"/>
-			</form>
-			<table>
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-				</tr>
-				<tr th:each="notification : ${notifications}">
-					<td th:text="${notificationStat.count}+${navi.countPerPage*(navi.currentPage-1)}"></td>
-					<td><a th:text="${notification.notification_title}" th:href="@{/subject/{subject_no}/notification/read/{notification_no}(subject_no=${notification.subject_no}, notification_no=${notification.notification_no})}"></a></td>
-					<td th:text="${notification.writer}"></td>
-				</tr>
-			</table>
-			
-			<div>
-				<th:block th:if="${navi.currentPage > 1}">
-			  		<a th:href="@{notification(page=${navi.currentPage - navi.pagePerGroup}, title_part=${title_part})}"><<</a>&nbsp;&nbsp;
-			  		<a th:href="@{notification(page=${navi.currentPage - 1}, title_part=${title_part})}"><</a>&nbsp;&nbsp;
-  				</th:block>
 
-				<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-  					<a th:href="@{notification(page=${counter}, title_part=${title_part})}" th:text="${counter}" th:classappend="${navi.currentPage == counter} ? 'current'"></a>
-				</th:block>&nbsp;&nbsp; 
-				<th:block th:if="${navi.currentPage < navi.totalPageCount}"></th:block>
-				<th:block th:if="${navi.currentPage < navi.totalPageCount}">
-					<a th:href="@{notification(page=${navi.currentPage + 1}, title_part=${title_part})}">></a>&nbsp;&nbsp;
-					<a th:href="@{notification(page=${navi.currentPage + navi.pagePerGroup}, title_part=${title_part})}">>></a>&nbsp;&nbsp;
-				</th:block>
-			</div>
+		<div class="contents">
+			<h1>[ 질문 게시판 - 글쓰기 ]</h1>
+			<form action="" method="post" th:object="${writeQna}">
+				<table>
+					<tr>
+						<th>제목</th>
+						<td>
+							<input type="text" th:field="*{qna_title}"/>
+							<div th:class="field-error" th:errors="*{qna_title}"></div>
+						</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td>
+							<textarea row="15" cols="50" th:field="*{qna_contents}"></textarea>
+							<div th:class="field-error" th:errors="*{qna_contents}"></div>
+						</td>
+					</tr>		
+				</table>
+				<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/qna(subject_no=*{subject_no})}'|" value="목록으로">
+				<input type="submit" value="등록하기"> <input type="reset"	value="취소">
+			</form>
 		</div>
 	</div>
-	
-	<footer id="footers">여기에 footer 위치</footer>
+
+<footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

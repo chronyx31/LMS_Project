@@ -79,28 +79,24 @@
 				</dl>
 			</div>
 		</div>
+
 		<div class="contents">
 			<h1>[ 질문 게시판 - 리스트 ]</h1>
 			<form method="get"> 
-				<input type="button" th:onclick="|location.href='/subject/qna/writeQna?subject_no=${subject.subject_no}'|" value="글 작성">
-				<input type="submit" value="제목으로 검색">
+				<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/qna/write(subject_no=${subject.subject_no})}'|" value="글 작성" />
+				<input type="text" name="title_part"/>
+				<input type="submit" value="제목으로 검색"/>
 			</form>
-			<div th:text="|currentPage: ${navi.currentPage}|"></div>
-			<div th:text="|pagePerGroup: ${navi.pagePerGroup}|"></div>
 			<table>
 				<tr>
-					<th>질문 번호</th>
-					<th>과목 번호</th>
+					<th>번호</th>
 					<th>제목</th>
-					<th>내용</th>
 					<th>작성자</th>
-					<th>작성 시간</th>
+					<th>작성일</th>
 				</tr>
 				<tr th:each="qna : ${qnas}">
-					<td th:text="${qnaStat.count}"></td>
-					<td th:text="${qna.subject_no}"></td>
-					<td><a th:text="${qna.qna_title}" th:href="@{/subject/qna/readQna/{qna_no}(qna_no=${qna.qna_no})}"></a></td>
-					<td th:text="${qna.qna_contents}"></td>
+					<td th:text="${qnaStat.count}+${navi.countPerPage*(navi.currentPage-1)}"></td>
+					<td><a th:text="${qna.qna_title}" th:href="@{/subject/{subject_no}/qna/read/{qna_no}(subject_no=${qna.subject_no}, qna_no=${qna.qna_no})}"></a></td>
 					<td th:text="${qna.writer}"></td>
 					<td th:text="${qna.qna_date}"></td>
 				</tr>

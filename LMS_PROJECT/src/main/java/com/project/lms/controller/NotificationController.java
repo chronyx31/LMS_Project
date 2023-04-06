@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RequestMapping("/subject")
 public class NotificationController {
+
 	private final SubjectMapper subjectMapper;
 	private final NotificationMapper notificationMapper;
 	
@@ -51,9 +52,20 @@ public class NotificationController {
 		model.addAttribute("subject", subject);
 		model.addAttribute("navi", navi);
 		model.addAttribute("notifications", notifications);
-		model.addAttribute("category_name", category_name);
-		model.addAttribute("title_part", title_part);
 		
 		return "subject/notification/notification";
 	}
+
+	// 글 읽기
+	@GetMapping("{subject_no}/notification/read/{notification_no}")
+	public String read(@PathVariable Long subject_no,@PathVariable Long notification_no, Model model) {
+
+		// 과목명을 찾기 위한 객체 생성
+		Subject subject = subjectMapper.findSubjectByNo(subject_no);
+		Notification notification = notificationMapper.findNotificationByNo(notification_no);
+		model.addAttribute("subject", subject);
+		model.addAttribute("notification", notification);		
+		return "subject/notification/readNotification";
+	}
+
 }
