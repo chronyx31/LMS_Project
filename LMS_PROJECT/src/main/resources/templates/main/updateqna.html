@@ -67,28 +67,6 @@
         </ul>
       </nav>
 </header>
-<!-- 
-<h1>[ 문의글 수정 ]</h1>
-<form action="/updateQna" method="post" th:object="${qna}">
-	<input type="hidden" th:field="*{qna_no}">
-	<table>
-		<tr>
-			<th>제목</th>
-			<td><input type="text" th:field="*{qna_title}"></td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td><textarea th:field="*{qna_contents}" cols="50" rows="15"></textarea></td>
-		</tr>
-	</table>
-	<input type="button" onclick="location.href='/qna'" value="목록으로">
-	<input type="submit" value="등록하기">
-	<input type="reset" value="취소">
-</form>
- -->
-
-
-
 <form action="/updateQna" method="post" th:object="${qna}">
 <input type="hidden" th:field="*{qna_no}">
     <div class="write-formOut">
@@ -115,10 +93,6 @@
        </div> 
     </div>
 </form>
-
-
-
-
 <footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>
