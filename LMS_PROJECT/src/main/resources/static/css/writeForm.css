@@ -1,0 +1,148 @@
+@charset "UTF-8";
+
+.write-formOut {
+  padding-left: 27%;
+  padding-bottom: 10%;
+  margin-bottom: 30%;
+}
+.write-form {
+    width: 470px;
+    padding: 30px 80px;
+    padding-bottom: 51px;
+    position: absolute;
+    box-shadow: 0 20px 40px rgba(0, 1, 1, 0.75);
+    font-size: 0;
+    margin: 50px;
+}
+
+
+.write-form label{
+    font-size: 16px;
+}
+
+.btn-form {
+    padding: 8px 195px;
+    margin-top: 36px;
+    border-radius: 5px/2px;
+    border: none;
+    background-color: #8DAB9F;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.input-field-wrapper {
+    width: 220px;
+    display: inline-block;
+    margin-bottom: 22px;
+    vertical-align: middle;
+    text-align: left;
+}
+
+.login-wrapper {
+    margin-right: 20px;
+}
+
+.input-field {
+    border: 2px solid #d7dcde;
+    border-radius: 3px;
+    width: 204px;
+    padding: 6px 0;
+    padding-left: 12px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.letter-textarea {
+    width: 442px;
+    height: 104px;
+    resize: none;
+    border: 2px solid #d7dcde;
+    border-radius: 3px;
+    padding-left: 12px;
+    padding-top: 6px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.input-field:hover, .letter-textarea:hover {
+    border: 2px solid #a2a9ac;
+}
+
+.input-field:focus, .letter-textarea:focus {
+    border: 2px solid #56bffb;
+}
+
+.btn-form {
+  width: 98%;
+}
+
+.btn-form:focus,.btn-form:active {
+    outline: none;
+ 
+}
+
+
+
+
+.btn-form2 {
+  width: 98%;
+}
+
+.btn-form2:focus,.btn-form2:active {
+    outline: none;
+ 
+}
+.btn-form2 {
+    padding: 8px 195px;
+    margin-top: 36px;
+    border-radius: 5px/2px;
+    border: none;
+    background-color: #D7D8DF;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+
+/*제목부분*/
+/* Titles & containers */
+
+.section-title {
+  color: #8DAB9F;
+  font-size: 26px;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.title-underline {
+  display: block;
+  width: 100px;
+  height: 2px;
+  margin-top: -10px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #D7D8DF;
+}
+
+/* Webflow Basics */
+
+.w-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 940px;
+}
+.w-container:before,
+.w-container:after {
+  content: " ";
+  display: table;
+}
+.w-container:after {
+  clear: both;
+}
+.w-container .w-row {
+  margin-left: -10px;
+  margin-right: -10px;
+}

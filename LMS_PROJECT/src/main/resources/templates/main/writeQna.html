@@ -7,6 +7,7 @@
     <title>[ QNA ]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/writeForm.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -16,6 +17,7 @@
     <style>
     </style>
 </head>
+<body>
 <header>
     <div class="topmenu upper">
 		<div class="home"><a href="/">logo</a></div>
@@ -57,28 +59,33 @@
         </ul>
       </nav>
 </header>
-
-<h1>[ QNA 작성 ]</h1>
 <form action="" method="post" th:object="${writeQna}">
-	<table>
-		<tr>
-			<th>제목</th>
-			<td>
-				<input type="text" th:field="*{qna_title}"/>
-				<div th:class="field-error" th:errors="*{qna_title}"></div>
-			</td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td>
-				<textarea th:field="*{qna_contents}" cols="50" rows="15"></textarea>
-				<div th:class="field-error" th:errors="*{qna_contents}"></div>
-			</td>
-		</tr>
-	</table>
-	<input type="button" onclick="location.href='/qna'" value="목록으로">
-	<input type="submit" value="등록하기">
-	<input type="reset" value="취소">
+    <div class="write-formOut">
+        <div class="write-form">
+            <div class="w-container promotion-container">
+                <h1 class="section-title">QNA 작성</h1>
+                <div class="title-underline"></div>
+              </div>
+
+                        <div class="input-field-wrapper login-wrapper">
+                            <label>
+                                제목 :
+                                <input class="input-field" type="text" name="username" id="login" value="제목" th:field="*{qna_title}"/>
+                                <div th:class="field-error" th:errors="*{qna_title}"></div>
+                            </label>
+                        </div>
+                        <div>
+                        </div>    
+                        <label>
+                            내용 :
+                            <textarea th:field="*{qna_contents}" class="letter-textarea" rows="5" cols="76"  name="letter"></textarea>
+                            <div th:class="field-error" th:errors="*{qna_contents}"></div>
+                        </label>
+                        <input type="submit" value="등록하기" class="btn-form">
+                        <input type="button" onclick="location.href='/qna'" value="목록으로" class="btn-form2">
+
+                </div> 
+        </div><!--end wtite form-->
 </form>
 
 <footer id="footers">여기에 footer 위치</footer>
