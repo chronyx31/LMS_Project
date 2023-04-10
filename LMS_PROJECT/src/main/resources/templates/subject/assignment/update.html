@@ -4,20 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[ Modify Information ]</title>
+    <title>[ 과제게시판 - 수정 ]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/sign.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             $("#footers").load("/footer.html");
         });
     </script>
-    <style>
-    </style>
 </head>
-<body>
 <header>
     <div class="topmenu upper">
 		<div class="home"><a href="/">logo</a></div>
@@ -41,10 +37,10 @@
               <li><a href="/subject?category_name=PYTHON">PYTHON</a></li>
             </ul>
           </li>
-          <li><a href="/fnq">고객센터</a>
+          <li><a href="/faq">고객센터</a>
             <ul class="submenu">
               <li><a href="/fnq">자주 묻는 질문</a></li>
-              <li><a href="/qna">문의사항</a></li>
+              <li><a href="/qna">문의 게시판</a></li>
               <li><a href="/policy">이용약관</a></li>
             </ul>
           </li>
@@ -59,29 +55,34 @@
         </ul>
       </nav>
 </header>
-<div class="member-page">
-	<form action="" method="post" th:object="${modifyinfo}">
-		<div class="form">
-			<h1>[ 내 정보 수정 ]</h1>
-			<input type="hidden" name="member_no" th:value="${session.loginMember.member_no}" />
-			<div>
-				<sapn class="attr-name">아이디</span>
-				<input class="attr-space" type="text" th:field="*{member_id}" disabled />
-			</div>
-			<div>
-				<span class="attr-name">이름</span>
-				<input class="attr-space" th:field="*{member_name}" />
-			</div>
-			<div>
-				<span class="attr-name">이메일</span>
-				<input class="attr-space" th:field="*{member_email}" />
-			</div>
-			<button type="submit">회원정보 수정</button>	
-			<p></p>
-			<button type="button" onclick="location.href='/members/mypage'">돌아가기</button> 
-		</div>
-	</form>
-</div>
-<footer id="footers">여기에 footer 위치</footer>
+
+<h1>[ 과제 게시판 - 수정 ]</h1>
+<form action="" method="post" th:object="${updateAssign}">
+	<table>
+		<tr>
+			<th>제목</th>
+			<td>
+				<input type="text" th:field="*{assignment_title}"/>
+				<div th:class="field-error" th:errors="*{assignment_title}"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td>
+				<textarea row="15" cols="50" th:field="*{assignment_contents}"></textarea>
+				<div th:class="field-error" th:errors="*{assignment_contents}"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>파일</th>
+			<td>
+				<input type="file" name="file">
+			</td>
+		</tr>
+	</table>
+	<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/assignment(subject_no=*{subject_no})}'|" value="목록으로">
+	<input type="submit" value="등록하기"> <input type="reset"	value="취소">
+</form>
+
 </body>
 </html>

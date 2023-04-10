@@ -3,5 +3,88 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.lms.repository.AssignmentMapper">
+	<!-- 전체 글 갯수 가져오기 ( 페이징 처리용 ) -->
+	<select id="getTotal" resultType="int">
+		select count(*) from assignment assign, subject sub, sub_category cate
+		<where>
+			assign.subject_no = sub.subject_no
+			and sub.category = cate.category_no
+			<if test='subject_no != null and subject_no != ""'>
+				and assign.subject_no = #{subject_no}
+			</if>
+			<if test='category_name != null and category_name != ""'>
+				and cate.category_name = #{category_name}
+			</if>
+			<if test='title_part != null and title_part != ""'>
+				and assignment_title like '%' || #{title_part} || '%'
+			</if>
+		</where>
+	</select>
 
+	<!-- 전체 글 가져오기 ( 페이징 처리 포함 ) -->
+	<select id="getAllAssignment" resultType="assignment">
+		select * from assignment assign, subject sub, sub_category cate
+		<where>
+			assign.subject_no = sub.subject_no
+			and sub.category = cate.category_no
+			<if test='subject_no != null and subject_no != ""'>
+				and assign.subject_no = #{subject_no}
+			</if>
+			<if test='category_name != null and category_name != ""'>
+				and cate.category_name = #{category_name}
+			</if>
+			<if test='title_part != null and title_part != ""'>
+				and assignment_title like '%' || #{title_part} || '%'
+			</if>
+		</where>
+		order by assign.assignment_no desc
+	</select>
+	
+	<!-- 등록 -->
+	<insert id="writeAssignment">
+		<selectKey keyProperty="assignment_no" resultType="long" order="BEFORE">
+			select seq_subject.nextval from dual
+		</selectKey>
+		insert into assignment (
+			assignment_no,
+			subject_no,
+			assignment_title,
+			assignment_contents,
+			writer,
+			originalfile,
+			savedfile
+			
+		) values (
+			#{assignment_no},
+			#{subject_no},
+			#{assignment_title},
+			#{assignment_contents},
+			#{writer},
+			#{originalfile},
+			#{savedfile}
+		)
+	</insert>
+	
+	<!-- 검색(assignment_no로 찾기) -->
+	<select id="findAssignmentByNo" resultType="assignment">
+		select * from assignment where assignment_no = #{assignment_no}
+	</select>
+	
+	<!-- 수정 -->
+	<update id="updateAssignment">
+		update assignment
+		<set>
+			<if test='assignment_title != null and assignment_title != ""'>
+				assignment_title = #{assignment_title},
+				assignment_contents = #{assignment_contents},
+				originalfile = #{originalfile}
+			</if>
+		</set>
+		where assignment_no = #{assignment_no}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteAssignment">
+		delete from assignment where assignment_no = #{assignment_no}
+	</delete>
 </mapper>

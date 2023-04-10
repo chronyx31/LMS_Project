@@ -20,12 +20,15 @@ public class Assignment {
 	private String savedfile;
 	private Long score;
 	
-	public Assignment(Long subject_no, String assignment_title, String assignment_contents, String writer) {
+	public Assignment(Long subject_no, String assignment_title, String assignment_contents, String writer, 
+					  String originalfile, String savedfile) {
 		super();
 		this.subject_no = subject_no;
 		this.assignment_title = assignment_title;
 		this.assignment_contents = assignment_contents;
 		this.writer = writer;
+		this.originalfile = originalfile;
+		this.savedfile = savedfile;
 	}
 
 	
