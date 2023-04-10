@@ -45,7 +45,7 @@ public class AssignmentController {
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
 	
 	@Value("${file.upload.path}")
-	private String uploadPath;	// 업드로 했을 때 저장될 위치 지정.
+	private String uploadPath;	// 업드로 했을 때 저장될 위치 지정
 	
 	
 	
