@@ -99,9 +99,10 @@
 		</div>
 		<div class="contents">
 			<h1> 강의 <span th:if="${category_name} != null and ${category_name} != ''"> - [[${category_name}]] </span> </h1>
-			<form>
-				<input type="text" name="title_part">
-				<input type="submit" value="제목검색">
+			<form action="">
+				<input type="text" name="title_part" />
+				<input type="hidden" name="category_name" th:value="${category_name}" />
+				<input type="submit" value="제목검색" />
 			</form>
 			<div class="sub_container">
 				<div th:each="subject : ${subjects}">
@@ -127,6 +128,7 @@
 				 </div>
 		</div>
 	</div>
+
 <footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

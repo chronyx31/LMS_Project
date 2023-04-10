@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[질문게시판]</title>
+    <title>[ Lecture ]</title>
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/default.css">
     <link rel="stylesheet" href="/css/sidebar.css">
@@ -83,8 +83,7 @@
 		</div>
 		<div class="contents">
 			<h1>[ 공지사항 게시판 - 리스트 ]</h1>
-			<form method="get"> 
-				<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/notification/write(subject_no=${subject.subject_no})}'|" value="글 작성" />
+			<form method="get">
 				<input type="text" name="title_part"/>
 				<input type="submit" value="제목으로 검색"/>
 			</form>
@@ -121,4 +120,7 @@
 	
 	<footer id="footers">여기에 footer 위치</footer>
 </body>
+<script type="text/javascript">
+history.replaceState({}, null, location.pathname);
+</script>
 </html>
