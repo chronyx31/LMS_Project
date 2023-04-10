@@ -14,5 +14,6 @@
   	<typeAlias type="com.project.lms.model.entity.board.Lecture" alias="lecture"/>
   	<typeAlias type="com.project.lms.model.entity.board.Reply" alias="reply"/>
   	<typeAlias type="com.project.lms.model.entity.board.Assignment" alias="assignment"/>
+  	<typeAlias type="com.project.lms.model.util.AttachedFile" alias="file"/>
   </typeAliases>
 </configuration>

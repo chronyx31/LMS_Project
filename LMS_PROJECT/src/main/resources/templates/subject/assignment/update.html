@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[ 과제게시판 - 수정 ]</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#footers").load("/footer.html");
+        });
+    </script>
+</head>
+<header>
+    <div class="topmenu upper">
+		<div class="home"><a href="/">logo</a></div>
+		<span th:if="${session.loginMember}">
+			<div class="member"><a href="/logout">로그아웃</a></div>
+		</span>
+		<span th:unless="${session.loginMember}">
+			<div class="member"><a href="/members/join">회원가입</a></div>
+			<div class="member"><a href="/members/login">로그인</a></div>
+		</span>
+    </div>
+    <nav class="topmenu">
+        <ul>
+          <li><a href="/introduce">소개</a></li>
+          <li><a href="/notification">공지사항</a></li>
+          <li><a href="/subject">과목</a>
+            <ul class="submenu">
+              <li><a href="/subject?category_name=JAVA">JAVA</a></li>
+              <li><a href="/subject?category_name=HTML">HTML</a></li>
+              <li><a href="/subject?category_name=DATABASE">DATABASE</a></li>
+              <li><a href="/subject?category_name=PYTHON">PYTHON</a></li>
+            </ul>
+          </li>
+          <li><a href="/faq">고객센터</a>
+            <ul class="submenu">
+              <li><a href="/fnq">자주 묻는 질문</a></li>
+              <li><a href="/qna">문의 게시판</a></li>
+              <li><a href="/policy">이용약관</a></li>
+            </ul>
+          </li>
+          <li><a href="/members/mypage">마이페이지</a>
+            <ul class="submenu">
+              <li><a href="/members/myinfo">내정보</a></li>
+              <li><a href="/members/modifypass">암호변경</a></li>
+              <li><a href="/members/mylecture">내강의</a></li>
+              <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+</header>
+
+<h1>[ 과제 게시판 - 수정 ]</h1>
+<form action="" method="post" th:object="${updateAssign}">
+	<table>
+		<tr>
+			<th>제목</th>
+			<td>
+				<input type="text" th:field="*{assignment_title}"/>
+				<div th:class="field-error" th:errors="*{assignment_title}"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td>
+				<textarea row="15" cols="50" th:field="*{assignment_contents}"></textarea>
+				<div th:class="field-error" th:errors="*{assignment_contents}"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>파일</th>
+			<td>
+				<input type="file" name="file">
+			</td>
+		</tr>
+	</table>
+	<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/assignment(subject_no=*{subject_no})}'|" value="목록으로">
+	<input type="submit" value="등록하기"> <input type="reset"	value="취소">
+</form>
+
+</body>
+</html>
