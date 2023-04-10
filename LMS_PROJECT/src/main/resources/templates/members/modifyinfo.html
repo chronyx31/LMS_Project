@@ -63,6 +63,7 @@
 	<form action="" method="post" th:object="${modifyinfo}">
 		<div class="form">
 			<h1>[ 내 정보 수정 ]</h1>
+			<input type="hidden" name="member_no" th:value="${session.loginMember.member_no}" />
 			<div>
 				<sapn class="attr-name">아이디</span>
 				<input class="attr-space" type="text" th:field="*{member_id}" disabled />

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.project.lms.model.dto.member.MemberInfoForm;
+import com.project.lms.model.dto.member.MemberModifyInfo;
 import com.project.lms.model.dto.member.MemberModifyPass;
 import com.project.lms.model.entity.member.Member;
 import com.project.lms.repository.MemberMapper;
@@ -53,14 +54,25 @@ public class MypageController {
 	
 	@GetMapping("modifyinfo")
 	public String goToModifyInfo(HttpServletResponse response, HttpServletRequest request, Model model) {
-		
+		log.info("123");
 		// 세션 가져오기
 		HttpSession session = request.getSession();
 		Member member = (Member) session.getAttribute("loginMember");
 		MemberInfoForm modifyinfo = new MemberInfoForm(member);
 		model.addAttribute("modifyinfo", modifyinfo);
-		
 		return "members/modifyinfo";
+	}
+	
+	@PostMapping("modifyinfo")
+	public String modifyInfo(@Validated @ModelAttribute("modifyinfo") MemberModifyInfo modify,
+			BindingResult result, HttpServletResponse response, HttpServletRequest request) {
+		if(result.hasErrors()) {
+			return "members/modifyinfo";
+		}Member member = modify.toMember(modify);
+		log.info("membermodify: {}", modify);
+		int complete = memberMapper.modifyMember(member);
+		log.info("complete : {}", complete);
+		return "redirect:/members/mypage";
 	}
 	
 	@GetMapping("modifypass")
