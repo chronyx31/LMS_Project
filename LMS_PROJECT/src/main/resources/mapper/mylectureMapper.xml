@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.lms.repository.MylectureMapper">
+	<select id="isMylectureExist" resultType="mylecture">
+		select * from mylecture
+		<where>
+			member_no = #{member_no}
+			<if test='subject_no != null and subject_no != ""'>
+				and subject_no = #{subject_no}
+			</if>
+		</where>
+	</select>
+</mapper>

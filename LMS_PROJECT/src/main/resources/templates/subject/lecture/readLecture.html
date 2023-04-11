@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${lecture.lecture_title}">[ Lecture ]</title>
+    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/default.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+    <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#footers").load("/footer.html");
+        });
+    </script>
+    <!-- 비디오 커스텀 CSS -->
+    <style>
+		.video-js .vjs-menu-button-inline.vjs-slider-active,.video-js .vjs-menu-button-inline:focus,.video-js .vjs-menu-button-inline:hover,.video-js.vjs-no-flex .vjs-menu-button-inline {
+		    width: 10em
+		}
+		
+		.video-js .vjs-controls-disabled .vjs-big-play-button {
+		    display: none!important
+		}
+		
+		.video-js .vjs-control {
+		    width: 3em
+		}
+		
+		.video-js .vjs-menu-button-inline:before {
+		    width: 1.5em
+		}
+		
+		.vjs-menu-button-inline .vjs-menu {
+		    left: 3em
+		}
+		
+		.vjs-paused.vjs-has-started.video-js .vjs-big-play-button,.video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-button {
+		    display: block
+		}
+		
+		.video-js .vjs-load-progress div,.vjs-seeking .vjs-big-play-button,.vjs-waiting .vjs-big-play-button {
+		    display: none!important
+		}
+		
+		.video-js .vjs-mouse-display:after,.video-js .vjs-play-progress:after {
+		    padding: 0 .4em .3em !important
+		}
+		
+		.video-js.vjs-ended .vjs-loading-spinner {
+		    display: none;
+		}
+		
+		.video-js.vjs-ended .vjs-big-play-button {
+		    display: block !important;
+		}
+		
+		video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-button,.vjs-paused.vjs-has-started.video-js .vjs-big-play-button {
+		    display: block
+		}
+		
+		.video-js .vjs-big-play-button {
+		    top: 50%;
+		    left: 50%;
+		    margin-left: -1.5em;
+		    margin-top: -1em
+		}
+		
+		.video-js .vjs-big-play-button {
+		    background-color: rgba(58,148,37,0.7);
+		    font-size: 3em;
+		    border-radius: 15%;
+		    height: 1.8em !important;
+		    line-height: 1.8em !important;
+		    margin-top: -0.9em !important
+		}
+		
+		.video-js:hover .vjs-big-play-button,.video-js .vjs-big-play-button:focus,.video-js .vjs-big-play-button:active {
+		    background-color: #3a9425
+		}
+		
+		.video-js .vjs-loading-spinner {
+		    border-color: #3a9425
+		}
+		
+		.video-js .vjs-control-bar2 {
+		    background-color: #3a9425
+		}
+		
+		.video-js .vjs-control-bar {
+		    background-color: #3a9425 !important;
+		    color: #eae7b1;
+		    font-size: 11px
+		}
+		
+		.video-js .vjs-play-progress,.video-js  .vjs-volume-level {
+		    background-color: #a6bb8d
+		}
+		
+		.video-js .vjs-slider {
+		    background-color: #3b3d41
+		}
+		
+		.video-js .vjs-load-progress {
+		    background: rgba(252,249,133,0.7);
+		}
+		
+		.video-js .vjs-big-play-button {
+		    color: #f3ec1a;
+		    border-color: #f3ec1a;
+		}
+    </style>
+</head>
+<body>
+<header>
+    <div class="topmenu upper">
+		<div class="home"><a href="/">logo</a></div>
+		<span th:if="${session.loginMember}">
+			<div class="member"><a href="/logout">로그아웃</a></div>
+		</span>
+		<span th:unless="${session.loginMember}">
+			<div class="member"><a href="/members/join">회원가입</a></div>
+			<div class="member"><a href="/members/login">로그인</a></div>
+		</span>
+    </div>
+    <nav class="topmenu">
+        <ul>
+          <li><a href="/introduce">소개</a></li>
+          <li><a href="/notification">공지사항</a></li>
+          <li><a href="/subject">과목</a>
+            <ul class="submenu">
+              <li><a href="/subject?category_name=JAVA">JAVA</a></li>
+              <li><a href="/subject?category_name=HTML">HTML</a></li>
+              <li><a href="/subject?category_name=DATABASE">DATABASE</a></li>
+              <li><a href="/subject?category_name=PYTHON">PYTHON</a></li>
+            </ul>
+          </li>
+          <li><a href="/fnq">고객센터</a>
+            <ul class="submenu">
+              <li><a href="/fnq">자주 묻는 질문</a></li>
+              <li><a href="/qna">문의사항</a></li>
+              <li><a href="/policy">이용약관</a></li>
+            </ul>
+          </li>
+          <li><a href="/members/mypage">마이페이지</a>
+            <ul class="submenu">
+              <li><a href="/members/myinfo">내정보</a></li>
+              <li><a href="/members/modifypass">암호변경</a></li>
+              <li><a href="/members/mylecture">내강의</a></li>
+              <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+</header>
+
+	<div class="container">
+		<div class=side_wrap>
+			<h2>
+				<span>과목</span>[[${subject.subject_title}]]
+			</h2>
+			<div class="side_menu">
+				<dl>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/notification(subject_no=${subject.subject_no})}">공지사항</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/lecture(subject_no=${subject.subject_no})}">강의게시판</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/assignment(subject_no=${subject.subject_no})}">과제게시판</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/qna(subject_no=${subject.subject_no})}">질문게시판</a>
+					</dt>
+				</dl>
+			</div>
+		</div>
+		<div class="contents">
+			<h1>[ 강의 - 읽기 ]</h1>
+			<table th:object="${lecture}">
+				<tr>
+					<th>제목</th>
+					<td th:text="*{lecture_title}"></td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td>
+						<video id="video-js" width="720" height="480" controls class="video-js" preload="auto"
+							data-setup='{"playbackRates": [1, 1.5, 2]}'>
+							<source th:src="|\lectures\*{lecture_contents}.mp4|" type="video/mp4" />
+						</video>
+					</td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td th:text="*{writer}"></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/lecture(subject_no=${subject_no})}'|" value="목록으로" />
+					</td>
+				</tr>
+			</table>
+			<span id="demo"></span>
+			<button id="check" onclick="attendCheck()">출석체크</button>
+			<button onclick="currTime()">현재 시점 확인</button>
+			<button onclick="rate2()">2배속 변경</button>
+		</div>
+	</div>
+	<footer id="footers">여기에 footer 위치</footer>
+</body>
+<script>
+	var vid = document.getElementById("video-js");
+	var supposedCurrentTime = 0;	// 추정 현재 시간
+	console.log(vid);
+	// 재생위치 임의 지정 ( 테스트용 )
+	vid.currentTime = 480;
+	// 인터벌로 비디오 시간이 변경될 때마다 호출하는 함수. 여기서 updatetime으로 이벤트리스너를 설정하면 너무 많은 요청이 일어남.
+	// 많은 요청은 서버에 부담이 크기 때문에 Interval안에는 넣지 않는다.
+	// 이 함수에 서버에 현재시간을 넣는다.
+	var interval;
+	// 실행중일 때 인터벌 실행, 일시정지시 인터벌 중지
+	vid.onplaying = play => {
+		interval = setInterval(loginfo, 5000);
+	};
+	vid.onpause = pause => {
+		clearInterval(interval);
+	};
+	function loginfo(){
+		console.log(vid.currentTime);
+	}
+
+
+	// 시간이 바뀌면 자동으로 supposedCurrentTime 도 갱신
+	vid.addEventListener('timeupdate', function() {
+		if (!vid.seeking) {
+			supposedCurrentTime = vid.currentTime;
+		}
+		// 90% 이상 영상시청하면 출석체크 버튼이 보이도록 하기
+		if (vid.currentTime > (vid.duration*0.9)){
+			console.log("90%이상 수강");
+			$("#check").show();
+		} else {
+			$("#check").hide();
+		}
+	});
+	// 동영상 탐색 금지 스크립트 동영상 탐색이 발생하면 동작
+	vid.addEventListener('seeking', function() {
+		// 동영상 현재시간과 추정현재시간을 비교해서 다르면 추정현재시간으로 되돌림
+		var delta = vid.currentTime - supposedCurrentTime;
+		// math.abs는 절대값 비교 수식
+		if (Math.abs(delta) > 0.01) {
+			alert("Seeking is disabled");
+			console.log("Seeking is disabled");
+			vid.currentTime = supposedCurrentTime;
+		}
+	});
+
+	// 재생속도 변경 금지 스크립트
+	vid.addEventListener('ratechange', function() {
+		// 동영상 재생속도가 변하면 되돌림
+		// math.abs는 절대값 비교 수식
+		if (vid.playbackRate != 1) {
+			alert("RateChange is disabled");
+			console.log("RateChange is disabled");
+			vid.playbackRate = 1;
+		}
+	});
+
+	// 동영상이 끝나면 호출되는 기능
+	vid.addEventListener('ended', function() {
+		// 추정현재시간을 0으로 되돌림 되감기 기능
+		supposedCurrentTime = 0;
+		// interval 함수 중지
+		clearInterval(interval);
+		// 출석체크 기능을 할 수도 있다고 생각함
+	});
+
+
+
+	vid.ontimeupdate = function() {myFunction()};
+	function myFunction() {
+		document.getElementById("demo").innerHTML = vid.currentTime;
+	}
+	function currTime(){
+		console.log(vid.currentTime);
+	}
+	// 영상 전체길이를 구하기 위해 필요한 함수
+	// html이 로딩되면서 작동하면 동영상 정보가 로딩되지 않은 상황이므로 제대로 동작하지 않음.
+	vid.onloadedmetadata = function() { 
+		var duration = vid.duration;
+		console.log(duration);
+	}
+	function rate2(){
+		vid.playbackRate = 2;
+	}
+</script>
+<script th:inline="javascript">
+	function attendCheck(){
+		let info = [[${attendance}]];
+		console.log(info);
+		info.video_point = vid.currentTime;
+		console.log(info.video_point);
+		console.log(info);
+		$.ajax({
+			url: "/subject/"+[[${subject_no}]]+"/lecture/updateattendance",
+			type: "post",
+			data: info,
+			success: function(result, success, xhr){
+				console.log(result);
+				console.log(success);
+			}
+		})
+	}
+
+</script>
+</html>

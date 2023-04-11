@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.lms.repository.AttendanceMapper">
+
+	<!-- 출석체크 테이블 찾기 -->
+	<select id="findAttendance" resultType="attendance">
+		select * from attendance
+		<where>
+			member_id = #{member_id}
+			<if test='lecture_no != null and lecture_no != ""'>
+				and lecture_no = #{lecture_no}
+			</if>
+		</where>
+	</select>
+
+	<!-- 출석체크 테이블 만들기 -->
+	<insert id="createAttendance">
+		<selectKey keyProperty="attendance_no" resultType="long" order="BEFORE">
+			select seq_member.nextval from dual
+		</selectKey>
+		insert into attendance (
+			attendance_no,
+			subject_no,
+			lecture_no,
+			member_id,
+			video_length
+		) values (
+			#{attendance_no},
+			#{subject_no},
+			#{lecture_no},
+			#{member_id},
+			#{video_length}
+		)
+	</insert>
+</mapper>

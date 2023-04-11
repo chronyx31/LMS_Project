@@ -12,14 +12,16 @@ public class Attendance {
 	private Long subject_no;
 	private Long lecture_no;
 	private String member_id;
-	private Long video_point;
-	private Long video_length;
+	private Double video_point;
+	private Double video_length;
 	private String attend_check;
 
-	public Attendance(Long lecture_no, String member_id) {
+	public Attendance(Long subject_no, Long lecture_no, String member_id, Double video_length) {
 		super();
+		this.subject_no = subject_no;
 		this.lecture_no = lecture_no;
 		this.member_id = member_id;
+		this.video_length = video_length;
 	}
 
 }
