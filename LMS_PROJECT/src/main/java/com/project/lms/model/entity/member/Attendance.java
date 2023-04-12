@@ -15,6 +15,7 @@ public class Attendance {
 	private Double video_point;
 	private Double video_length;
 	private String attend_check;
+	private Long accumulate_time;
 
 	public Attendance(Long subject_no, Long lecture_no, String member_id, Double video_length) {
 		super();
