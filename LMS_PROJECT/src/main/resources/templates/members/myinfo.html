@@ -59,7 +59,11 @@
 </header>
 <div class="member-page">
 	<div class="form" th:object="${myinfo}">
-		<h1>[ 내 정보 ]</h1>
+			  <div class="w-container promotion-container">
+                <h1 class="section-title">내 정보</h1>
+                <div class="title-underline"></div>
+              </div>
+              <br>
 		<div>
 			<sapn class="attr-name">아이디</span>
 			<input class="attr-space" type="text" th:placeholder="*{member_id}" disabled />

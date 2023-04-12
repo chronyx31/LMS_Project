@@ -62,6 +62,11 @@
 <div class="member-page">
 	<div class="form">
 		<form class="login-form" action="" method="post" th:object="${loginForm}">
+				<div class="w-container promotion-container">
+                <h1 class="section-title">로그인</h1>
+                <div class="title-underline"></div>
+              </div>
+              <br>
 			<div>
 				<input type="text" th:field="*{member_id}" placeholder="아이디"/>
 				<div th:errorClass="field-error" th:errors="*{member_id}"></div>

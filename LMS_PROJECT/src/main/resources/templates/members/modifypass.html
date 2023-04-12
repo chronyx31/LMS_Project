@@ -63,7 +63,11 @@
 </header>
 <div class="member-page">
 	<div class="form">
-		<h1>[ 패스워드 정보 변경 ]</h1>
+			  <div class="w-container promotion-container">
+                <h1 class="section-title">비밀번호 정보 변경</h1>
+                <div class="title-underline"></div>
+              </div>
+              <br>
 		<form action="" method="post" th:object=${modify}>
 			<input type="hidden" name="member_no" th:value="${session.loginMember.member_no}" />
 			<div>
