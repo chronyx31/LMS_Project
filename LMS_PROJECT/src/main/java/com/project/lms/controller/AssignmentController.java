@@ -1,9 +1,17 @@
 package com.project.lms.controller;
 
+import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+import javax.swing.text.html.parser.Entity;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,10 +24,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriUtils;
 
+import com.project.lms.model.dto.board.AssignmentUpdateForm;
 import com.project.lms.model.dto.board.AssignmentWriteForm;
 import com.project.lms.model.entity.board.Assignment;
-import com.project.lms.model.entity.board.QNA;
 import com.project.lms.model.entity.member.Member;
 import com.project.lms.model.entity.subject.Subject;
 import com.project.lms.model.util.AttachedFile;
@@ -56,7 +65,7 @@ public class AssignmentController {
 		log.info("title_part:{}", title_part);	// title_part는 검색용
 		
 		// 검색 조건 없을 때, null 출력. category 이름으로 총 갯수 검색
-		int total = assignmentMapper.getTotal(title_part, null, subject_no);
+		int total = assignmentMapper.getTotal(title_part, subject_no);
 		// 글이 없을 경우, total=0이되면 이상하니까 1로 처리.
 		if (total < 1) {
 			total = 1;
@@ -74,7 +83,7 @@ public class AssignmentController {
 		
 		
 		// 페이징 처리한 전체 글
-		List<Assignment> assignment = assignmentMapper.getAllAssignment(rb, title_part, null, subject_no);
+		List<Assignment> assignment = assignmentMapper.getAllAssignment(rb, title_part, subject_no);
 		log.info("assignment:{}", assignment);
 		model.addAttribute("assignments", assignment);
 		model.addAttribute("title_part", title_part);
@@ -90,6 +99,7 @@ public class AssignmentController {
 			model.addAttribute("subject", subject);
 			// DTO 처리
 			model.addAttribute("write", new AssignmentWriteForm(subject_no));
+		//	model.addAttribute("updateAssign", new AssignmentUpdateForm(subject_no));
 			return "subject/assignment/write";
 		}
 	
@@ -116,32 +126,65 @@ public class AssignmentController {
 		// DTO를 Entity로 변환
 			write.setWriter(loginMember.getMember_id());
 			Assignment assignment = write.toAssignment(write);
+			assignment.setOriginalfile(savedFile.getOriginalfile());	// 업로드 했던 것을 담아줘야 한다.
+			assignment.setSavedfile(savedFile.getSavedfile());
+			
 			log.info("assignment:{}", assignment);
-			assignmentMapper.writeAssignment(assignment, savedFile);
+			assignmentMapper.writeAssignment(assignment);
 			
 			return "redirect:/subject/" + assignment.getSubject_no() + "/assignment";
 		}	
 	
-	// 읽기(읽기에 다운로드 넣어야 할듯) -> 다운로드용 하나 만들기
+	// 읽기 페이지 이동
 		@GetMapping("{subject_no}/assignment/read/{assignment_no}")
 		public String read(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 				@RequestParam(defaultValue = "1") int page,
-				@PathVariable Long subject_no, @PathVariable Long assignment_no, Model model) {
+				@PathVariable Long subject_no, @PathVariable Long assignment_no,
+				@RequestParam(required = false) String title_part, Model model) {
 
+			
 			// 글을 읽기 위한 객체 생성
 			Subject subject = subjectMapper.findSubjectByNo(subject_no);
 			Assignment readAssign = assignmentMapper.findAssignmentByNo(assignment_no);
 			model.addAttribute("subject", subject);
 			model.addAttribute("readAssign", readAssign);
 			
-		
+			// 파일을 읽기 위한 객체 생성
+			List<Assignment> files = assignmentMapper.downloadFile(assignment_no);
+			log.info("assignment_no:{}", assignment_no);
+			log.info("subject", subject);
+			model.addAttribute("files", files);
+			
 			return "subject/assignment/read";
 		}
 	
+		
+		// 읽기 - 다운로드
+		@GetMapping("{subject_no}/assignment/read/{assignment_no}/download")
+		public ResponseEntity<Resource> read(@PathVariable Long subject_no, @PathVariable Long assignment_no,
+				 Model model) throws MalformedURLException{
+			
+			Assignment readAssign = assignmentMapper.findAssignmentByNo(assignment_no);
+			model.addAttribute("readAssign", readAssign);
+			
+			String fullPath = uploadPath + readAssign.getSavedfile();
+			log.info("fullPath:{}", fullPath);
+			
+			// 바디에 넣어줄 값 세팅(file: 서버에 저장된 파일의 경로)
+			UrlResource resource = new UrlResource("file:"+ fullPath);		// 경로 정보
+			
+			// 헤더에 넣어줄 값 세팅 (attatched; filename="다운로드 받을 파일명")
+			String encodingFileName = UriUtils.encode(readAssign.getOriginalfile(), StandardCharsets.UTF_8); // 한글 인식 되도록 하게 하는...
+			String contentDisposition = "attached; filename =\"" + encodingFileName + "\"";
+			
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition).body(resource);
+		}
+				
 		// 수정 페이지 이동
 		@GetMapping("{subject_no}/assignment/update/{assignment_no}")
 		public String update(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-							 @PathVariable Long subject_no, @PathVariable Long assignment_no, Model model) {
+							 @PathVariable Long subject_no, @PathVariable Long assignment_no, 
+							 Model model) {
 			// 사이드바에서 과목명을 보여주기 위한 과목 객체 등록
 			Subject subject = subjectMapper.findSubjectByNo(subject_no);
 			model.addAttribute("subject", subject);
@@ -154,7 +197,6 @@ public class AssignmentController {
 			}
 			return "redirect:/subject/" + subject_no + "/assignment";
 		}
-	
 			
 		// DB 수정
 		@PostMapping("{subject_no}/assignment/update/{assignment_no}")
