@@ -56,26 +56,27 @@ public class LectureController {
 	private final String rootPath = System.getProperty("user.dir");
 	private final String lecturePath = rootPath + "\\src\\main\\resources\\static\\lectures\\";
 
-//	// 인터셉터 대신 사용될 코드
-//	@ModelAttribute("checkLecture")
-//	public MyLecture checkLecture(@PathVariable Long subject_no, Model model,
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-//			HttpServletResponse response) throws IOException {
-//		log.info("pathsub: {}", subject_no);
-//		log.info("member: {}", loginMember);
-//		MyLecture isMylectureExist = mylectureMapper.isMylectureExist(subject_no, loginMember.getMember_no());
-////		MyLecture isMylectureExist = new MyLecture(loginMember.getMember_no(), subject_no);
-////		isMylectureExist.setMylecture_no((long)1);
-//		log.info("isExist:{}", isMylectureExist);
-////		if (isMylectureExist == null) {
-////			response.setContentType("text/html; charset=UTF-8");
-////			PrintWriter out = response.getWriter();
-////			out.println("<script>alert('수강신청을 먼저 해주시기 바랍니다.'); location.href='/subject/" + subject_no
-////					+ "/notification';</script>");
-////			out.flush();
-////		}
-//		return isMylectureExist;
-//	}
+	// 인터셉터 대신 사용될 코드 Controller 내 메소드 실행전 실행된다.
+	// 수강신청을 했는지 확인하는 절차. 수강신청을 하지 않으면 강의를 볼 수 없다. 강의페이지에 들어오지 않도록 한다.
+	@ModelAttribute("applyLecture")
+	public MyLecture checkLecture(@PathVariable Long subject_no,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			HttpServletResponse response) throws IOException {
+		log.info("pathsub: {}", subject_no);
+		log.info("member: {}", loginMember);
+
+		// 내강의에 정보가 있는지 없는지 확인하는 Query문
+		MyLecture isMylectureExist = mylectureMapper.isMylectureExist(subject_no, loginMember.getMember_no());
+		log.info("isExist:{}", isMylectureExist);
+		if (isMylectureExist == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('수강신청을 먼저 해주시기 바랍니다.'); location.href='/subject/" + subject_no
+					+ "/notification';</script>");
+			out.flush();
+		}
+		return isMylectureExist;
+	}
 
 	// 기본 경로
 	@GetMapping("{subject_no}/lecture")
@@ -117,21 +118,6 @@ public class LectureController {
 		log.info("URI:{}", requestURI);
 		MyLecture checkLecture = (MyLecture) model.getAttribute("checkLecture");
 		log.info("attr: {}",checkLecture);
-		// 수강신청을 했는지 확인하는 절차. 수강신청을 하지 않으면 강의를 볼 수 없다.
-		// 어디서 수강신청확인을 하고 어디까지 뒤로 보낼것인지 조절해야 할 사안.
-		MyLecture isMylectureExist = mylectureMapper.isMylectureExist(subject_no, loginMember.getMember_no());
-		log.info("isExist:{}", isMylectureExist);
-		if (isMylectureExist == null) {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('수강신청을 먼저 해주시기 바랍니다.'); location.href='/subject/" + subject_no
-					+ "/lecture';</script>");
-			out.flush();
-			// return값에 redirect가 있으면 cannot render error가 일어남.
-//			return "redirect:/subject/" + subject_no + "/lecture";
-			// return값이 없으면 아래의 코드도 전부 실행되기 때문에 return null로 끊어줄 필요가 있음. 
-			return null;
-		}
 
 		// 글을 읽기 위한 객체 생성
 		Subject subject = subjectMapper.findSubjectByNo(subject_no);

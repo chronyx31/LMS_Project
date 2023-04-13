@@ -1,6 +1,10 @@
 package com.project.lms.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Controller;
@@ -19,7 +23,9 @@ import com.project.lms.model.dto.board.QnaWriteForm;
 import com.project.lms.model.entity.board.QNA;
 import com.project.lms.model.entity.board.Reply;
 import com.project.lms.model.entity.member.Member;
+import com.project.lms.model.entity.member.MyLecture;
 import com.project.lms.model.entity.subject.Subject;
+import com.project.lms.repository.MylectureMapper;
 import com.project.lms.repository.QnaMapper;
 import com.project.lms.repository.ReplyMapper;
 import com.project.lms.repository.SubjectMapper;
@@ -37,9 +43,32 @@ public class QnaController {
 	private final SubjectMapper subjectMapper;
 	private final QnaMapper qnaMapper;
 	private final ReplyMapper replyMapper;
+	private final MylectureMapper mylectureMapper;
 
 	final int countPerPage = 3;//한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
+
+	// 인터셉터 대신 사용될 코드 Controller 내 메소드 실행전 실행된다.
+	// 수강신청을 했는지 확인하는 절차. 수강신청을 하지 않으면 강의를 볼 수 없다. 강의페이지에 들어오지 않도록 한다.
+	@ModelAttribute("applyLecture")
+	public MyLecture checkLecture(@PathVariable Long subject_no,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			HttpServletResponse response) throws IOException {
+		log.info("pathsub: {}", subject_no);
+		log.info("member: {}", loginMember);
+
+		// 내강의에 정보가 있는지 없는지 확인하는 Query문
+		MyLecture isMylectureExist = mylectureMapper.isMylectureExist(subject_no, loginMember.getMember_no());
+		log.info("isExist:{}", isMylectureExist);
+		if (isMylectureExist == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('수강신청을 먼저 해주시기 바랍니다.'); location.href='/subject/" + subject_no
+					+ "/notification';</script>");
+			out.flush();
+		}
+		return isMylectureExist;
+	}
 
 	// 기본경로
 	@GetMapping("{subject_no}/qna")
