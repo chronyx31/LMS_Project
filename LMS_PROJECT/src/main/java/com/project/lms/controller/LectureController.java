@@ -99,7 +99,8 @@ public class LectureController {
 //		if (isMylectureExist == null) {
 //			response.setContentType("text/html; charset=UTF-8");
 //			PrintWriter out = response.getWriter();
-//			out.println("<script>alert('수강신청을 먼저 해주시기 바랍니다.'); location.href='/subject/" + subject_no
+//			out.println("<script>alert('수강신청을 먼저 해주시기 바랍니다.'); 
+//			location.href='/subject/" + subject_no
 //					+ "/lecture';</script>");
 //			out.flush();
 //			// return값에 redirect가 있으면 cannot render error가 일어남.

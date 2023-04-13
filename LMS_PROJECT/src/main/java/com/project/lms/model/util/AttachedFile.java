@@ -1,17 +1,15 @@
 package com.project.lms.model.util;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class AttachedFile {
-	private Long file_id;
-	private String originalFile;
-	private String savedFile;
-	
-	public AttachedFile(String originalFile, String savedFile) {
-		this.originalFile = originalFile;
-		this.savedFile = savedFile;
-	}
+	private String originalfile;
+	private String savedfile;
 }
 
 // 브라우저에서 선택한 파일 명 A.txt (originalFile)

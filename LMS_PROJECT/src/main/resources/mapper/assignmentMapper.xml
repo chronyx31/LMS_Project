@@ -12,9 +12,6 @@
 			<if test='subject_no != null and subject_no != ""'>
 				and assign.subject_no = #{subject_no}
 			</if>
-			<if test='category_name != null and category_name != ""'>
-				and cate.category_name = #{category_name}
-			</if>
 			<if test='title_part != null and title_part != ""'>
 				and assignment_title like '%' || #{title_part} || '%'
 			</if>
@@ -29,9 +26,6 @@
 			and sub.category = cate.category_no
 			<if test='subject_no != null and subject_no != ""'>
 				and assign.subject_no = #{subject_no}
-			</if>
-			<if test='category_name != null and category_name != ""'>
-				and cate.category_name = #{category_name}
 			</if>
 			<if test='title_part != null and title_part != ""'>
 				and assignment_title like '%' || #{title_part} || '%'
@@ -76,9 +70,10 @@
 		<set>
 			<if test='assignment_title != null and assignment_title != ""'>
 				assignment_title = #{assignment_title},
-				assignment_contents = #{assignment_contents},
-				originalfile = #{originalfile}
 			</if>
+				assignment_contents = #{assignment_contents},
+				originalfile = #{originalfile},
+				savedfile = #{savedfile}
 		</set>
 		where assignment_no = #{assignment_no}
 	</update>
@@ -87,4 +82,9 @@
 	<delete id="deleteAssignment">
 		delete from assignment where assignment_no = #{assignment_no}
 	</delete>
+	
+	<!-- 다운로드 -->
+	<select id="downloadFile" resultType="file">
+		select * from assignment where assignment_no = #{assignment_no}
+	</select>
 </mapper>

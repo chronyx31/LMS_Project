@@ -61,7 +61,7 @@
 	<div class="container">
 		<div class=side_wrap>
 			<h2>
-				<span>과목</span>[[${subject.subject_title}]]
+				<span>과목</span><!--  [[${subject.subject_title}]]-->
 			</h2>
 			<div class="side_menu">
 				<dl>
@@ -84,19 +84,22 @@
 		<div class="contents">
 			<h1>[ 과제 게시판 - 등록 ]</h1>
 			<form action="" method="post" th:object="${write}" enctype="multipart/form-data">
+			<div th:if="${#fields.hasGlobalErrors()}">
+			<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">
+		</div>
 				<table>
 					<tr>
 						<th>제목</th>
 						<td>
 							<input type="text" th:field="*{assignment_title}"/>
-							<div th:class="field-error" th:errors="*{assignment_title}"></div>
+							<div th:errorClass="field-error" th:errors="*{assignment_title}"></div>
 						</td>
 					</tr>
 					<tr>
 						<th>내용</th>
 						<td>
 							<textarea row="15" cols="50" th:field="*{assignment_contents}"></textarea>
-							<div th:class="field-error" th:errors="*{assignment_contents}"></div>
+							<div th:errorClass="field-error" th:errors="*{assignment_contents}"></div>
 						</td>
 					</tr>
 					<tr>
