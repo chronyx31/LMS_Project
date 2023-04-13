@@ -7,6 +7,7 @@
     <title>[My Page]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/mypage.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -14,20 +15,6 @@
         });
     </script>
     <style>
-    .mypage_table {
-    	display: table;
-    	table-layout: fixed;
-    	width: 100%;
-    	
-    }
-    .mypage-info{
-    	display: table-cell;
-    	padding: 0 5%;
-    	text-align: center;
-    	height: 7em;
-    	line-height: 7em;
-    	
-    }
     </style>
 </head>
 <header>
@@ -75,11 +62,11 @@
 	<span th:if="${session.loginMember}" > <!-- interceptor 적용하면 없어도 됨 -->
 		<h2 style="text-align: center; width: 100%;">[[${session.loginMember.member_name}]] 님 환영합니다.</h2>
 	</span>
-	<div class="mypage_table">
-		<div class="mypage-info"><a href="/members/myinfo"><div>내정보</div></a></div>
-		<div class="mypage-info"><a href="/members/modifypass"><div>암호변경</div></a></div>
-		<div class="mypage-info"><a href="/members/mylecture"><div>내강의</div></a></div>
-		<div class="mypage-info"><a class="mypage-link" href="/logout"><div>로그아웃</div></a></div>
+	 <div class="mypage_table">
+		<div class="mypage-info" style="display:inline-block;"><a href="/members/myinfo"><div>내정보</div></a></div>
+		<div class="mypage-info" style="display:inline-block;"><a href="/members/modifypass"><div>암호변경</div></a></div>
+		<div class="mypage-info" style="display:inline-block;"><a href="/members/mylecture"><div>내강의</div></a></div>
+		<div class="mypage-info" style="display:inline-block;"><a class="mypage-link" href="/logout"><div>로그아웃</div></a></div>
 </div>
 </div>
 

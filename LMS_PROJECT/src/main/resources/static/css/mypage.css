@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+	h2{
+	background-color: #C0C0C0;
+	padding: 20px;
+	margin: auto;
+	}
+	.mypage_table {
+    	display: table;
+    	table-layout: fixed;
+    	width: 75%;
+    	
+    }
+    .mypage-info{
+    	 border : 1px solid;
+    	display: table;
+    	padding: 7%;
+    	text-align: center;  
+        height: 6px;
+        margin: 10%;
+    	
+    }
+	
