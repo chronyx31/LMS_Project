@@ -1,0 +1,18 @@
+@charset "UTF-8";
+ #under{
+ 	text-decoration:underline;
+ }
+ #center{
+ 	text-align: center;
+ }
+ #reference{
+ 	font-size : small;
+ 	color : blue;
+ 	text-align: center;
+ }
+ #text{
+ 	padding: 10%;
+ }
+ #enforcement{
+ 	color : blue;
+ }
