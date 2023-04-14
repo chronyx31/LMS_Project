@@ -205,117 +205,114 @@
 					</td>
 				</tr>
 			</table>
-			<span id="demo"></span>
 			<button id="check" onclick="attendCheck()">출석체크</button>
-			<button onclick="currTime()">현재 시점 확인</button>
-			<button onclick="rate2()">2배속 변경</button>
 		</div>
 	</div>
 	<footer id="footers">여기에 footer 위치</footer>
 </body>
-<script>
-	var vid = document.getElementById("video-js");
-	var supposedCurrentTime = 0;	// 추정 현재 시간
-	console.log(vid);
-	// 재생위치 임의 지정 ( 테스트용 )
-	vid.currentTime = 480;
-	// 인터벌로 비디오 시간이 변경될 때마다 호출하는 함수. 여기서 updatetime으로 이벤트리스너를 설정하면 너무 많은 요청이 일어남.
-	// 많은 요청은 서버에 부담이 크기 때문에 Interval안에는 넣지 않는다.
-	// 이 함수에 서버에 현재시간을 넣는다.
-	var interval;
-	// 실행중일 때 인터벌 실행, 일시정지시 인터벌 중지
-	vid.onplaying = play => {
-		interval = setInterval(loginfo, 5000);
-	};
-	vid.onpause = pause => {
-		clearInterval(interval);
-	};
-	function loginfo(){
-		console.log(vid.currentTime);
-	}
-
-
-	// 시간이 바뀌면 자동으로 supposedCurrentTime 도 갱신
-	vid.addEventListener('timeupdate', function() {
-		if (!vid.seeking) {
-			supposedCurrentTime = vid.currentTime;
-		}
-		// 90% 이상 영상시청하면 출석체크 버튼이 보이도록 하기
-		if (vid.currentTime > (vid.duration*0.9)){
-			console.log("90%이상 수강");
-			$("#check").show();
-		} else {
-			$("#check").hide();
-		}
-	});
-	// 동영상 탐색 금지 스크립트 동영상 탐색이 발생하면 동작
-	vid.addEventListener('seeking', function() {
-		// 동영상 현재시간과 추정현재시간을 비교해서 다르면 추정현재시간으로 되돌림
-		var delta = vid.currentTime - supposedCurrentTime;
-		// math.abs는 절대값 비교 수식
-		if (Math.abs(delta) > 0.01) {
-			alert("Seeking is disabled");
-			console.log("Seeking is disabled");
-			vid.currentTime = supposedCurrentTime;
-		}
-	});
-
-	// 재생속도 변경 금지 스크립트
-	vid.addEventListener('ratechange', function() {
-		// 동영상 재생속도가 변하면 되돌림
-		// math.abs는 절대값 비교 수식
-		if (vid.playbackRate != 1) {
-			alert("RateChange is disabled");
-			console.log("RateChange is disabled");
-			vid.playbackRate = 1;
-		}
-	});
-
-	// 동영상이 끝나면 호출되는 기능
-	vid.addEventListener('ended', function() {
-		// 추정현재시간을 0으로 되돌림 되감기 기능
-		supposedCurrentTime = 0;
-		// interval 함수 중지
-		clearInterval(interval);
-		// 출석체크 기능을 할 수도 있다고 생각함
-	});
-
-
-
-	vid.ontimeupdate = function() {myFunction()};
-	function myFunction() {
-		document.getElementById("demo").innerHTML = vid.currentTime;
-	}
-	function currTime(){
-		console.log(vid.currentTime);
-	}
-	// 영상 전체길이를 구하기 위해 필요한 함수
-	// html이 로딩되면서 작동하면 동영상 정보가 로딩되지 않은 상황이므로 제대로 동작하지 않음.
-	vid.onloadedmetadata = function() { 
-		var duration = vid.duration;
-		console.log(duration);
-	}
-	function rate2(){
-		vid.playbackRate = 2;
-	}
-</script>
 <script th:inline="javascript">
-	function attendCheck(){
-		let info = [[${attendance}]];
-		console.log(info);
-		info.video_point = vid.currentTime;
-		console.log(info.video_point);
-		console.log(info);
-		$.ajax({
-			url: "/subject/"+[[${subject_no}]]+"/lecture/updateattendance",
-			type: "post",
-			data: info,
-			success: function(result, success, xhr){
-				console.log(result);
-				console.log(success);
+		var vid = document.getElementById("video-js");
+		var supposedCurrentTime = 0;	// 추정 현재 시간
+		console.log(vid);
+		var interval;
+		// 타임리프를 이용하여 중단점 불러오기 (이어보기 기능)
+		vid.currentTime = [[${attendance.video_point}]];
+		// 출석여부 확인
+		var chkattend = [[${attendance.attend_check}]];
+		// 실행중일 때 인터벌 실행, 일시정지시 인터벌 중지 (10초마다)
+		vid.onplaying = play => {
+			interval = setInterval(loginfo, 10000);
+		};
+		vid.onpause = pause => {
+			clearInterval(interval);
+			saveContinuePoint();
+		};
+		function loginfo(){
+			console.log(vid.currentTime);
+			saveContinuePoint();
+		}
+		// 시간이 바뀌면 자동으로 supposedCurrentTime 도 갱신
+		vid.addEventListener('timeupdate', function() {
+			if (!vid.seeking) {
+				supposedCurrentTime = vid.currentTime;
 			}
-		})
-	}
-
+			// 90% 이상 영상시청하였고 출석을 하지 않았으면 출석체크 버튼이 보이도록 하기
+			if (vid.currentTime > (vid.duration*0.9) && chkattend=='NO'){
+				$("#check").show();
+			} else {
+				$("#check").hide();
+			}
+		});
+		// 동영상이 끝나면 호출되는 기능
+		vid.addEventListener('ended', function() {
+			// 추정현재시간을 0으로 되돌림 되감기 기능
+			supposedCurrentTime = 0;
+			// interval 함수 중지
+			clearInterval(interval);
+			// 출석체크 기능을 할 수도 있다고 생각함
+		});
+		// 영상 전체길이를 구하기 위해 필요한 함수
+		// html이 로딩되면서 작동하면 동영상 정보가 로딩되지 않은 상황이므로 제대로 동작하지 않음.
+		vid.onloadedmetadata = function() { 
+			var duration = vid.duration;
+			console.log(duration);
+		}
+		// 출석체크 AJAX 함수
+		function attendCheck(){
+			$.ajax({
+				url: "/subject/"+[[${subject_no}]]+"/lecture/updateattendance",
+				type: "post",
+				data: info,
+				success: function(result, success, xhr){
+					console.log(result);
+					console.log(success);
+					if (success=='nocontent'){
+						alert('수강시간이 정상적으로 처리되지 않았습니다.\r다시 확인하여 주시기 바랍니다.');
+					} else if (success=='success') {
+						alert('정상적으로 출석체크 되었습니다.');
+					}
+				}
+			})
+		}
+		// 중단지점 저장 AJAX 함수
+		function saveContinuePoint() {
+			let info = [[${attendance}]];
+			info.video_point = vid.currentTime;
+			$.ajax({
+				url: "/subject/"+[[${subject_no}]]+"/lecture/saveContinuePoint",
+				type: "post",
+				data: info,
+				success: function(result, success, xhr){
+					console.log(result);
+					console.log(success);
+				}
+			})
+		}
 </script>
+<th:block th:if='${attendance.attend_check=="NO"}'>
+<!-- 출석체크를 한 사람은 동영상탐색, 재생속도 변경등이 가능하도록 자바스크립트를 지움 -->
+	<script th:inline="javascript">
+		// 동영상 탐색 금지 스크립트 동영상 탐색이 발생하면 동작
+		vid.addEventListener('seeking', function() {
+			// 동영상 현재시간과 추정현재시간을 비교해서 다르면 추정현재시간으로 되돌림
+			var delta = vid.currentTime - supposedCurrentTime;
+			// math.abs는 절대값 비교 수식
+			if (Math.abs(delta) > 0.01) {
+				alert("Seeking is disabled");
+				console.log("Seeking is disabled");
+				vid.currentTime = supposedCurrentTime;
+			}
+		});
+		// 재생속도 변경 금지 스크립트
+		vid.addEventListener('ratechange', function() {
+			// 동영상 재생속도가 변하면 되돌림
+			// math.abs는 절대값 비교 수식
+			if (vid.playbackRate != 1) {
+				alert("RateChange is disabled");
+				console.log("RateChange is disabled");
+				vid.playbackRate = 1;
+			}
+		});
+	</script>
+</th:block>
 </html>

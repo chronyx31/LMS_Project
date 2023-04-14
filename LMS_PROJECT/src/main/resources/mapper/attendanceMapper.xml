@@ -34,4 +34,27 @@
 			#{video_length}
 		)
 	</insert>
+
+	<!-- 업데이트 하기 attend_check가 YES 혹은 NO일 때에만 수정이 일어나도록.
+	Check조건이 있어서 YES/NO가 아니면 오라클에서 오류가 일어남 -->
+	<update id="updateAttendance">
+		update attendance
+		<set>
+			accumulate_time = #{accumulate_time},
+			<if test='attend_check == "YES" or attend_check == "NO"'>
+				attend_check = #{attend_check}
+			</if>
+		</set>
+		where attendance_no = #{attendance_no}
+	</update>
+
+	<!-- 이어보기 저장하기 -->
+	<update id="setContinuePoint">
+		update attendance
+		<set>
+			accumulate_time = #{accumulate_time},
+			video_point = #{video_point}
+		</set>
+		where attendance_no = #{attendance_no}
+	</update>
 </mapper>
