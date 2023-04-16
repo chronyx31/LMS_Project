@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[ Policy ]</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/default.css"> 
+    <link rel="stylesheet" href="/css/policy.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#footers").load("/footer.html");
+        });
+    </script>
+    <style>
+    </style>
+</head>
+<header>
+    <div class="topmenu upper">
+		<div class="home"><a href="/">logo</a></div>
+		<span th:if="${session.loginMember}">
+			<div class="member"><a href="/logout">로그아웃</a></div>
+		</span>
+		<span th:unless="${session.loginMember}">
+			<div class="member"><a href="/members/join">회원가입</a></div>
+			<div class="member"><a href="/members/login">로그인</a></div>
+		</span>
+    </div>
+    <nav class="topmenu">
+        <ul>
+          <li><a href="/introduce">소개</a></li>
+          <li><a href="/notification">공지사항</a></li>
+          <li><a href="/subject">과목</a>
+            <ul class="submenu">
+              <li><a href="/subject?category_name=JAVA">JAVA</a></li>
+              <li><a href="/subject?category_name=HTML">HTML</a></li>
+              <li><a href="/subject?category_name=DATABASE">DATABASE</a></li>
+              <li><a href="/subject?category_name=PYTHON">PYTHON</a></li>
+            </ul>
+          </li>
+          <li><a href="/fnq">고객센터</a>
+            <ul class="submenu">
+              <li><a href="/fnq">자주 묻는 질문</a></li>
+              <li><a href="/qna">문의사항</a></li>
+              <li><a href="/policy">이용약관</a></li>
+            </ul>
+          </li>
+          <li><a href="/members/mypage">마이페이지</a>
+            <ul class="submenu">
+              <li><a href="/members/myinfo">내정보</a></li>
+              <li><a href="/members/modifypass">암호변경</a></li>
+              <li><a href="/members/mylecture">내강의</a></li>
+              <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+</header>
+<form method="get" action="policy">
+<table>
+<div id=text>
+	  <h1 id="center">표준약관표지의 사용에 관한 고시</h1><br>
+	  <p id="reference">[시행 2016. 10. 31.] [공정거래위원회고시 제2016-14호, 2016. 10. 31., 일부개정]</p><br>
+	  <small style="float : right">공정거래위원회(약관심사과), 044-200-4455</small><br><br>
+	  <p><b>제1조(목적)</b> 이 고시는 <p id="under">「약관의 규제에 관한 법률」 제19조</p>의3 제7항의 규정에 의하여 사업자 및 사업자단체(이하 "사업자 등"이라 한다)가 공정거래위원회가 심사하거나 제정 또는 개정한 표준약관(이하 "표준약관"이라 한다)을 사용하여 공정거래위원회의 표준약관표지를 사용하려는 경우, 이에 대한 필요한 사항을 정함을 목적으로 한다.</p><br>
+	  <p><b>제2조(표준약관표지의 사용기준)</b>① 표준약관과 동일한 약관을 사용하는 사업자 등은 공정거래위원회가 별지에서 정한 표준약관표지(이하 "표준약관표지"라 한다)를 사용할 수 있다.<br>
+	  ② 사업자 등이 사용하는 약관의 주요 내용이 표준약관과 동일하지만 약관의 일부 내용이 표준약관과 다른 경우에는 그 일부 내용이 표준약관에 비해 고객에게 불리하지 않은 경우에 표준약관표지를 사용할 수 있다. <br>
+	  ③ 사업자 등이 표준약관과 동일한 약관을 기본적인 약관으로 사용하면서 표준약관에서 정하지 않은 내용을 새로 추가하거나 표준약관의 내용을 구체화하는 등 별도의 약관을 마련하여 사용하는 경우, 그 별도의 약관이 표준약관에서 정한 취지와 내용에 모순되지 않으면 기본적인 약관에 한해 표준약관표지를 사용할 수 있다. <br>
+	  ④ 공정거래위원회가 표준약관을 개정하여 공시한 경우, 변경 전의 표준약관표지를 사용하던 사업자 등은 표준약관표지를 사용할 수 없다. 다만, 사업자 등의 약관이 제1항 내지 제3항의 규정에 합치되는 경우에는 변경된 표준약관표지를 사용할 수 있다. </p><br><br>
+	  <p><b>제3조(표준약관표지의 표시방법)</b>표준약관표지는 사업자 등이 사용하는 약관의 첫 페이지 우측 상단에 표시한다.</p><br><br>
+	  <p><b>제4조(약관의 변경)</b>표준약관표지를 사용하는 사업자 등이 약관을 변경하는 경우에는 표준약관표지를 사용할 수 없다. 다만 변경된 약관이 표준약관의 주요 내용과 동일하고 표준약관의 내용과 다른 규정내용이 표준약관에 비해 고객에게 불리하지 않는 경우에는 그러하지 아니하다.</p><br><br>
+	  <p><b>제5조(재검토기한)</b>공정거래위원회는 <p id="under">「훈령ㆍ예규 등의 발령 및 관리에 관한 규정」</p>에 따라 이 고시에 대하여 2016년 1월 1일을 기준으로 매 3년이 되는 시점(매 3년째의 12월 31일까지를 말한다)마다 그 타당성을 검토하여 개선 등의 조치를 하여야 한다.</p><br>
+	  <p><b>부  칙</b> <p id="enforcement">(제2009-63호,2009.10.15)</p><br>
+	  	이 고시는 2009년 10월 15일부터 시행한다.
+	  </p>
+	  <p><b>부  칙</b> <p id="enforcement">(제2012-37호,2012.8.20)</p><br>
+	  	이 고시는 2012년 9월 28일부터 시행한다.
+	  </p>
+	  <p><b>부  칙</b> <p id="enforcement">(제2015-15호,2015.10.23)</p><br>
+	  	<b>제 1조(시행일)</b>이 고시는 2015년 10월 23일부터 시행한다.
+	  </p>
+	  <p><b>부  칙</b> <p id="enforcement">(제2016-14호,2016.10.31)</p><br>
+	  	<b>제 1조(시행일)</b>이 고시는 2016년 10월 31일부터 시행한다.
+	  </p>
+</div> 
+</table>
+	  
+</form>
+
+<footer id="footers">여기에 footer 위치</footer>
+</body>
+</html>

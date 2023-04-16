@@ -13,5 +13,10 @@ public interface AttendanceMapper {
 
 	// 출석체크 테이블 만들기
 	int createAttendance(Attendance createAttendance);
-	
+
+	// 업데이트 하기
+	int updateAttendance(Attendance attendance);
+
+	// 이어보기 지점 저장
+	int setContinuePoint(Attendance attendance);
 }

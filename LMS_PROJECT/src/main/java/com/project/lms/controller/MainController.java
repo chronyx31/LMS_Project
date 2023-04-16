@@ -52,6 +52,12 @@ public class MainController {
 	public String fnq() {
 		return "main/fnq";
 	}
+	
+	//이용약관 페이지 이동
+	@GetMapping("policy")
+	public String policy() {
+		return "main/policy";
+	}
 
 	// 게시판 보기
 	@GetMapping("notification")
