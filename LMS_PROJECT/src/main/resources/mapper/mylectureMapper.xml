@@ -12,4 +12,43 @@
 			</if>
 		</where>
 	</select>
+	
+	<insert id="ApplyLecture">
+		<selectKey keyProperty="mylecture_no"  resultType="long" order="BEFORE">
+			select seq_subject.nextval from dual
+		</selectKey>
+		insert into mylecture (
+			mylecture_no,
+			member_no,
+			subject_no
+		) values (
+			#{mylecture_no},
+			#{member_no},
+			#{subject_no}
+		)
+	</insert>
+	
+	<select id="getAllMyLecture" resultType="membermylecture">
+		select subject_no,
+		subject_title,
+		subject_img
+		
+		 from subject sub, mylecture myle
+		<where>
+			myle.subject_no = sub.subject_no
+			and myle.member_no = #{member_no}
+
+		</where>
+	</select>
+	
+	
+	<select id="getTotalofMyLecture" resultType="int">
+		select count(*) from subject sub, mylecture myle
+				<where>
+			myle.subject_no = sub.subject_no
+			and myle.member_no = #{member_no}
+
+		</where>
+	</select>
+
 </mapper>

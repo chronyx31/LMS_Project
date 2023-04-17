@@ -78,6 +78,13 @@
 					<dt>
 						<a th:href="@{/subject/{subject_no}/qna(subject_no=${subject.subject_no})}">질문게시판</a>
 					</dt>
+					
+					<th:block th:if="${applyLecture == null}">
+					<dt>
+						<a th:href="@{/subject/{subject_no}/apply(subject_no=${subject.subject_no})}">수강신청</a>
+					</dt>
+					</th:block>
+					
 				</dl>
 			</div>
 		</div>
