@@ -68,7 +68,7 @@
 				<td th:text="*{assignment_title}"></td>
 			</tr>
 			<tr>
-				<th>내용</th>
+				<th>내용</bth>
 				<td th:text="*{assignment_contents}"></td>
 			</tr>
 			<tr>
@@ -87,12 +87,10 @@
 		 
 		<table>
 			<tr>
-				<th>No</th>
 				<th>파일명</th>
 				<th>다운로드</th>
 			</tr>
 			 <tr th:each="file : ${files}">
-				<th th:text="${fileStat.count}">No</th>
 				<th th:text="${file.savedfile}">파일명</th>
 				<th><a th:href="@{/subject/{subject_no}/assignment/read/{assignment_no}/download(subject_no=${subject_no}, assignment_no=${assignment_no})}">다운로드</a></th>
 			</tr>
@@ -104,35 +102,6 @@
 				<input type="submit" value="삭제하기">
 			</th:block>
 		</a> 
-		
-		<!-- 과제를 읽는 곳에 댓글을 쓸 필요가 있는지? 점검.
-		<table>
-			<tr>
-				<th>댓글</th>
-				<th>작성자</th>
-			</tr>
-			<tr th:each="reply : ${replies}">
-				<td th:text="${reply.reply_contents}"></td>
-				<td th:text="${reply.writer}"></td>
-			</tr>
-		</table>
-		 
-			<div>
-				<th:block th:if="${navi.currentPage > 1}">
-			  		<a th:href="@{{assignment_no}(assignment_no=${assignment.assignment_no}, page=${navi.currentPage - navi.pagePerGroup})}"><<</a>&nbsp;&nbsp;
-			  		<a th:href="@{{assignment_no}(assignment_no=${assignment.assignment_no}, page=${navi.currentPage - 1})}"><</a>&nbsp;&nbsp;
-  				</th:block>
-
-				<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-  					<a th:href="@{{assignment_no}(assignment_no=${assignment.assignment_no}, page=${counter})}" th:text="${counter}" th:classappend="${navi.currentPage == counter} ? 'current'"></a>
-				</th:block>&nbsp;&nbsp; 
-				
-				<th:block th:if="${navi.currentPage < navi.totalPageCount}">
-					<a th:href="@{{assignment_no}(assignment_no=${assignment.assignment_no}, page=${navi.currentPage + 1}, title_part=${title_part})}">></a>&nbsp;&nbsp;
-					<a th:href="@{{assignment_no}(assignment_no=${assignment.assignment_no}, page=${navi.currentPage + navi.pagePerGroup})}">>></a>&nbsp;&nbsp;
-				</th:block>
-			</div>
-			 -->
 			<tr>
 				<td colspan="2"><input type="button" th:onclick="|location.href='@{/subject/{subject_no}/assignment(subject_no=${subject_no})}'|" value="목록으로"></td>
 			</tr>

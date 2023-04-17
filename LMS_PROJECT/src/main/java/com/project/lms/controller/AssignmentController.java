@@ -1,9 +1,12 @@
 package com.project.lms.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.html.parser.Entity;
 
 import org.apache.ibatis.session.RowBounds;
@@ -30,9 +33,11 @@ import com.project.lms.model.dto.board.AssignmentUpdateForm;
 import com.project.lms.model.dto.board.AssignmentWriteForm;
 import com.project.lms.model.entity.board.Assignment;
 import com.project.lms.model.entity.member.Member;
+import com.project.lms.model.entity.member.MyLecture;
 import com.project.lms.model.entity.subject.Subject;
 import com.project.lms.model.util.AttachedFile;
 import com.project.lms.repository.AssignmentMapper;
+import com.project.lms.repository.MylectureMapper;
 import com.project.lms.repository.SubjectMapper;
 import com.project.lms.util.FileService;
 import com.project.lms.util.PageNavigator;
@@ -49,6 +54,7 @@ public class AssignmentController {
 	private final SubjectMapper subjectMapper;
 	private final AssignmentMapper assignmentMapper;
 	private final FileService fileService;
+	private final MylectureMapper mylectureMapper;
 	
 	final int countPerPage = 3;//한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
@@ -57,6 +63,20 @@ public class AssignmentController {
 	private String uploadPath;	// 업드로 했을 때 저장될 위치 지정
 	
 	
+	@ModelAttribute("applyAssignment")
+	public MyLecture check(@PathVariable Long subject_no,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			HttpServletResponse response) throws IOException {
+		
+		MyLecture check = mylectureMapper.isMylectureExist(subject_no, loginMember.getMember_no());
+		if(check == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('수강신청을 먼저 해주시기 바랍니다.'); location.href='/subject/" + subject_no + "/notification'; </script>");
+			out.flush();
+		}
+		return check;
+	}
 	
 	// 기본경로
 	@GetMapping("{subject_no}/assignment")
@@ -109,6 +129,7 @@ public class AssignmentController {
 				@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 				@Validated @ModelAttribute("write") AssignmentWriteForm write, BindingResult result,
 				MultipartFile file) {
+			// 유효성 검사
 			if (result.hasErrors()) {
 				return "subject/assignment/write";
 			}
@@ -202,20 +223,24 @@ public class AssignmentController {
 		@PostMapping("{subject_no}/assignment/update/{assignment_no}")
 		public String update(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 				@PathVariable Long subject_no, @PathVariable Long assignment_no, Model model,
-				@ModelAttribute("updateAssign")Assignment assignment) {
+				@Validated @ModelAttribute("updateAssign")Assignment assignment, BindingResult result) {
 			
+			if (result.hasErrors()) {
+				return "subject/assignment/update";
+			}
 			log.info("assignment:{}", assignment);
 			Assignment findAssignment = assignmentMapper.findAssignmentByNo(assignment.getAssignment_no());
 			// 작성자 = 로그인 멤버가 같은 경우 set
 			if (loginMember.getMember_id().equals(findAssignment.getWriter())) {
 				findAssignment.setAssignment_title(assignment.getAssignment_title());
 				findAssignment.setAssignment_contents(assignment.getAssignment_contents());
+				findAssignment.setScore(assignment.getScore());
 				assignmentMapper.updateAssignment(findAssignment);
 				log.info("수정 성공");
 				return "redirect:/subject/" + subject_no + "/assignment";
 			}
 				log.info("수정 실패했습니다.");
-			
+				
 			return "redirect:/subject/" + subject_no + "/assignment/read/" + assignment_no;	// 수정 실패시 수정 전 페이지로
 		}
 	

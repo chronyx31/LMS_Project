@@ -57,7 +57,11 @@
 </header>
 
 <h1>[ 과제 게시판 - 수정 ]</h1>
-<form action="" method="post" th:object="${updateAssign}">
+<form action="" method="post" th:object="${updateAssign}" enctype="multipart/form-data">
+
+<div th:if="${#fields.hasGlobalErrors()}">
+<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+</div>
 	<table>
 		<tr>
 			<th>제목</th>
@@ -71,6 +75,13 @@
 			<td>
 				<textarea row="15" cols="50" th:field="*{assignment_contents}"></textarea>
 				<div th:class="field-error" th:errors="*{assignment_contents}"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>점수</th>
+			<td>
+				<input type="text" th:field="*{score}"/>
+				<div th:class="field-error" th:errors="*{score}"></div>
 			</td>
 		</tr>
 		<tr>

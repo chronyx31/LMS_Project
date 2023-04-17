@@ -23,7 +23,9 @@ public class AssignmentUpdateForm {
 	private String assignment_contents;
 	@NotBlank
 	private String originalfile;
-	private String savedfile;		
+	private String savedfile;
+	//private Long score;
+	
 //	@DateTimeFormat(pattern = "yyyy-MM-dd")
 //	private LocalDateTime assignment_date;
 	
@@ -36,6 +38,7 @@ public class AssignmentUpdateForm {
 		this.assignment_title = assignment_title;
 		this.assignment_contents = assignment_contents;
 		this.originalfile = originalfile;
+		
 	}
 	
 	public Assignment toAssignment(AssignmentUpdateForm update) {
@@ -44,6 +47,7 @@ public class AssignmentUpdateForm {
 		assignment.setAssignment_title(update.getAssignment_title());
 		assignment.setAssignment_contents(update.getAssignment_contents());
 		assignment.setOriginalfile(update.getOriginalfile());
+		//assignment.setScore(update.getScore());
 		return assignment;
 	}
 	

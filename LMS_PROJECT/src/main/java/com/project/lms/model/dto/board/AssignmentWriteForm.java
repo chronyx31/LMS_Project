@@ -25,16 +25,17 @@ public class AssignmentWriteForm {
 	private String writer;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime assignment_date;
-	
+	private Long score;
 	public AssignmentWriteForm(Long subject_no) {
 		this.subject_no = subject_no;
 	}
 
-	public AssignmentWriteForm(String assignment_title, String assignment_contents, String writer) {
+	public AssignmentWriteForm(String assignment_title, String assignment_contents, String writer, Long score) {
 		super();
 		this.assignment_title = assignment_title;
 		this.assignment_contents = assignment_contents;
 		this.writer = writer;
+		this.score = score;
 	}
 	
 	public Assignment toAssignment(AssignmentWriteForm write) {
@@ -43,6 +44,7 @@ public class AssignmentWriteForm {
 		assignment.setAssignment_title(write.getAssignment_title());
 		assignment.setAssignment_contents(write.getAssignment_contents());
 		assignment.setWriter(write.getWriter());
+		assignment.setScore(write.getScore());
 		return assignment;
 	}
 	
