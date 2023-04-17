@@ -29,9 +29,10 @@
 	</insert>
 	
 	<select id="getAllMyLecture" resultType="membermylecture">
-		select subject_no,
-		subject_title,
-		subject_img
+		select 
+		sub.subject_no,
+		sub.subject_title,
+		sub.subject_img
 		
 		 from subject sub, mylecture myle
 		<where>
@@ -44,10 +45,9 @@
 	
 	<select id="getTotalofMyLecture" resultType="int">
 		select count(*) from subject sub, mylecture myle
-				<where>
+		<where>
 			myle.subject_no = sub.subject_no
 			and myle.member_no = #{member_no}
-
 		</where>
 	</select>
 

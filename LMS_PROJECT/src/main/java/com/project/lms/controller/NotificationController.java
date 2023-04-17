@@ -15,6 +15,7 @@ import com.project.lms.model.entity.board.Notification;
 import com.project.lms.model.entity.member.Member;
 import com.project.lms.model.entity.member.MyLecture;
 import com.project.lms.model.entity.subject.Subject;
+import com.project.lms.repository.AttendanceMapper;
 import com.project.lms.repository.MylectureMapper;
 import com.project.lms.repository.NotificationMapper;
 import com.project.lms.repository.SubjectMapper;
@@ -32,6 +33,7 @@ public class NotificationController {
 	private final SubjectMapper subjectMapper;
 	private final NotificationMapper notificationMapper;
 	private final MylectureMapper mylectureMapper;
+	private final AttendanceMapper attendanceMapper;
 	
 	final int countPerPage = 5;//한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
@@ -96,6 +98,8 @@ public class NotificationController {
 			lecture.setSubject_no(subject_no);
 			//회원번호와 과목번호가 저장된 객체를 DB에 저장
 			mylectureMapper.ApplyLecture(lecture);
+			
+			
 			
 
 		return "redirect:/subject/" + subject_no + "/notification";

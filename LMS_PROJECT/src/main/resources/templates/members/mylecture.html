@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[ SUBJECT ]</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#footers").load("/footer.html");
+        });
+    </script>
+    <style>
+    	a {
+    		text-decoration: none;
+    	}
+    	.sub_container{
+    		display: flex;
+    		flex-wrap: wrap;
+    	}
+    	
+    	.sub_container a{
+    		text-decoration: none;
+    	}
+    	.sub_banner{
+    		border: 1px solid;
+    		background-color: blue;
+    		color: white;
+    		width: 100px;
+    		height: 150px;
+    	}
+    </style>
+</head>
+<header>
+    <div class="topmenu upper">
+		<div class="home"><a href="/">logo</a></div>
+		<span th:if="${session.loginMember}">
+			<div class="member"><a href="/logout">로그아웃</a></div>
+		</span>
+		<span th:unless="${session.loginMember}">
+			<div class="member"><a href="/members/join">회원가입</a></div>
+			<div class="member"><a href="/members/login">로그인</a></div>
+		</span>
+    </div>
+    <nav class="topmenu">
+        <ul>
+          <li><a href="/introduce">소개</a></li>
+          <li><a href="/notification">공지사항</a></li>
+          <li><a href="/subject">과목</a>
+            <ul class="submenu">
+              <li><a href="/subject?category_name=JAVA">JAVA</a></li>
+              <li><a href="/subject?category_name=HTML">HTML</a></li>
+              <li><a href="/subject?category_name=DATABASE">DATABASE</a></li>
+              <li><a href="/subject?category_name=PYTHON">PYTHON</a></li>
+            </ul>
+          </li>
+          <li><a href="/fnq">고객센터</a>
+            <ul class="submenu">
+              <li><a href="/fnq">자주 묻는 질문</a></li>
+              <li><a href="/qna">문의사항</a></li>
+              <li><a href="/policy">이용약관</a></li>
+            </ul>
+          </li>
+          <li><a href="/members/mypage">마이페이지</a>
+            <ul class="submenu">
+              <li><a href="/members/myinfo">내정보</a></li>
+              <li><a href="/members/modifypass">암호변경</a></li>
+              <li><a href="/members/mylecture">내강의</a></li>
+              <li th:if="${session.loginMember}"><a href="/logout">로그아웃</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+</header>
+
+	<div class="container">
+		<div class="contents">
+			<h1> 내 강의 </h1>
+			
+
+			
+			<div class="sub_container">
+				<div th:each="mylecture : ${mylectures}">
+					<!-- <a th:href="@{/subject/{subject_no}/notification(subject_no=${subject.subject_no})}"> -->
+						<div class="sub_banner" th:text="${mylecture.subject_title}">
+							과목 배너 부분 타임리프로 처리를 한다.
+						</div>
+					</a>
+				</div>
+			</div>
+			
+				 <div>
+					<th:block th:if="${navi.currentPage} > 1">
+						<a th:href="@{mylecture(page=${navi.currentPage - navi.pagePerGroup}, subject_name=${subject_name})}"><<</a>&nbsp;&nbsp;
+						<a th:href="@{mylecture(page=${navi.currentPage - 1}, subject_name=${subject_name})}"><</a>&nbsp;&nbsp;
+					</th:block>
+					<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+						<a class="pageCounter" th:href="@{mylecture(page=${counter}, subject_name=${subject_name})}" th:text="${counter}" th:classappend="${counter}==${navi.currentPage} ? 'active' : ''"></a>
+					</th:block>&nbsp;&nbsp;
+					<th:block th:if="${navi.currentPage} < ${navi.totalPageCount}">
+						<a th:href="@{mylecture(page=${navi.currentPage + 1}, subject_name=${subject_name})}">></a>&nbsp;&nbsp;
+						<a th:href="@{mylecture(page=${navi.currentPage + navi.pagePerGroup}, subject_name=${subject_name})}">>></a>&nbsp;&nbsp;
+					</th:block>
+				 </div> 
+		</div>
+	</div>
+
+<footer id="footers">여기에 footer 위치</footer>
+</body>
+</html>
