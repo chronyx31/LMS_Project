@@ -68,15 +68,15 @@ public class LectureController {
 
 		// 내강의에 정보가 있는지 없는지 확인하는 Query문
 		MyLecture isMylectureExist = mylectureMapper.isMylectureExist(subject_no, loginMember.getMember_no());
-//		log.info("isExist:{}", isMylectureExist);
-//		if (isMylectureExist == null) {
-//			response.setContentType("text/html; charset=UTF-8");
-//			PrintWriter out = response.getWriter();
-//			out.println("<script>alert('수강신청을 먼저 해주시기 바랍니다.'); location.href='/subject/" + subject_no
-//					+ "/notification';</script>");
-//			out.flush();
-//			out.close();	
-//		}
+		log.info("isExist:{}", isMylectureExist);
+		if (isMylectureExist == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('수강신청을 먼저 해주시기 바랍니다.'); location.href='/subject/" + subject_no
+					+ "/notification';</script>");
+			out.flush();
+			out.close();	
+		}
 		return isMylectureExist;
 	}
 

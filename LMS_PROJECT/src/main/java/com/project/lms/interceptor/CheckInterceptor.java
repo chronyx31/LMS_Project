@@ -26,7 +26,7 @@ public class CheckInterceptor implements HandlerInterceptor {
 		} else {
 			// 로그인이 되어있지 않을 경우 => Controller 실행 안되도록
 			session.setAttribute("message", "로그인 후 이용바랍니다");
-			response.sendRedirect("/member/loginForm?redirectURL=" + requestURI);
+			response.sendRedirect("/members/login?redirectURL=" + requestURI);
 			return false;
 		}
 		return true;

@@ -53,7 +53,7 @@ public class MemberController {
 		log.info("findMember: {}",findMember);
 		if (findMember != null) {
 			result.reject("joinFail", "이미 사용중인 아이디 입니다.");
-			return "member/join";
+			return "members/join";
 		}
 		// 회원가입
 		memberMapper.joinMember(MemberJoinForm.toMember(joinForm));

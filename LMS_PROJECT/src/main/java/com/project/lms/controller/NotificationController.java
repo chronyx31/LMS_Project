@@ -1,11 +1,16 @@
 package com.project.lms.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +43,23 @@ public class NotificationController {
 	final int countPerPage = 5;//한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
 
+	@ModelAttribute("applyAssignment")
+	public MyLecture check(@PathVariable Long subject_no,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			HttpServletResponse response) throws IOException {
+		
+		MyLecture check = mylectureMapper.isMylectureExist(subject_no, loginMember.getMember_no());
+		if(check == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('로그인을 먼저 해주시기 바랍니다.'); location.href='/members/login'; </script>");
+			out.flush();
+		}
+		return check;
+	}
+	
+	
+	
 	// 과목 이동, 공지사항 게시판으로 이동
 	@GetMapping("{subject_no}/notification")
 	public String gotosubject(@PathVariable Long subject_no, @RequestParam(defaultValue = "1") int page,

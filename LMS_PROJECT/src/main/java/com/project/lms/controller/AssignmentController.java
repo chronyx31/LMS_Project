@@ -72,7 +72,7 @@ public class AssignmentController {
 		if(check == null) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('수강신청을 먼저 해주시기 바랍니다.'); location.href='/subject/" + subject_no + "/notification'; </script>");
+			out.println("<script>alert('로그인을 먼저 해주시기 바랍니다.'); location.href='/members/login'; </script>");
 			out.flush();
 		}
 		return check;
