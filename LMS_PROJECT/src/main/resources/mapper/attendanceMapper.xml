@@ -57,4 +57,24 @@
 		</set>
 		where attendance_no = #{attendance_no}
 	</update>
+	<!-- 여기부터 -->
+	<insert id="createMyAttendance">
+		<selectKey keyProperty="attendance_no" resultType="long" order="BEFORE">
+			select seq_member.nextval from dual
+		</selectKey>
+		insert into attendance (
+			attendance_no,
+			subject_no,
+			lecture_no,
+			member_id,
+			video_length
+		) values (
+			#{attendance_no},
+			#{subject_no},
+			#{lecture_no},
+			#{member_id},
+			default
+		)
+	</insert>
+	<!-- 여기까지 -->
 </mapper>

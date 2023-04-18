@@ -20,4 +20,8 @@ public interface LectureMapper {
 
 	// 게시글 검색
 	Lecture findLectureByNo(Long lecture_no);
+	//여기부터
+	int getMyTotal(Long subject_no);
+	List<Lecture> getAllMyLectures(Long subject_no);
+	//여기까지
 }

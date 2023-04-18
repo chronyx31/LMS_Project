@@ -19,4 +19,7 @@ public interface AttendanceMapper {
 
 	// 이어보기 지점 저장
 	int setContinuePoint(Attendance attendance);
+	//여기부터
+	int createMyAttendance(Attendance attedance);
+	//여기까지
 }

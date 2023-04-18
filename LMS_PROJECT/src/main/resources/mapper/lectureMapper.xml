@@ -35,5 +35,15 @@
 	<select id="findLectureByNo" resultType="lecture">
 		select * from lecture where lecture_no = #{lecture_no}
 	</select>
+	<!-- 여기부터 -->
+	<select id="getMyTotal" resultType="int">
+		select count(*) from lecture
+		where subject_no = #{subject_no}
+	</select>
+	<select id="getAllMyLectures" resultType="lecture">
+		select * from lecture
+		where subject_no = #{subject_no}
+	</select>
+	<!-- 여기까지 -->
 
 </mapper>
