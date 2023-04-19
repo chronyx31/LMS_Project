@@ -2,23 +2,82 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
-	h2{
-	background-color: #dcdcdc;
-	padding: 20px;
-	margin: auto;
-	}
+h2{
+  color: #8DAB9F;
+  font-size: 25px;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 1px;
+}
 	img{
-        width:25%;
-        padding: 5px;
-        margin: 5px;
+        width:65%;
+        padding: 5px 15px 0px 15px;
+        margin: 5px 15px 0px 15px;
       }
       table{
         margin: auto;
         text-align: center;
       }
-      td{
-        border: 2px solid;
+      #text{
+      	font-size:25px;
+      	margin:-7px -9px 15px 1px;
       }
-	#contents{
-	display:block;
+      a{
+      	text-decoration-line:none;
+      	color:#527062;
+      }
+      th, td{
+      padding:10px;
+      }
+      .member-page {
+		width: 460px;
+		padding: 8% 0 0;
+		margin: auto;
 	}
+	.form {
+		position: relative;
+		z-index: 0;
+		background: #FFFFFF;
+		max-width: 460px;
+		margin: 0 auto 100px;
+		padding: 70px;
+		text-align: center;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+	}
+	
+	.form>div{
+		overflow: hidden;
+	} 
+	.container {
+		position: relative;
+		z-index: 1;
+		max-width: 300px;
+		margin: 0 auto;
+	}
+	
+	body {
+		background: #76b852; /* fallback for old browsers */
+		background: rgb(141,194,111);
+		background: white;
+		font-family: "Roboto", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;      
+	}
+.title-underline {
+  display: block;
+  width: 100px;
+  height: 2px;
+  margin-top: -10px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #D7D8DF;
+}
+
+/* Webflow Basics */
+
+.w-container {
+  margin-bottom: 15%;
+  max-width: 940px;
+}
+
+	

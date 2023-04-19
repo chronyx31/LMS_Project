@@ -58,36 +58,41 @@
         </ul>
       </nav>
 </header>
-<div class="contents-container">
+<div class="member-page">
+<div class="form">
+<div class="w-container promotion-container">
 	<span th:if="${session.loginMember}" > <!-- interceptor 적용하면 없어도 됨 -->
-		<h2 style="text-align: center; width: 100%;">[[${session.loginMember.member_name}]] 님 환영합니다.</h2>
+		<h2>[[${session.loginMember.member_name}]] 님 환영합니다.</h2>
+		<div class="title-underline"></div>
 	</span>
+</div>
 	  <table>
             <tr>
               <td>
                 <a id="contents" href="/members/myinfo">
-                <img src="https://kr.seaicons.com/wp-content/uploads/2015/07/user-info-icon.png" alt="내정보"></a>
-                <p>내정보</p>
+                <img src="/img/mypage.png" alt="내정보">
+                <p id="text">내정보</p></a>
               </td>
               <td>
                 <a id="contents" href="/members/modifypass">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMfsJYTg1XAunLg_XaXRNVP1t8wugRh7hUkQ&usqp=CAU" alt="암호변경"></a>
-                <p>암호변경</p>
+                <img src="/img/resetpassword.png" alt="암호변경">
+                <p id="text">암호변경</p></a>
               </td>
             </tr>
             <tr>
               <td>
                 <a id="contents" href="/members/mylecture">
-                <img src="https://cdn-icons-png.flaticon.com/512/3022/3022112.png" alt="내강의"></a>
-                <p>내강의</p>
+                <img src="/img/mylecture.png" alt="내강의">
+                <p id="text">내강의</p></a>
               </td>
               <td>
                 <a id="contents" class="mypage-link" href="/logout">
-                <img src="https://cdn-icons-png.flaticon.com/512/660/660350.png" alt="로그아웃"></a>
-                <p>로그아웃</p>
+                <img src="/img/logout.png" alt="로그아웃">
+                <p id="text">로그아웃</p></a>
               </td>
             </tr>
           </table>
+  </div>
 </div>
 
 <footer id="footers">여기에 footer 위치</footer>
