@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
             "/members/joinForm",
             "/members/loginForm",
             "/logout",
-            "/subject/",
+            "/subject",
             "/error",	
             "/css/**",
             "/js/**",
