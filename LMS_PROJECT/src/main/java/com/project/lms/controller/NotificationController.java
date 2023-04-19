@@ -129,7 +129,7 @@ public class NotificationController {
 				attendanceMapper.createMyAttendance(attendance);
 			}
 		}
-			
+			//
 		return "redirect:/subject/" + subject_no + "/notification";
 	}
 
