@@ -105,6 +105,11 @@ public class NotificationController {
 	public String applyLecture(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@PathVariable Long subject_no,
 			Model model) {
+		//수강신청 전에 이미 수강신청을 했는지 확인을 하는 if문
+		if (mylectureMapper.isMylectureExist(subject_no, loginMember.getMember_no()) != null) {
+			log.info("이미 수강신청된 강의입니다.");
+			return "redirect:/subject/" + subject_no + "/notification";
+		} else {
 		//수강신청 버튼을 눌렀을 때, 버튼을 누른 사람의 회원번호와 그 강의번호를 저장하기 위한 MyLecture객체 생성
 		MyLecture lecture = new MyLecture();
 			//수강신청을 한 회원의 회원번호와 그 강의의 번호를 lecture에 저장
@@ -123,7 +128,7 @@ public class NotificationController {
 				attendance.setSubject_no(subject_no);
 				attendanceMapper.createMyAttendance(attendance);
 			}
-			
+		}
 			
 		return "redirect:/subject/" + subject_no + "/notification";
 	}
