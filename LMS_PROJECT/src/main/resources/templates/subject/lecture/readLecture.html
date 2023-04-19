@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/header.css" />
     <link rel="stylesheet" href="/css/default.css" />
     <link rel="stylesheet" href="/css/sidebar.css" />
+    <link rel="stylesheet" href="/css/script.css">
     <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -180,32 +181,33 @@
 			</div>
 		</div>
 		<div class="contents">
-			<h1>[ 강의 - 읽기 ]</h1>
-			<table th:object="${lecture}">
-				<tr>
-					<th>제목</th>
-					<td th:text="*{lecture_title}"></td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td>
-						<video id="video-js" width="720" height="480" controls class="video-js" preload="auto"
+			<h1 class="Montserrat">[ 강의 - 읽기 ]</h1>
+			<div th:object="${lecture}">
+				<div class="content">
+				<div class="link">
+			      <a target="_blank">
+			        <h1 th:text="*{lecture_title}"></h1>
+			      </a>
+			    </div>
+			    <p class="script">
+			    		<video id="video-js" width="720" height="480" controls class="video-js" preload="auto"
 							data-setup='{"playbackRates": [1, 1.5, 2]}'>
 							<source th:src="|\lectures\*{lecture_contents}.mp4|" type="video/mp4" />
 						</video>
-					</td>
-				</tr>
-				<tr>
-					<th>작성자</th>
-					<td th:text="*{writer}"></td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/lecture(subject_no=${subject_no})}'|" value="목록으로" />
-					</td>
-				</tr>
-			</table>
-			<button id="check" onclick="attendCheck()">출석체크</button>
+			    </p>
+				<div class="linka">
+					<a target="_blank">
+						<h5 th:text="*{writer}"></h5>
+					</a>
+				</div>
+				</div>
+			</div>
+			<div class="buttonOutForm">
+				<div class="buttonForm">
+					<a id="check" onclick="attendCheck()">출석체크</a>
+					<a th:onclick="|location.href='@{/subject/{subject_no}/lecture(subject_no=${subject_no})}'|">목록으로</a>
+				</div>
+			</div>
 		</div>
 	</div>
 	<footer id="footers">여기에 footer 위치</footer>
@@ -259,10 +261,12 @@
 		}
 		// 출석체크 AJAX 함수
 		function attendCheck(){
+			let info = [[${attendance}]];
+			info.video_point = vid.currentTime;
 			$.ajax({
 				url: "/subject/"+[[${subject_no}]]+"/lecture/updateattendance",
-				type: "post",
-				data: info,
+				type: "post" ,
+				data: info ,
 				success: function(result, success, xhr){
 					console.log(result);
 					console.log(success);

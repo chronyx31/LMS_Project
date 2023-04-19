@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/default.css">
     <link rel="stylesheet" href="/css/sidebar.css">
-    
+    <link rel="stylesheet" href="/css/board.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -89,38 +91,53 @@
 			</div>
 		</div>
 		<div class="contents">
-			<h1>[ 공지사항 게시판 - 리스트 ]</h1>
-			<form method="get"> 
-				<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/notification/write(subject_no=${subject.subject_no})}'|" value="글 작성" />
-				<input type="text" name="title_part"/>
-				<input type="submit" value="제목으로 검색"/>
+			<h1 class="Montserrat">[ 공지사항 게시판 - 리스트 ]</h1>
+			<form method="get">
+				<div class="wrapper">
+					<div class="searchBar">
+						<input id="searchQueryInput" type="text" name="title_part" placeholder="검색" value="" />
+						<button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
+						<svg style="width:24px;height:24px" viewBox="0 0 24 24">
+							<path fill="#666666" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+						</svg>
+						</button>
+					</div>
+				</div>
 			</form>
-			<table>
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-				</tr>
-				<tr th:each="notification : ${notifications}">
-					<td th:text="${notificationStat.count}+${navi.countPerPage*(navi.currentPage-1)}"></td>
-					<td><a th:text="${notification.notification_title}" th:href="@{/subject/{subject_no}/notification/read/{notification_no}(subject_no=${notification.subject_no}, notification_no=${notification.notification_no})}"></a></td>
-					<td th:text="${notification.writer}"></td>
-				</tr>
-			</table>
-			
-			<div>
+			<div class="inner_cont">
+				<div class="borad_list_tbl">
+					<table>
+						<colgroup>
+							<col width="80"><col width="160"><col width="*">
+						</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">번호</th>
+							<th scope="col" width="400">제목</th>
+							<th scope="col">작성자</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="notification : ${notifications}">
+							<td th:text="${notificationStat.count}+${navi.countPerPage*(navi.currentPage-1)}"></td>
+							<td style="text-align:left;"><a th:text="${notification.notification_title}" th:href="@{/subject/{subject_no}/notification/read/{notification_no}(subject_no=${notification.subject_no}, notification_no=${notification.notification_no})}"></a></td>
+							<td th:text="${notification.writer}"></td>
+						</tr>
+					</tbody>
+					</table>
+					</div>
+				</div>
+			<div class="page-box">
 				<th:block th:if="${navi.currentPage > 1}">
-			  		<a th:href="@{notification(page=${navi.currentPage - navi.pagePerGroup}, title_part=${title_part})}"><<</a>&nbsp;&nbsp;
-			  		<a th:href="@{notification(page=${navi.currentPage - 1}, title_part=${title_part})}"><</a>&nbsp;&nbsp;
+			  		<a class="btn" th:href="@{notification(page=${navi.currentPage - navi.pagePerGroup}, title_part=${title_part})}"><<</a>
+			  		<a class="btn" th:href="@{notification(page=${navi.currentPage - 1}, title_part=${title_part})}"><</a>
   				</th:block>
-
 				<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-  					<a th:href="@{notification(page=${counter}, title_part=${title_part})}" th:text="${counter}" th:classappend="${navi.currentPage == counter} ? 'current'"></a>
-				</th:block>&nbsp;&nbsp; 
-				<th:block th:if="${navi.currentPage < navi.totalPageCount}"></th:block>
+  					<a th:href="@{notification(page=${counter}, title_part=${title_part})}" th:text="${counter}" th:classappend="${navi.currentPage == counter} ? 'current btn number on' : 'btn number'"></a>
+				</th:block> 
 				<th:block th:if="${navi.currentPage < navi.totalPageCount}">
-					<a th:href="@{notification(page=${navi.currentPage + 1}, title_part=${title_part})}">></a>&nbsp;&nbsp;
-					<a th:href="@{notification(page=${navi.currentPage + navi.pagePerGroup}, title_part=${title_part})}">>></a>&nbsp;&nbsp;
+					<a class="btn" th:href="@{notification(page=${navi.currentPage + 1}, title_part=${title_part})}">></a>
+					<a class="btn" th:href="@{notification(page=${navi.currentPage + navi.pagePerGroup}, title_part=${title_part})}">>></a>
 				</th:block>
 			</div>
 		</div>

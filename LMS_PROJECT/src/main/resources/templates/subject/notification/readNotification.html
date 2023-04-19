@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/script.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -88,24 +91,27 @@
 		</div>
 
 		<div class="contents">
-			<h1>[ 공지사항 게시판 - 읽기 ]</h1>
-				<table th:object="${notification}">
-					<tr>
-						<th>제목</th>
-						<td th:text="*{notification_title}"></td>
-					</tr>
-					<tr>
-						<th>내용</th>
-						<td th:text="*{notification_contents}"></td>
-					</tr>
-					<tr>
-						<th>작성자</th>
-						<td th:text="*{writer}"></td>
-					</tr>
-					<tr>
-						<td colspan="2"><input type="button" th:onclick="|location.href='@{/subject/{subject_no}/notification(subject_no=${subject_no})}'|" value="목록으로"></td>
-					</tr>
-				</table>
+			<h1 class="Montserrat">[ 공지사항 게시판 - 읽기 ]</h1>
+			<div th:object="${notification}">
+				<div class="content">
+					<div class="link">
+				      <a target="_blank">
+				        <h1 th:text="*{notification_title}"></h1>
+				      </a>
+				    </div>
+				    <p class="script" th:text="*{notification_contents}"></p>
+					<div class="linka">
+						<a target="_blank">
+							<h5 th:text="*{writer}"></h5>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="buttonOutForm">
+				<div class="buttonForm">
+					<a th:onclick="|location.href='@{/subject/{subject_no}/notification(subject_no=${subject_no})}'|">목록으로</a>
+				</div>
+			</div>
 		</div>
 	</div>
 
