@@ -7,6 +7,11 @@
     <title>[ QNA ]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/writeForm.css">
+    <link rel="stylesheet" href="/css/script.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -57,28 +62,53 @@
         </ul>
       </nav>
 </header>
-
-<h1>[ 질문 게시판 - 글쓰기 ]</h1>
-<form action="" method="post" th:object="${updateQna}">
-	<table>
-		<tr>
-			<th>제목</th>
-			<td>
-				<input type="text" th:field="*{qna_title}"/>
-				<div th:class="field-error" th:errors="*{qna_title}"></div>
-			</td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td>
-				<textarea row="15" cols="50" th:field="*{qna_contents}"></textarea>
-				<div th:class="field-error" th:errors="*{qna_contents}"></div>
-			</td>
-		</tr>		
-	</table>
-	<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/qna(subject_no=*{subject_no})}'|" value="목록으로">
-	<input type="submit" value="등록하기"> <input type="reset"	value="취소">
-</form>
-
+<div class="container">
+	<div class=side_wrap>
+		<h2>
+			<span>과목</span>[[${subject.subject_title}]]
+		</h2>
+		<div class="side_menu">
+			<dl>
+				<dt>
+					<a th:href="@{/subject/{subject_no}/notification(subject_no=${subject.subject_no})}">공지사항</a>
+				</dt>
+				<dt>
+					<a th:href="@{/subject/{subject_no}/lecture(subject_no=${subject.subject_no})}">강의게시판</a>
+				</dt>
+				<dt>
+					<a th:href="@{/subject/{subject_no}/assignment(subject_no=${subject.subject_no})}">과제게시판</a>
+				</dt>
+				<dt>
+					<a th:href="@{/subject/{subject_no}/qna(subject_no=${subject.subject_no})}">질문게시판</a>
+				</dt>
+			</dl>
+		</div>
+	</div>
+	<form action="" method="post" th:object="${updateQna}">
+		<input type="hidden" th:field="*{qna_no}" />
+		<div class="write-formOut">
+			<div class="write-form">
+				<div class="w-container promotion-container">
+					<h1 class="section-title">글 작성</h1>
+					<div class="title-underline"></div>
+				</div>
+				<div class="input-field-wrapper login-wrapper">
+					<label>제목 :
+						<input class="input-field" type="text" id="login" value="제목" th:field="*{qna_title}"/>
+						<div th:class="field-error" th:errors="*{qna_title}" />
+					</label>
+				</div>
+				<div></div>
+				<label>내용 :
+					<textarea th:field="*{qna_contents}" class="letter-textarea" rows="5" cols="76" />
+					<div th:class="field-error" th:errors="*{qna_contents}" />
+				</label>
+				<input type="submit" value="등록하기" class="btn-form" />
+				<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/qna(subject_no=*{subject_no})}'|" value="목록으로" class="btn-form2" />
+			</div>
+		</div>
+	</form>
+</div>
+<footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

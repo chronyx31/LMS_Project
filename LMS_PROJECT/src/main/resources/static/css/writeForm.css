@@ -31,7 +31,6 @@
     border: none;
     background-color: #8DAB9F;
     font-size: 12px;
-    text-transform: uppercase;
     color: #ffffff;
 }
 
@@ -54,7 +53,6 @@
     padding: 6px 0;
     padding-left: 12px;
     font-size: 12px;
-    text-transform: uppercase;
 }
 
 .letter-textarea {
@@ -66,7 +64,6 @@
     padding-left: 12px;
     padding-top: 6px;
     font-size: 12px;
-    text-transform: uppercase;
 }
 
 .input-field:hover, .letter-textarea:hover {
@@ -104,7 +101,6 @@
     border: none;
     background-color: #D7D8DF;
     font-size: 12px;
-    text-transform: uppercase;
     color: #ffffff;
 }
 
@@ -118,7 +114,6 @@
   font-weight: 400;
   text-align: center;
   letter-spacing: 1px;
-  text-transform: uppercase;
 }
 
 .title-underline {

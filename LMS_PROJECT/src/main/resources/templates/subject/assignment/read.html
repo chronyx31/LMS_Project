@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[ 과제게시판 - 읽기 ]</title>
+    <title th:text="${readAssign.assignment_title}">[ 과제게시판 - 읽기 ]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/script.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -58,54 +61,76 @@
         </ul>
       </nav>
 </header>
+	<div class="container">
+		<div class=side_wrap>
+			<h2>
+				<span>과목</span>[[${subject.subject_title}]]
+			</h2>
+			<div class="side_menu">
+				<dl>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/notification(subject_no=${subject.subject_no})}">공지사항</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/lecture(subject_no=${subject.subject_no})}">강의게시판</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/assignment(subject_no=${subject.subject_no})}">과제게시판</a>
+					</dt>
+					<dt>
+						<a th:href="@{/subject/{subject_no}/qna(subject_no=${subject.subject_no})}">질문게시판</a>
+					</dt>
+				</dl>
+			</div>
+		</div>
 
-<h1>[ 과제게시판 - 읽기 ]</h1>
-	<form th:action="@{/subject/{subject_no}/assignment/delete/{assignment_no}(subject_no=${subject_no}, assignment_no=${assignment_no})}" method="post">
-		<table th:object="${readAssign}">
-			
-			<tr>
-				<th>제목</th>
-				<td th:text="*{assignment_title}"></td>
-			</tr>
-			<tr>
-				<th>내용</bth>
-				<td th:text="*{assignment_contents}"></td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td th:text="*{writer}"></td>
-			</tr>
-			<tr>
-				<th>작성일</th>
-				<td th:text="*{assignment_date}"></td>
-			</tr>
-			<tr>
-				<th>점수</th>
-				<td th:text="*{score}"></td>
-			</tr>
-		</table>
-		 
-		<table>
-			<tr>
-				<th>파일명</th>
-				<th>다운로드</th>
-			</tr>
-			 <tr th:each="file : ${files}">
-				<th th:text="${file.savedfile}">파일명</th>
-				<th><a th:href="@{/subject/{subject_no}/assignment/read/{assignment_no}/download(subject_no=${subject_no}, assignment_no=${assignment_no})}">다운로드</a></th>
-			</tr>
-			 
-		</table>
-		<a th:if="${session.loginMember != null}">
-			<th:block th:if="${session.loginMember.member_id == readAssign.writer}">
-				<input type="button" th:onclick="|location.href='/subject/${subject_no}/assignment/update/${assignment_no}'|" value="수정하기"> 
-				<input type="submit" value="삭제하기">
-			</th:block>
-		</a> 
-			<tr>
-				<td colspan="2"><input type="button" th:onclick="|location.href='@{/subject/{subject_no}/assignment(subject_no=${subject_no})}'|" value="목록으로"></td>
-			</tr>
-	</form>
+		<div class="contents">
+		<div class="buttonOutForm">
+			<div class="buttonForm">
+				<input style="background: #3F3F48;" type="button" th:onclick="|location.href='@{/subject/{subject_no}/assignment(subject_no=${subject_no})}'|" value="목록으로">
+			</div>
+		</div>
+		<form th:action="@{/subject/{subject_no}/assignment/delete/{assignment_no}(subject_no=${subject_no}, assignment_no=${assignment_no})}" method="post">
+			<div th:object="${readAssign}">
+			<div class="content">
+				<div class="link">
+					<a target="_blank">
+						<h1 th:text="*{assignment_title}"></h1>
+					</a>
+				</div>
+				<p class="script" th:text="*{assignment_contents}"></p>
+				<div class="linka">
+				<div style="width:90%; overflow:hidden;" class="outerComment">
+					<div class="comment" th:each="file : ${files}">
+						<div class="comment-author"> 제출파일 </div>
+						<div class="comment-text"><a th:text="${file.originalfile}" th:href="@{/subject/{subject_no}/assignment/read/{assignment_no}/download(subject_no=${subject_no}, assignment_no=${assignment_no})}">다운로드</a></div>
+					</div>
+					<div class="comment" style="float:right;">
+						<div class="comment-author"> 점수 </div>
+						<div class="comment-text">[[*{score}]]</div>
+					</div>
+				</div>
+					<a target="_blank">
+						<h5>작성일 : [[*{assignment_date}]]</h5>
+						<h5>작성자 : [[*{writer}]]</h5>
+					</a>
+				</div>
+			</div>
+			</div>
+			<div class="buttonOutForm">	
+				<div th:if="${session.loginMember != null}">
+					<th:block th:if="${session.loginMember.member_id == readAssign.writer}">
+						<div class="buttonForm">
+							<a th:onclick="|location.href='/subject/${subject_no}/assignment/update/${assignment_no}'|">수정하기</a>
+							<input type="submit" value="삭제하기">
+						</div>
+					</th:block>
+				</div>
+			</div>
+		</form>
+		
+		</div>
+	</div>
 
 <footer id="footers">여기에 footer 위치</footer>
 </body>

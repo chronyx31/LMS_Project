@@ -181,12 +181,11 @@
 			</div>
 		</div>
 		<div class="contents">
-			<h1 class="Montserrat">[ 강의 - 읽기 ]</h1>
 			<div th:object="${lecture}">
 				<div class="content">
 				<div class="link">
 			      <a target="_blank">
-			        <h1 th:text="*{lecture_title}"></h1>
+			        <h1>[[*{lecture_title}]]<i th:if="${attendance.attend_check}=='YES'" style="float:right; color:green;">수강완료</i></h1>
 			      </a>
 			    </div>
 			    <p class="script">
@@ -197,7 +196,7 @@
 			    </p>
 				<div class="linka">
 					<a target="_blank">
-						<h5 th:text="*{writer}"></h5>
+						<h5>작성자 : [[*{writer}]]</h5>
 					</a>
 				</div>
 				</div>

@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/writeForm.css">
+    <link rel="stylesheet" href="/css/script.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -15,6 +19,29 @@
         });
     </script>
     <style>
+		.fileSelector {
+			margin:0;
+			padding:10px;
+			max-width:300px;
+			background-color:#929292;
+			border:none;
+			color:#fff;
+			cursor:pointer;
+			text-align:center;
+			border-radius:5px;
+			transition:0.2s ease all;
+		}
+		
+		.fileSelector:hover {
+			background:#ADADAD;
+		}
+		
+		[type=file]{
+			display:none;
+		}
+		.br {
+		font-size:15px;
+		}
     </style>
 </head>
 <header>
@@ -58,69 +85,84 @@
         </ul>
       </nav>
 </header>
-	<div class="container">
-		<div class=side_wrap>
-			<h2>
-				<span>과목</span><!--  [[${subject.subject_title}]]-->
-			</h2>
-			<div class="side_menu">
-				<dl>
-					<dt>
-						<a th:href="@{/subject/{subject_no}/notification(subject_no=${subject.subject_no})}">공지사항</a>
-					</dt>
-					<dt>
-						<a th:href="@{/subject/{subject_no}/lecture(subject_no=${subject.subject_no})}">강의게시판</a>
-					</dt>
-					<dt>
-						<a th:href="@{/subject/{subject_no}/assignment(subject_no=${subject.subject_no})}">과제게시판</a>
-					</dt>
-					<dt>
-						<a th:href="@{/subject/{subject_no}/qna(subject_no=${subject.subject_no})}">질문게시판</a>
-					</dt>
-				</dl>
-			</div>
-		</div>
-
-		<div class="contents">
-			<h1>[ 과제 게시판 - 등록 ]</h1>
-			<form action="" method="post" th:object="${write}" enctype="multipart/form-data">
-			<div th:if="${#fields.hasGlobalErrors()}">
-			<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">
-		</div>
-				<table>
-					<tr>
-						<th>제목</th>
-						<td>
-							<input type="text" th:field="*{assignment_title}"/>
-							<div th:errorClass="field-error" th:errors="*{assignment_title}"></div>
-						</td>
-					</tr>
-					<tr>
-						<th>내용</th>
-						<td>
-							<textarea row="15" cols="50" th:field="*{assignment_contents}"></textarea>
-							<div th:errorClass="field-error" th:errors="*{assignment_contents}"></div>
-						</td>
-					</tr>
-					<tr>
-						<th>점수</th>
-						<td>
-							<input type="text" th:field="*{score}" disabled>
-						</td>
-					</tr>
-					<tr>
-						<th>파일</th>
-						<td>
-							<input type="file" name="file">
-						</td>
-					</tr>
-				</table>
-				<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/assignment(subject_no=*{subject_no})}'|" value="목록으로">
-				<input type="submit" value="등록하기"> <input type="reset"	value="취소">	
-			</form>
+<div class="container">
+	<div class=side_wrap>
+		<h2>
+			<span>과목</span>[[${subject.subject_title}]]
+		</h2>
+		<div class="side_menu">
+			<dl>
+				<dt>
+					<a th:href="@{/subject/{subject_no}/notification(subject_no=${subject.subject_no})}">공지사항</a>
+				</dt>
+				<dt>
+					<a th:href="@{/subject/{subject_no}/lecture(subject_no=${subject.subject_no})}">강의게시판</a>
+				</dt>
+				<dt>
+					<a th:href="@{/subject/{subject_no}/assignment(subject_no=${subject.subject_no})}">과제게시판</a>
+				</dt>
+				<dt>
+					<a th:href="@{/subject/{subject_no}/qna(subject_no=${subject.subject_no})}">질문게시판</a>
+				</dt>
+			</dl>
 		</div>
 	</div>
 
+<form action="" method="post" th:object="${write}" enctype="multipart/form-data">
+	<div class="write-formOut">
+		<div class="write-form">
+			<div class="w-container promotion-container">
+				<h1 class="section-title">글 작성</h1>
+				<div class="title-underline"></div>
+			</div>
+			<div th:if="${#fields.hasGlobalErrors()}">
+				<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}" />
+			</div>
+			<div class="input-field-wrapper login-wrapper">
+				<label>제목 :
+					<input class="input-field" type="text" id="login" value="제목" th:field="*{assignment_title}"/>
+					<div th:errorClass="field-error" th:errors="*{assignment_title}" />
+				</label>
+			</div>
+			<div></div>
+			<label>내용 :
+				<textarea th:field="*{assignment_contents}" class="letter-textarea" rows="5" cols="76"></textarea>
+				<div th:class="field-error" th:errors="*{assignment_contents}" />
+			</label>
+			<p class="br"></p>
+			<label class="fileSelector" for="file">제출 파일</label>
+				<input type="file" id="file" name="file" required />
+			<input type="submit" value="등록하기" class="btn-form">
+			<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/assignment(subject_no=*{subject_no})}'|" value="목록으로" class="btn-form2">
+		</div>
+	</div>
+</form>
+</div>
+
 <footer id="footers">여기에 footer 위치</footer>
 </body>
+<script type="text/javascript">
+	// 파일 선택시 label에 파일명을 표시하게 만드는 JQuery.
+	$(function () {
+		// type이 file인 태그에 변화가 있을 시 함수 실행
+		$("[type=file]").on("change", function () {
+			// 파일의 정보를 가져온다.
+			var file = this.files[0];
+			// 파일의 이름이 30자 이상이면 말줄임표로 글자수 제한하고 아니면 모든 이름 표시
+			if (file.name.length >= 30) {
+				$(".fileSelector").text("선택 : " + file.name.substr(0, 30) + "..");
+			} else {
+				$(".fileSelector").text("선택 : " + file.name);
+			}
+			
+			// 파일형식 블랙리스트. 배열에 들어있는 확장자는 파일등록이 안되도록.
+			var ext = $("#file").val().split(".").pop().toLowerCase();
+			if ($.inArray(ext, ["php", "html"]) !== -1) {
+				$(".fileSelector").text("제출 파일");
+				$("#file").val("");
+				alert("허용되지 않는 파일형식입니다.");
+			}
+		});
+	});
+</script>
 </html>

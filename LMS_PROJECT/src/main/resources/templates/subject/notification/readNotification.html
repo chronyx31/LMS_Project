@@ -91,7 +91,6 @@
 		</div>
 
 		<div class="contents">
-			<h1 class="Montserrat">[ 공지사항 게시판 - 읽기 ]</h1>
 			<div th:object="${notification}">
 				<div class="content">
 					<div class="link">
@@ -102,7 +101,7 @@
 				    <p class="script" th:text="*{notification_contents}"></p>
 					<div class="linka">
 						<a target="_blank">
-							<h5 th:text="*{writer}"></h5>
+							<h5>작성자 : [[*{writer}]]</h5>
 						</a>
 					</div>
 				</div>
