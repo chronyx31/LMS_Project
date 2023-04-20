@@ -78,20 +78,26 @@
 
 	<div class="container">
 		<div class="contents">
-			<h1> 내 강의 </h1>
+			<h1> 내 출석 현황 </h1>
 			
-
-			
-			<div class="sub_container">
-				<div th:each="mylecture : ${mylectures}">
-					<a th:href="@{/members/{subject_no}/myattendance(subject_no=${mylecture.subject_no})}">
-						<div class="sub_banner" th:text="${mylecture.subject_title}">
-							과목 배너 부분 타임리프로 처리를 한다.
-						</div>
-					</a>
-				</div>
+			<div>
+				<table>
+					<tr>
+						<th>번호</th>
+						<th>과목명</th>
+						<th>강의명</th>
+						<th>출석여부</th>
+					</tr>
+					<tr th:each="myattendance : ${attendances}">
+						<td th:text="${myattendanceStat.count}"></td>
+						<td th:text="${myattendance.subject_title}"></td>
+						<td th:text="${myattendance.lecture_title}"></td>
+						<td th:text="${myattendance.attend_check}"></td>
+					</tr>
+				</table>
 			</div>
 			
+			<!-- 
 				 <div>
 					<th:block th:if="${navi.currentPage} > 1">
 						<a th:href="@{mylecture(page=${navi.currentPage - navi.pagePerGroup}, subject_name=${subject_name})}"><<</a>&nbsp;&nbsp;
@@ -104,7 +110,8 @@
 						<a th:href="@{mylecture(page=${navi.currentPage + 1}, subject_name=${subject_name})}">></a>&nbsp;&nbsp;
 						<a th:href="@{mylecture(page=${navi.currentPage + navi.pagePerGroup}, subject_name=${subject_name})}">>></a>&nbsp;&nbsp;
 					</th:block>
-				 </div> 
+				 </div>
+				  --> 
 		</div>
 	</div>
 

@@ -15,20 +15,25 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.project.lms.model.dto.member.MemberAttendance;
 import com.project.lms.model.dto.member.MemberInfoForm;
 import com.project.lms.model.dto.member.MemberModifyInfo;
 import com.project.lms.model.dto.member.MemberModifyPass;
 import com.project.lms.model.dto.member.MemberMyLecture;
+import com.project.lms.model.entity.member.Attendance;
 import com.project.lms.model.entity.member.Member;
 import com.project.lms.model.entity.member.MyLecture;
 import com.project.lms.model.entity.subject.Subject;
+import com.project.lms.repository.AttendanceMapper;
 import com.project.lms.repository.MemberMapper;
 import com.project.lms.repository.MylectureMapper;
+import com.project.lms.repository.SubjectMapper;
 import com.project.lms.util.PageNavigator;
 
 import lombok.RequiredArgsConstructor;
@@ -42,6 +47,8 @@ public class MypageController {
 
 	private final MemberMapper memberMapper;
 	private final MylectureMapper mylectureMapper;
+	private final SubjectMapper subjectMapper;
+	private final AttendanceMapper attendanceMapper;
 	final int countPerPage = 1;//한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
 
@@ -156,7 +163,34 @@ public class MypageController {
 		mylectures = mylectureMapper.getAllMyLecture(rb, member.getMember_no());
 		model.addAttribute("mylectures", mylectures);
 		model.addAttribute("navi", navi);
+		
 //		mylectures.setMember_no(member.getMember_no());
 		return"members/mylecture";
+	}
+	
+	@GetMapping("{subject_no}/myattendance")
+	public String gotomyattendance (@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@PathVariable Long subject_no, Model model
+			) {
+		List<Attendance> attendances = mylectureMapper.getMyAttendance(subject_no, loginMember.getMember_id());
+		for(int i = 0; i<attendances.size(); i++) {
+			//log.info(attendances.get(i).getLecture_no().toString());
+		}
+		
+		List<MemberAttendance> myAttendances = new ArrayList<>();
+		MemberAttendance myAttendance = new MemberAttendance();
+		for (int i = 0; i < attendances.size(); i++) {
+			myAttendance.setMember_id(loginMember.getMember_id());
+			myAttendance.setLecture_title(mylectureMapper.getAttendanceLecture_title(attendances.get(i).getLecture_no()));
+			log.info(mylectureMapper.getAttendanceLecture_title(attendances.get(i).getLecture_no()));
+			myAttendance.setSubject_title(mylectureMapper.getAttendanceSubject_title(attendances.get(i).getSubject_no()));
+			myAttendance.setAttend_check(attendances.get(i).getAttend_check());
+			myAttendances.add(myAttendance);
+			
+		}
+		
+		model.addAttribute("attendances", myAttendances);
+		
+		return "members/myattendance";
 	}
 }

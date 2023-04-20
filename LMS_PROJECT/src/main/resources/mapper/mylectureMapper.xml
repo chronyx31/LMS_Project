@@ -51,4 +51,26 @@
 		</where>
 	</select>
 
+	<select id="getMyAttendance" resultType="attendance">
+	 select * from attendance
+	 	<where>
+	 		member_id = #{member_id}
+	 		and subject_no = #{subject_no}
+	 	</where>
+	</select>
+	
+	<select id="getAttendanceLecture_title" resultType="string">
+		select lecture_title from lecture
+		<where>
+			lecture_no = #{lecture_no}
+		</where>
+	</select>
+	
+	<select id="getAttendanceSubject_title" resultType="string">
+		select subject_title from subject
+		<where>
+			subject_no = #{subject_no}
+		</where>
+	</select>
+
 </mapper>
