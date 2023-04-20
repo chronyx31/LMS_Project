@@ -125,7 +125,7 @@
   <div class="main_notice">
     <table>
       <tr>
-        <th><a class="noticeheader" href="/notification">공지사항</a></th>
+        <th><a class="noticeheader" href="/notification"><img src="/img/notification.png" alt="공지사항"></a></th>
       </tr>
       <tr th:each="notification : ${notifications}">
         <td><a class="noticetitle" th:href="@{/readnotice/{notification_no}(notification_no=${notification.notification_no})}"
@@ -133,8 +133,8 @@
       </tr>
     </table>
   </div>
-  <div class="main_banner"><a href="/faq"><div>자주묻는질문</div></a></div>
-  <div class="main_banner"><a href="/qna"><div>문의 게시판</div></a></div>
+  <div class="main_banner"><a href="/fnq"><div><img src="/img/faq.png" alt="자주 묻는 질문"></div></a></div>
+  <div class="main_banner"><a href="/qna"><div><img src="/img/qna.png" alt="문의 게시판"></div></a></div>
 </div>
 
 <br>

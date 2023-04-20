@@ -175,7 +175,7 @@ header, footer, body {margin:0;}
     border: 1px solid black;
     overflow: hidden;
     color: white;
-    background: #30A6E6;
+    background: #8DAB9F;
   }
 .main_box a {
   text-decoration: none;
@@ -185,13 +185,13 @@ header, footer, body {margin:0;}
   width: 40%;
   float: left;
   padding: 0 5% 0 0;
-  background: #30A6E6;
+  background: #8DAB9F;
 }
 .main_notice table {
   display: inline-block;
 }
 .main_notice td {
-  background: black;
+  text-decoration-line:underline;
 }
 .main_banner {
   width: 40%;
@@ -209,4 +209,7 @@ header, footer, body {margin:0;}
 	display: block;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+img{
+	width:20%;
 }
