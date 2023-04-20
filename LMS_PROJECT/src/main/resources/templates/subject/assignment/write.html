@@ -115,23 +115,23 @@
 				<h1 class="section-title">글 작성</h1>
 				<div class="title-underline"></div>
 			</div>
-			<div th:if="${#fields.hasGlobalErrors()}">
-				<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}" />
-			</div>
 			<div class="input-field-wrapper login-wrapper">
 				<label>제목 :
 					<input class="input-field" type="text" id="login" value="제목" th:field="*{assignment_title}"/>
-					<div th:errorClass="field-error" th:errors="*{assignment_title}" />
+					<div th:errorClass="field-error" th:errors="*{assignment_title}"></div>
 				</label>
 			</div>
 			<div></div>
 			<label>내용 :
 				<textarea th:field="*{assignment_contents}" class="letter-textarea" rows="5" cols="76"></textarea>
-				<div th:class="field-error" th:errors="*{assignment_contents}" />
+				<div th:class="field-error" th:errors="*{assignment_contents}"></div>
 			</label>
 			<p class="br"></p>
 			<label class="fileSelector" for="file">제출 파일</label>
-				<input type="file" id="file" name="file" required />
+				<input type="file" id="file" name="file"/>
+				<div th:if="${#fields.hasGlobalErrors()}">
+					<p style="font-size:14px;" class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}" />
+				</div>
 			<input type="submit" value="등록하기" class="btn-form">
 			<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/assignment(subject_no=*{subject_no})}'|" value="목록으로" class="btn-form2">
 		</div>

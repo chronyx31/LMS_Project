@@ -114,9 +114,6 @@
 				<h1 class="section-title">글 수정</h1>
 				<div class="title-underline"></div>
 			</div>
-			<div th:if="${#fields.hasGlobalErrors()}">
-				<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}" />
-			</div>
 			<div class="input-field-wrapper login-wrapper">
 				<label>제목 :
 					<input class="input-field" type="text" th:field="*{assignment_title}"/>
@@ -131,6 +128,9 @@
 			<p class="br"></p>
 						<label class="fileSelector" for="file">제출 파일</label>
 				<input type="file" id="file" name="file" />
+				<div th:if="${#fields.hasGlobalErrors()}">
+					<p style="font-size:14px;"  class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}" />
+				</div>
 			<input type="submit" value="등록하기" class="btn-form">
 			<input type="button" th:onclick="|location.href='@{/subject/{subject_no}/assignment(subject_no=*{subject_no})}'|" value="목록으로" class="btn-form2">
 		</div>

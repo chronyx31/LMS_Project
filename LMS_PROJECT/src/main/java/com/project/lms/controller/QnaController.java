@@ -115,8 +115,10 @@ public class QnaController {
 	public String write(@PathVariable("subject_no") Long subject_no,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@Validated @ModelAttribute("writeQna") QnaWriteForm write,
-			BindingResult result) {
+			BindingResult result, Model model) {
 		if (result.hasErrors()) {
+			Subject subject = subjectMapper.findSubjectByNo(subject_no);
+			model.addAttribute("subject", subject);
 			return "subject/qna/writeQna";
 		}
 
