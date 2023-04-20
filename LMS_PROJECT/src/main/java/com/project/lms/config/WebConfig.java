@@ -31,7 +31,7 @@ public class WebConfig implements WebMvcConfigurer {
             "/readnotice/**",
             "/readqna/**",
 //            "/writeQna",				이게 있으면 로그인 하지 않아도 등록이 되므로 페이지로 바로 이동했을 때, 로그인 페이지로 이동하도록 처리
-//            "/updateQna/**",			이게 있으면 로그인 하지 않아도 수정이 되므로 페이지로 바로 이동했을 때, 로그인 페이지로 이동하도록 처리
+//            "/updateQna/**",,			이게 있으면 로그인 하지 않아도 수정이 되므로 페이지로 바로 이동했을 때, 로그인 페이지로 이동하도록 처리
             "/deleteQna/**",
             "/fnq",
             "/introduce",
