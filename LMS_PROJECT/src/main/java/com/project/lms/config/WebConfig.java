@@ -15,6 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
 		
 		String[] excludePathPatterns = {			// 인터셉터에서 제외할 URL패턴
             "/",
+            "/index",
             "/members/join",
             "/members/login",
             "/members/checkId",
@@ -36,8 +37,10 @@ public class WebConfig implements WebMvcConfigurer {
             "/introduce",
             "/policy",
             "/qna",
-            "/fnq",
-            "*.ico"
+            "/faq",
+            "*.ico",
+            "/img/**"
+            
             
 		};
 

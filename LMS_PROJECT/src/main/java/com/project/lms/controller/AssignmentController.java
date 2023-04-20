@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.html.parser.Entity;
 
@@ -127,7 +128,6 @@ public class AssignmentController {
 		model.addAttribute("subject", subject);
 		// DTO 처리
 		model.addAttribute("write", new AssignmentWriteForm(subject_no));
-		// model.addAttribute("updateAssign", new AssignmentUpdateForm(subject_no));
 		return "subject/assignment/write";
 	}
 	
@@ -135,7 +135,8 @@ public class AssignmentController {
 	@PostMapping("{subject_no}/assignment/write")
 	public String write(@PathVariable("subject_no") Long subject_no,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@Validated @ModelAttribute("write") AssignmentWriteForm write, BindingResult result, MultipartFile file) {
+			@Validated @ModelAttribute("write") AssignmentWriteForm write, BindingResult result, 
+			MultipartFile file, HttpServletResponse response, HttpServletRequest request) {
 		// 유효성 검사
 		if (result.hasErrors()) {
 			return "subject/assignment/write";
@@ -148,18 +149,18 @@ public class AssignmentController {
 		log.info("file.getOriginalFileName():{}", file.getOriginalFilename());
 		log.info("file.getSize():{}", file.getSize());
 
+		Assignment assignment = write.toAssignment(write);
 		AttachedFile savedFile = fileService.saveFile(file);
 		log.info("savedFile:{}", savedFile);
-
 		// DTO를 Entity로 변환
 		write.setWriter(loginMember.getMember_id());
-		Assignment assignment = write.toAssignment(write);
-		assignment.setOriginalfile(savedFile.getOriginalfile()); // 업로드 했던 것을 담아줘야 한다.
 		assignment.setSavedfile(savedFile.getSavedfile());
-
-		log.info("assignment:{}", assignment);
+		assignment.setOriginalfile(savedFile.getOriginalfile()); // 업로드 했던 것을 담아줘야 한다.
 		assignmentMapper.writeAssignment(assignment);
+		log.info("assignment:{}", assignment);
 
+		
+		
 		return "redirect:/subject/" + assignment.getSubject_no() + "/assignment";
 	}
 
@@ -227,23 +228,35 @@ public class AssignmentController {
 	@PostMapping("{subject_no}/assignment/update/{assignment_no}")
 	public String update(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@PathVariable Long subject_no, @PathVariable Long assignment_no, Model model,
-			@Validated @ModelAttribute("updateAssign") Assignment assignment, BindingResult result) {
+			@Validated @ModelAttribute("updateAssign") Assignment assignment, MultipartFile file, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "subject/assignment/update";
 		}
 		log.info("assignment:{}", assignment);
+	
 		Assignment findAssignment = assignmentMapper.findAssignmentByNo(assignment.getAssignment_no());
+		AttachedFile savedFile = fileService.saveFile(file);
+		
 		// 작성자 = 로그인 멤버가 같은 경우 set
 		if (loginMember.getMember_id().equals(findAssignment.getWriter())) {
 			findAssignment.setAssignment_title(assignment.getAssignment_title());
 			findAssignment.setAssignment_contents(assignment.getAssignment_contents());
 			findAssignment.setScore(assignment.getScore());
+			findAssignment.setOriginalfile(savedFile.getOriginalfile());
+			findAssignment.setSavedfile(savedFile.getSavedfile());
 			assignmentMapper.updateAssignment(findAssignment);
 			log.info("수정 성공");
 			return "redirect:/subject/" + subject_no + "/assignment";
 		}
-		log.info("수정 실패했습니다.");
+		
+		// 수정 중에 파일이 업로드 되지 않았을 때
+		if(!file.isEmpty()) {
+			assignment.setSavedfile(savedFile.getSavedfile());	
+			assignment.setOriginalfile(savedFile.getOriginalfile()); // 업로드 했던 것을 담아줘야 한다.			
+			assignmentMapper.writeAssignment(assignment);
+			return "subject/assignment/update";
+		}
 
 		return "redirect:/subject/" + subject_no + "/assignment/read/" + assignment_no; // 수정 실패시 수정 전 페이지로
 	}

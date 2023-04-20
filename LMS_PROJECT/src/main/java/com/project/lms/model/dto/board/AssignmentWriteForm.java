@@ -26,6 +26,7 @@ public class AssignmentWriteForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime assignment_date;
 	private Long score;
+	
 	public AssignmentWriteForm(Long subject_no) {
 		this.subject_no = subject_no;
 	}

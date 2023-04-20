@@ -73,8 +73,7 @@
 			</if>
 				assignment_contents = #{assignment_contents},
 				originalfile = #{originalfile},
-				savedfile = #{savedfile},
-				score = #{score}
+				savedfile = #{savedfile}
 		</set>
 		where assignment_no = #{assignment_no}
 	</update>
