@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.project.lms.model.entity.board.Notification;
+import com.project.lms.model.entity.board.QNA;
 import com.project.lms.repository.NotificationMapper;
+import com.project.lms.repository.QnaMapper;
 import com.project.lms.util.PageNavigator;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class HomeController {
 	private final NotificationMapper notificationMapper;
+	private final QnaMapper qnaMapper;
 	
 	// index페이지에 최신 공지글을 보여주기 위한 방법으로 pagenavigator를 이용
 	final int countPerPage = 2;		// index 페이지에 표시될 게시글 숫자
@@ -40,8 +43,28 @@ public class HomeController {
 		List<Notification> notifications = notificationMapper.getAllNotifications(rb, null, "MAIN", null);
 		log.info("notifications:{}", notifications);
 		model.addAttribute("notifications", notifications);
+		
+		QNA qna = new QNA();
+		int total2 = qnaMapper.getTotal(null, "MAIN", null);
+		PageNavigator navi2 = new PageNavigator(countPerPage, pagePerGroup, 1, total2);
+		RowBounds rb2 = new RowBounds(navi2.getStartRecord(), navi2.getCountPerPage());
+		List<QNA> qnas = qnaMapper.getAllQnas(rb2, null, "MAIN", null);
+		log.info("qnas : {}", qnas);
+		model.addAttribute("qnas", qnas);
 		return "index";
 	}
+	
+//	@GetMapping("/")
+//	public String home2(Model model) {
+//		QNA qna = new QNA();
+//		int total2 = qnaMapper.getTotal(null, "MAIN", null);
+//		PageNavigator navi2 = new PageNavigator(countPerPage, pagePerGroup, 1, total2);
+//		RowBounds rb2 = new RowBounds(navi2.getStartRecord(), navi2.getCountPerPage());
+//		List<QNA> qnas = qnaMapper.getAllQnas(rb2, null, "MAIN", null);
+//		log.info("qnas : {}", qnas);
+//		model.addAttribute("qnas", qnas);
+//		return "index";
+//	}
 	
 	// 로그아웃
 	@GetMapping("logout")

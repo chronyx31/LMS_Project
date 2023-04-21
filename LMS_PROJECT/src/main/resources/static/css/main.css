@@ -174,24 +174,21 @@ header, footer, body {margin:0;}
     text-align: center;
     border: 1px solid black;
     overflow: hidden;
-    color: white;
-    background: #8DAB9F;
+    background: #D7D8DF;
   }
 .main_box a {
   text-decoration: none;
-  color: white;
+  color: black;
 }
 .main_notice {
-  width: 40%;
-  float: left;
-  padding: 0 5% 0 0;
-  background: #8DAB9F;
+  background: #D7D8DF;
 }
 .main_notice table {
   display: inline-block;
 }
 .main_notice td {
   text-decoration-line:underline;
+  border: 1px dotted;
 }
 .main_banner {
   width: 40%;
@@ -205,11 +202,14 @@ header, footer, body {margin:0;}
 	display: block;
 
 }
+.qnatitle{
+	display:block;
+}
 .noticeheader {
 	display: block;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 img{
-	width:20%;
+	width:7%;
 }
