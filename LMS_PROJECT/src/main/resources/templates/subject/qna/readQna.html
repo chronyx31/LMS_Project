@@ -84,11 +84,6 @@
 		</div>
 
 		<div class="contents">
-			<div class="buttonOutForm">
-				<div class="buttonForm">
-					<input style="background: #3F3F48;" type="button" th:onclick="|location.href='@{/subject/{subject_no}/qna(subject_no=${subject_no})}'|" value="목록으로">
-				</div>
-			</div>
 			<form th:action="@{/subject/{subject_no}/qna/delete/{qna_no}(subject_no=${subject_no}, qna_no=${qna_no})}" method="post">
 				<div th:object="${qna}">
 				<div class="content">
@@ -108,13 +103,16 @@
 				</div>
 
 				<div class="buttonOutForm">	
-					<div th:if="${session.loginMember != null}">
+					<div style="display: inline-block; margin-left: 15%; float: left;" th:if="${session.loginMember != null}">
 						<th:block th:if="${session.loginMember.member_id == qna.writer}">
-							<div class="buttonForm">
+							<div style="display: inline" class="buttonForm">
 								<a th:onclick="|location.href='/subject/${subject_no}/qna/update/${qna_no}'|">수정하기</a>
 								<input type="submit" value="삭제하기">
 							</div>
 						</th:block>
+					</div>
+					<div style="margin-right: 5%;" class="buttonForm">
+						<input style="background: #3F3F48;" type="button" th:onclick="|location.href='@{/subject/{subject_no}/qna(subject_no=${subject_no})}'|" value="목록으로">
 					</div>
 				</div>
 			</form>

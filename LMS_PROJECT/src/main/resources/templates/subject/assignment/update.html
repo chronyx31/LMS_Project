@@ -117,17 +117,17 @@
 			<div class="input-field-wrapper login-wrapper">
 				<label>제목 :
 					<input class="input-field" type="text" th:field="*{assignment_title}"/>
-					<div th:errorClass="field-error" th:errors="*{assignment_title}" />
+					<div th:errorClass="field-error" th:errors="*{assignment_title}"></div>
 				</label>
 			</div>
 			<div></div>
 			<label>내용 :
 				<textarea th:field="*{assignment_contents}" class="letter-textarea" rows="5" cols="76"></textarea>
-				<div th:class="field-error" th:errors="*{assignment_contents}" />
+				<div th:class="field-error" th:errors="*{assignment_contents}"></div>
 			</label>
 			<p class="br"></p>
-						<label class="fileSelector" for="file">제출 파일</label>
-				<input type="file" id="file" name="file" />
+				<label class="fileSelector" th:text="*{originalfile}">제출 파일</label>
+				<p style="font-size:14px; color:red;" >제출파일 수정은 불가합니다.</p>
 				<div th:if="${#fields.hasGlobalErrors()}">
 					<p style="font-size:14px;"  class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}" />
 				</div>
