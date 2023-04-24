@@ -113,10 +113,10 @@
       <input type="radio" name="slide" class="control" id="Slide4" />
       <label for="Slide4" id="s4"></label>
       <div class="overflow-wrapper">
-        <a class="slide" href=""><img src="http://placehold.it/940x470" /></a>
-        <a class="slide" href=""><img src="http://placehold.it/940x470" /></a>
-        <a class="slide" href=""><img src="http://placehold.it/940x470" /></a>
-        <a class="slide" href=""><img src="http://placehold.it/940x470" /></a>
+        <a class="slide" href="/subject?category_name=JAVA"><img src="/img/java main.jpg" /></a>
+        <a class="slide" href="/subject?category_name=HTML"><img src="/img/html main.jpg" /></a>
+        <a class="slide" href="/subject?category_name=DATABASE"><img src="/img/Database main.jpg" /></a>
+        <a class="slide" href="/subject?category_name=PYTHON"><img src="/img/python main.jpg" /></a>
       </div>
     </div>
   </div>
@@ -124,24 +124,17 @@
 <div class="main_box">
   <div class="main_notice">
     <table>
-        <tr>
-          <th><a class="noticeheader" href="/notification"><img src="/img/notification.png" alt="공지사항">공지사항</a></th>
-          <th><a class="noticeheader" href="/qna"><img src="/img/qna.png" alt="문의게시판">문의게시판</a></th>
-        </tr>
-        <tr>
-          <td>
-          <div th:each="notification : ${notifications}">
-          	<a class="noticetitle" th:href="@{/readnotice/{notification_no}(notification_no=${notification.notification_no})}" th:text="${notification.notification_title}"></a>
-          </div>
-          </td>
-          <td>
-            <div th:each="qna : ${qnas}">
-            	<a class="qnatitle" th:href="@{/readqna/{qna_no}(qna_no=${qna.qna_no})}" th:text="${qna.qna_title}"></a>
-            </div>
-           </td>
-        </tr>     
-     </table>
+      <tr>
+        <th><a class="noticeheader" href="/notification"><img src="/img/notification.png" alt="공지사항"></a></th>
+      </tr>
+      <tr th:each="notification : ${notifications}">
+        <td><a class="noticetitle" th:href="@{/readnotice/{notification_no}(notification_no=${notification.notification_no})}"
+         th:text="${notification.notification_title}"></a></td>
+      </tr>
+    </table>
   </div>
+  <div class="main_banner"><a href="/fnq"><div><img src="/img/faq.png" alt="자주 묻는 질문"></div></a></div>
+  <div class="main_banner"><a href="/qna"><div><img src="/img/qna.png" alt="문의 게시판"></div></a></div>
 </div>
 
 <br>
