@@ -28,7 +28,7 @@ public class HomeController {
 	private final QnaMapper qnaMapper;
 	
 	// index페이지에 최신 공지글을 보여주기 위한 방법으로 pagenavigator를 이용
-	final int countPerPage = 2;		// index 페이지에 표시될 게시글 숫자
+	final int countPerPage = 5;		// index 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;		// 한번에 표시될 페이지의 수 : 1페이지만 쓰기때문에 이용안함
 	
 	@GetMapping("/")
@@ -53,18 +53,6 @@ public class HomeController {
 		model.addAttribute("qnas", qnas);
 		return "index";
 	}
-	
-//	@GetMapping("/")
-//	public String home2(Model model) {
-//		QNA qna = new QNA();
-//		int total2 = qnaMapper.getTotal(null, "MAIN", null);
-//		PageNavigator navi2 = new PageNavigator(countPerPage, pagePerGroup, 1, total2);
-//		RowBounds rb2 = new RowBounds(navi2.getStartRecord(), navi2.getCountPerPage());
-//		List<QNA> qnas = qnaMapper.getAllQnas(rb2, null, "MAIN", null);
-//		log.info("qnas : {}", qnas);
-//		model.addAttribute("qnas", qnas);
-//		return "index";
-//	}
 	
 	// 로그아웃
 	@GetMapping("logout")
