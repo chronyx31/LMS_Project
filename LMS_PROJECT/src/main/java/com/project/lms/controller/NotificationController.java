@@ -45,7 +45,7 @@ public class NotificationController {
 	private final AttendanceMapper attendanceMapper;
 	private final LectureMapper lectureMapper;
 	
-	final int countPerPage = 5;//한 페이지에 표시될 게시글 숫자
+	final int countPerPage = 15;//한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
 
 

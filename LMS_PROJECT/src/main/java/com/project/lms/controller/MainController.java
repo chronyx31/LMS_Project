@@ -36,7 +36,7 @@ public class MainController {
 	private final QnaMapper qnaMapper;
 	private final ReplyMapper replyMapper;
 	
-	final int countPerPage = 2;//한 페이지에 표시될 게시글 숫자
+	final int countPerPage = 15;//한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
 	String category_name = "MAIN";
 	Long subject_no = (long) 1;

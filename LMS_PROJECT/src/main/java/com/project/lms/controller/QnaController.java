@@ -45,7 +45,8 @@ public class QnaController {
 	private final ReplyMapper replyMapper;
 	private final MylectureMapper mylectureMapper;
 
-	final int countPerPage = 3;//한 페이지에 표시될 게시글 숫자
+	final int countPerPage = 15;//한 페이지에 표시될 게시글 숫자
+	final int countPerPageReply = 3;//한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
 
 	// 인터셉터 대신 사용될 코드 Controller 내 메소드 실행전 실행된다.
@@ -148,7 +149,7 @@ public class QnaController {
 		}
 
 		// 댓글 페이징 처리를 위한 객체 생성
-		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		PageNavigator navi = new PageNavigator(countPerPageReply, pagePerGroup, page, total);
 		model.addAttribute("navi", navi);
 		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
 		List<Reply> replies = replyMapper.getAllReplies(rb, qna_no);

@@ -50,7 +50,7 @@ public class LectureController {
 	private final MylectureMapper mylectureMapper;
 	private final AttendanceMapper attendanceMapper;
 
-	final int countPerPage = 3; // 한 페이지에 표시될 게시글 숫자
+	final int countPerPage = 15; // 한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5; // 한번에 표시될 페이지의 수
 
 	// 경로 탐색용 String이지만 절대경로로 동영상 재생시 재생이 거부됨. 상대경로를 사용할 필요가 있음.
