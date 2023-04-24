@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MemberAttendance {
 	private String member_id;
+	private Long lecture_no;
+	private Long subject_no;
 	private String lecture_title;
 	private String subject_title;
 	private String attend_check;

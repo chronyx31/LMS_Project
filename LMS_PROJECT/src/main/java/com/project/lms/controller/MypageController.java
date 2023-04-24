@@ -26,6 +26,7 @@ import com.project.lms.model.dto.member.MemberInfoForm;
 import com.project.lms.model.dto.member.MemberModifyInfo;
 import com.project.lms.model.dto.member.MemberModifyPass;
 import com.project.lms.model.dto.member.MemberMyLecture;
+import com.project.lms.model.entity.board.Assignment;
 import com.project.lms.model.entity.member.Attendance;
 import com.project.lms.model.entity.member.Member;
 import com.project.lms.model.entity.member.MyLecture;
@@ -49,7 +50,7 @@ public class MypageController {
 	private final MylectureMapper mylectureMapper;
 	private final SubjectMapper subjectMapper;
 	private final AttendanceMapper attendanceMapper;
-	final int countPerPage = 1;//한 페이지에 표시될 게시글 숫자
+	final int countPerPage = 3;//한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
 
 	@GetMapping("mypage")
@@ -169,28 +170,49 @@ public class MypageController {
 	}
 	
 	@GetMapping("{subject_no}/myattendance")
-	public String gotomyattendance (@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+	public String gotomyattendance (@RequestParam(defaultValue = "1") int page,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@PathVariable Long subject_no, Model model
-			) {
-		List<Attendance> attendances = mylectureMapper.getMyAttendance(subject_no, loginMember.getMember_id());
-		for(int i = 0; i<attendances.size(); i++) {
-			//log.info(attendances.get(i).getLecture_no().toString());
+			) {	
+		int total = mylectureMapper.getTotalMyAttendance(subject_no, loginMember.getMember_no());
+		if (total < 1) {
+			total = 1;
+		}
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
+		List<MemberAttendance> myAttendances = mylectureMapper.getMyAttendance(rb, subject_no, loginMember.getMember_no()); 
+		for(int i=0; i<myAttendances.size(); i++) {
+			log.info("subject_no : " + myAttendances.get(i).getSubject_no());
+			log.info("lecture_no : " + myAttendances.get(i).getLecture_no());
 		}
 		
-		List<MemberAttendance> myAttendances = new ArrayList<>();
-		MemberAttendance myAttendance = new MemberAttendance();
-		for (int i = 0; i < attendances.size(); i++) {
-			myAttendance.setMember_id(loginMember.getMember_id());
-			myAttendance.setLecture_title(mylectureMapper.getAttendanceLecture_title(attendances.get(i).getLecture_no()));
-			log.info(mylectureMapper.getAttendanceLecture_title(attendances.get(i).getLecture_no()));
-			myAttendance.setSubject_title(mylectureMapper.getAttendanceSubject_title(attendances.get(i).getSubject_no()));
-			myAttendance.setAttend_check(attendances.get(i).getAttend_check());
-			myAttendances.add(myAttendance);
-			
-		}
-		
+		// subject를 읽기 위해서 불러오기
+		Subject subject = subjectMapper.findSubjectByNo(subject_no);
+		log.info("subject:{}", subject);
+		model.addAttribute("subject", subject);
 		model.addAttribute("attendances", myAttendances);
-		
+		model.addAttribute("navi", navi);
 		return "members/myattendance";
+	}
+	
+	@GetMapping("{subject_no}/myassignment")
+	public String gotomyassignment (@RequestParam(defaultValue = "1") int page,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@PathVariable Long subject_no, Model model) {
+		int total = mylectureMapper.getTotalMyAssignment(subject_no, loginMember.getMember_id());
+		if (total < 1) {
+			total = 1;
+		}
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
+		List<Assignment> myAssignments = mylectureMapper.getMyAssignment(rb, subject_no, loginMember.getMember_id());
+		// subject를 읽기 위해서 불러오기
+		Subject subject = subjectMapper.findSubjectByNo(subject_no);
+		log.info("subject:{}", subject);
+		model.addAttribute("subject", subject);
+		model.addAttribute("assignments", myAssignments);
+		model.addAttribute("navi", navi);
+		
+		return"members/myassignment";
 	}
 }

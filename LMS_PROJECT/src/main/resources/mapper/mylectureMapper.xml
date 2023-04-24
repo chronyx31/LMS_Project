@@ -51,26 +51,47 @@
 		</where>
 	</select>
 
-	<select id="getMyAttendance" resultType="attendance">
-	 select * from attendance
+	  
+	 <select id="getMyAttendance" resultType="memberattendance">
+	 select sub.subject_no, lec.lecture_no, atd.member_id, lecture_title, subject_title, attend_check from
+	 	 lecture lec, subject sub, attendance atd, mylecture myle, member mem
 	 	<where>
-	 		member_id = #{member_id}
-	 		and subject_no = #{subject_no}
-	 	</where>
-	</select>
+	 		mem.member_no = #{member_no} and myle.member_no = #{member_no}
+	 		and sub.subject_no = #{subject_no}
+	 		and myle.subject_no = sub.subject_no
+	 		and lec.subject_no = sub.subject_no
+	 		and atd.lecture_no = lec.lecture_no
+            and atd.member_id = mem.member_id
+            </where>
+            ORDER BY lec.lecture_no ASC
+    </select>
+    
+    <select id="getTotalMyAttendance" resultType="int">
+	 select count(*) from
+	 	 lecture lec, subject sub, attendance atd, mylecture myle, member mem
+	 	<where>
+	 		mem.member_no = #{member_no} and myle.member_no = #{member_no}
+	 		and sub.subject_no = #{subject_no}
+	 		and myle.subject_no = sub.subject_no
+	 		and lec.subject_no = sub.subject_no
+	 		and atd.lecture_no = lec.lecture_no
+            and atd.member_id = mem.member_id
+            </where>
+    </select>
 	
-	<select id="getAttendanceLecture_title" resultType="string">
-		select lecture_title from lecture
-		<where>
-			lecture_no = #{lecture_no}
-		</where>
-	</select>
-	
-	<select id="getAttendanceSubject_title" resultType="string">
-		select subject_title from subject
-		<where>
-			subject_no = #{subject_no}
-		</where>
-	</select>
 
+		<select id="getMyAssignment" resultType="assignment">
+		select * from assignment
+		<where>
+			writer = #{member_id}
+			and subject_no = #{subject_no}
+		</where>
+	</select>
+	<select id="getTotalMyAssignment" resultType="int">
+	select count(*) from assignment
+	<where>
+			writer = #{member_id}
+			and subject_no = #{subject_no}
+		</where>
+	</select>
 </mapper>

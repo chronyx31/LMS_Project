@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
+import com.project.lms.model.dto.member.MemberAttendance;
 import com.project.lms.model.dto.member.MemberMyLecture;
+import com.project.lms.model.entity.board.Assignment;
 import com.project.lms.model.entity.member.Attendance;
 import com.project.lms.model.entity.member.MyLecture;
 import com.project.lms.model.entity.subject.Subject;
@@ -22,8 +24,11 @@ public interface MylectureMapper {
 	// 내가 수강중인 강의 숫자 측정하기
 	int getTotalofMyLecture(Long member_no);
 	// 내 출석정보 가져오기
-	List<Attendance> getMyAttendance (@Param("subject_no") Long subject_no, @Param("member_id") String member_id);
-	
-	String getAttendanceLecture_title (long lecture_no);
-	String getAttendanceSubject_title (long subject_no);
+	List<MemberAttendance> getMyAttendance (RowBounds rb, @Param("subject_no") Long subject_no, @Param("member_no") Long member_no);
+	// 내 출석정보 갯수 가져오기
+	int getTotalMyAttendance (@Param("subject_no") Long subject_no, @Param("member_no") Long member_no);
+	// 내가 제출한 과제 정보 가져오기
+	List<Assignment> getMyAssignment(RowBounds rb, @Param("subject_no") Long subject_no, @Param("member_id") String member_id);
+	// 내가 제출한 과제 갯수 가져오기
+	int getTotalMyAssignment(@Param("subject_no") Long subject_no, @Param("member_id") String member_id);
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[ My Attendance ]</title>
+    <title>[ My Assignment ]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -78,38 +78,40 @@
 
 	<div class="container">
 		<div class="contents">
-			<h1> 내 출석 현황 </h1>
-			
-			<a th:href="@{/members/{subject_no}/myassignment(subject_no=${subject.subject_no})}">과제</a>
+			<h1> 내 과제 현황 </h1>
+			 
+			<a th:href="@{/members/{subject_no}/myattendance(subject_no=${subject.subject_no})}">출석</a>
 			<div>
 				<table>
 					<tr>
 						<th>번호</th>
-						<th>과목명</th>
-						<th>강의명</th>
-						<th>출석여부</th>
+						<th>과제제목</th>
+						<th>제출파일</th>
+						<th>점수</th>
+						<th>과제제출일</th>
 					</tr>
-					<tr th:each="myattendance : ${attendances}">
-						<td th:text="${myattendanceStat.count}"></td>
-						<td th:text="${myattendance.subject_title}"></td>
-						<td><a th:text="${myattendance.lecture_title}" th:href="@{/subject/{subject_no}/lecture/read/{lecture_no}(subject_no=${myattendance.subject_no}, lecture_no=${myattendance.lecture_no})}"></a></td>
-						<td th:text="${myattendance.attend_check}"></td>
+					<tr th:each="myassignment : ${assignments}">
+						<td th:text="${myassignmentStat.count}"></td>
+						<td><a th:text="${myassignment.assignment_title}" th:href="@{/subject/{subject_no}/assignment/read/{assignment_no}(subject_no=${myassignment.subject_no}, assignment_no=${myassignment.assignment_no})}"></a></td>
+						<td th:text="${myassignment.originalfile}"></td>
+						<td th:text="${myassignment.score}"></td>
+						<td th:text="${myassignment.assignment_date}"></td>
 					</tr>
 				</table>
 			</div>
-			
+			 
 			
 				 <div>
 					<th:block th:if="${navi.currentPage} > 1">
-						<a th:href="@{myattendance(page=${navi.currentPage - navi.pagePerGroup}, subject_name=${subject_name})}"><<</a>&nbsp;&nbsp;
-						<a th:href="@{myattendance(page=${navi.currentPage - 1}, subject_name=${subject_name})}"><</a>&nbsp;&nbsp;
+						<a th:href="@{myassignment(page=${navi.currentPage - navi.pagePerGroup}, subject_name=${subject_name})}"><<</a>&nbsp;&nbsp;
+						<a th:href="@{myassignment(page=${navi.currentPage - 1}, subject_name=${subject_name})}"><</a>&nbsp;&nbsp;
 					</th:block>
 					<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-						<a class="pageCounter" th:href="@{myattendance(page=${counter}, subject_name=${subject_name})}" th:text="${counter}" th:classappend="${counter}==${navi.currentPage} ? 'active' : ''"></a>
+						<a class="pageCounter" th:href="@{myassignment(page=${counter}, subject_name=${subject_name})}" th:text="${counter}" th:classappend="${counter}==${navi.currentPage} ? 'active' : ''"></a>
 					</th:block>&nbsp;&nbsp;
 					<th:block th:if="${navi.currentPage} < ${navi.totalPageCount}">
-						<a th:href="@{myattendance(page=${navi.currentPage + 1}, subject_name=${subject_name})}">></a>&nbsp;&nbsp;
-						<a th:href="@{myattendance(page=${navi.currentPage + navi.pagePerGroup}, subject_name=${subject_name})}">>></a>&nbsp;&nbsp;
+						<a th:href="@{myassignment(page=${navi.currentPage + 1}, subject_name=${subject_name})}">></a>&nbsp;&nbsp;
+						<a th:href="@{myassignment(page=${navi.currentPage + navi.pagePerGroup}, subject_name=${subject_name})}">>></a>&nbsp;&nbsp;
 					</th:block>
 				 </div>
 				 
