@@ -7,6 +7,7 @@
     <title>[ My Assignment ]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/board.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -75,49 +76,65 @@
         </ul>
       </nav>
 </header>
-
-	<div class="container">
-		<div class="contents">
-			<h1> 내 과제 현황 </h1>
+<body>
+<br><br><br><br>
+<div id="skybox"></div>
+<div style="margin-top: 15px; margin-left: 8%; font-size: 1.5em"><b>[[${subject.subject_title}]]</b></div>
+<h1 class="Montserrat" style="margin-top: 5px; font-size: 3em">내가 제출한 과제</h1>
+<!-- 
+			<h2>
+				<span>과목</span>[[${subject.subject_title}]]
+			</h2>
 			 
 			<a th:href="@{/members/{subject_no}/myattendance(subject_no=${subject.subject_no})}">출석</a>
-			<div>
-				<table>
-					<tr>
-						<th>번호</th>
-						<th>과제제목</th>
-						<th>제출파일</th>
-						<th>점수</th>
-						<th>과제제출일</th>
-					</tr>
-					<tr th:each="myassignment : ${assignments}">
-						<td th:text="${myassignmentStat.count}"></td>
-						<td><a th:text="${myassignment.assignment_title}" th:href="@{/subject/{subject_no}/assignment/read/{assignment_no}(subject_no=${myassignment.subject_no}, assignment_no=${myassignment.assignment_no})}"></a></td>
-						<td th:text="${myassignment.originalfile}"></td>
-						<td th:text="${myassignment.score}"></td>
-						<td th:text="${myassignment.assignment_date}"></td>
-					</tr>
-				</table>
-			</div>
-			 
-			
-				 <div>
-					<th:block th:if="${navi.currentPage} > 1">
-						<a th:href="@{myassignment(page=${navi.currentPage - navi.pagePerGroup}, subject_name=${subject_name})}"><<</a>&nbsp;&nbsp;
-						<a th:href="@{myassignment(page=${navi.currentPage - 1}, subject_name=${subject_name})}"><</a>&nbsp;&nbsp;
-					</th:block>
-					<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-						<a class="pageCounter" th:href="@{myassignment(page=${counter}, subject_name=${subject_name})}" th:text="${counter}" th:classappend="${counter}==${navi.currentPage} ? 'active' : ''"></a>
-					</th:block>&nbsp;&nbsp;
-					<th:block th:if="${navi.currentPage} < ${navi.totalPageCount}">
-						<a th:href="@{myassignment(page=${navi.currentPage + 1}, subject_name=${subject_name})}">></a>&nbsp;&nbsp;
-						<a th:href="@{myassignment(page=${navi.currentPage + navi.pagePerGroup}, subject_name=${subject_name})}">>></a>&nbsp;&nbsp;
-					</th:block>
-				 </div>
-				 
-		</div>
-	</div>
+			-->
+<div class="inner_cont">
+    <div class="borad_list_tbl">
+    	<table>
+            <colgroup>
+                <col width="120"><col width="180"><col width="*">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">번호</th>
+                    <th scope="col" width="400">과제제목</th>
+                    <th scope="col">제출파일</th>
+                    <th scope="col">점수</th>
+                    <th scope="col">과제제출일</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr th:each="myassignment : ${assignments}">
+   					<td th:text="${myassignmentStat.count + (navi.countPerPage * (navi.currentPage-1))}"></td>
+    				<td style="text-align:left;"><a th:text="${myassignment.assignment_title}" th:href="@{/subject/{subject_no}/assignment/read/{assignment_no}(subject_no=${myassignment.subject_no}, assignment_no=${myassignment.assignment_no})}"></a></td>
+    				<td th:text="${myassignment.originalfile}"></td>
+    				<td th:text="${myassignment.score}"></td>
+    				<td th:text="${myassignment.assignment_date}"></td>
+ 		 		</tr>
+ 		 	</tbody>
+ 		 </table>
+ 	</div>
+</div>
 
+<div class="page-box">
+	<th:block th:if="${navi.currentPage > 1}">
+		<a class="btn" th:href="@{myassignment(page=${navi.currentPage - navi.pagePerGroup}, subject_name=${subject_name})}">&lt;&lt;</a>
+	  	<a class="btn" th:href="@{myassignment(page=${navi.currentPage - 1}, subject_name=${subject_name})}">&lt;</a>
+	</th:block>
+	<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+  		<a class="btn number" th:href="@{myassignment(page=${counter}, subject_name=${subject_name})}" th:text="${counter}" th:classappend="${navi.currentPage == counter} ? 'current btn number on' : 'btn number'"></a>
+  	</th:block>
+  	<th:block th:if="${navi.currentPage < navi.totalPageCount}">
+  		<a class="btn" th:href="@{myassignment(page=${navi.currentPage + 1}, subject_name=${subject_name})}">&gt;</a>
+  		<a class="btn" th:href="@{myassignment(page=${navi.currentPage + navi.pagePerGroup}, subject_name=${subject_name})}">&gt;&gt;</a>
+  	</th:block>
+</div>
+		<div class="buttonForm" style="margin-right: 10%; margin-top: 2%;">
+			<a th:href="@{/members/{subject_no}/myattendance(subject_no=${subject.subject_no})}">출석정보</a>
+			<a th:href="@{/members/mylecture}" style="background: #3F3F48;">내 강의</a>
+		</div>
+		
+		
 <footer id="footers">여기에 footer 위치</footer>
 </body>
 </html>

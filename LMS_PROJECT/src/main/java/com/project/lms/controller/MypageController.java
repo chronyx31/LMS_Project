@@ -50,7 +50,7 @@ public class MypageController {
 	private final MylectureMapper mylectureMapper;
 	private final SubjectMapper subjectMapper;
 	private final AttendanceMapper attendanceMapper;
-	final int countPerPage = 3;//한 페이지에 표시될 게시글 숫자
+	final int countPerPage = 10;//한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
 
 	@GetMapping("mypage")
@@ -147,6 +147,7 @@ public class MypageController {
 			@RequestParam(defaultValue = "1") int page,
 			HttpServletRequest request,
 			Model model) {
+		// 세션 가져오기
 		HttpSession session = request.getSession();
 		Member member = (Member) session.getAttribute("loginMember");
 		// 페이징 처리를 위한 객체 생성
@@ -156,16 +157,17 @@ public class MypageController {
 		if (total < 1) {
 			total = 1;
 		}
+		//페이징 처리를 위한 객체 생성
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
 		
-		
+		//내 강의 목록 불러오기
 		List<MemberMyLecture> mylectures = new ArrayList<>();
 		mylectures = mylectureMapper.getAllMyLecture(rb, member.getMember_no());
 		model.addAttribute("mylectures", mylectures);
 		model.addAttribute("navi", navi);
 		
-//		mylectures.setMember_no(member.getMember_no());
+
 		return"members/mylecture";
 	}
 	
@@ -174,17 +176,18 @@ public class MypageController {
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@PathVariable Long subject_no, Model model
 			) {	
+		//페이징 처리를 위해 내 출석 정보의 숫자 가져오기
 		int total = mylectureMapper.getTotalMyAttendance(subject_no, loginMember.getMember_no());
+		//total이 1보다 작을 경우에도 페이징 처리가 정상적으로 표시되도록 하기 위해 total을 1로 만들어 주기
 		if (total < 1) {
 			total = 1;
 		}
+		//페이징 처리를 위한 객체 생성
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
+		//내 출석정보 가져오기
 		List<MemberAttendance> myAttendances = mylectureMapper.getMyAttendance(rb, subject_no, loginMember.getMember_no()); 
-		for(int i=0; i<myAttendances.size(); i++) {
-			log.info("subject_no : " + myAttendances.get(i).getSubject_no());
-			log.info("lecture_no : " + myAttendances.get(i).getLecture_no());
-		}
+		
 		
 		// subject를 읽기 위해서 불러오기
 		Subject subject = subjectMapper.findSubjectByNo(subject_no);
@@ -199,12 +202,16 @@ public class MypageController {
 	public String gotomyassignment (@RequestParam(defaultValue = "1") int page,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@PathVariable Long subject_no, Model model) {
+		// 페이징 처리를 위해 내가 제출한 과제목록의 숫자 가져오기
 		int total = mylectureMapper.getTotalMyAssignment(subject_no, loginMember.getMember_id());
+		//total이 1보다 작을 경우에도 페이징 처리가 정상적으로 표시되도록 하기 위해 total을 1로 만들어 주기
 		if (total < 1) {
 			total = 1;
 		}
+		//페이징 처리를 위한 객체 생성
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
+		// 내가 제출한 과제목록 가져오기
 		List<Assignment> myAssignments = mylectureMapper.getMyAssignment(rb, subject_no, loginMember.getMember_id());
 		// subject를 읽기 위해서 불러오기
 		Subject subject = subjectMapper.findSubjectByNo(subject_no);
