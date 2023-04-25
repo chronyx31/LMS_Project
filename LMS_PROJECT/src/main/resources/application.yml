@@ -7,6 +7,10 @@ spring:
     driver-class-name: oracle.jdbc.OracleDriver
     username: lms
     password: 1234
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 mybatis:
   config-location: classpath:config/mybatis-config.xml

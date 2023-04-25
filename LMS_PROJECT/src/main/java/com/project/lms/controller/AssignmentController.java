@@ -142,6 +142,8 @@ public class AssignmentController {
 		log.info("file:{}", file);
 		if (file.isEmpty()) {
 			result.rejectValue("file", "fileError", "첨부 파일이 없습니다.");
+		} else if (file.getSize() >= 52428800) {
+			result.rejectValue("file", "fileError", "용량은 50MB 이하로 업로드하여 주기시 바랍니다.");
 		}
 		
 		// 사이드바에 있는 과목을 받아옴(일회성)

@@ -130,6 +130,7 @@
 			<label class="fileSelector" for="file">제출 파일</label>
 				<input type="file" id="file" name="file" th:field="*{file}"/>
 				<p class="br"></p>
+				<p style="font-size:14px; color:red;" >파일은 zip, hwp, xlsx, docx, pdf 형식으로, 50MB 이내로만 가능합니다.</p>
 				<div th:errorClass="field-error" th:errors="*{file}"></div>
 			<form>
 			<input type="submit" value="등록하기" class="btn-form" onclick="return confirm('파일 등록 시 수정이 불가능합니다.\n등록하시겠습니까?')">
@@ -148,20 +149,37 @@
 		// type이 file인 태그에 변화가 있을 시 함수 실행
 		$("[type=file]").on("change", function () {
 			// 파일의 정보를 가져온다.
-			var file = this.files[0];
+			let file = this.files[0];
 			// 파일의 이름이 30자 이상이면 말줄임표로 글자수 제한하고 아니면 모든 이름 표시
 			if (file.name.length >= 30) {
-				$(".fileSelector").text("선택 : " + file.name.substr(0, 30) + "..");
+				$(".fileSelector").text("선택 : " + file.name.substr(0, 30) + "...");
 			} else {
 				$(".fileSelector").text("선택 : " + file.name);
 			}
 			
 			// 파일형식 블랙리스트. 배열에 들어있는 확장자는 파일등록이 안되도록.
-			var ext = $("#file").val().split(".").pop().toLowerCase();
+			// inArray : 배열 내의 값을 찾아서 인덱스를 반환합니다.(요소가 없을 경우 -1을 반환).
+/*
+			let ext = $("#file").val().split(".").pop().toLowerCase();
 			if ($.inArray(ext, ["php", "html"]) !== -1) {
-				$(".fileSelector").text("제출 파일");
+				$(".fileSelector").text("제출 파일");ㅌ
 				$("#file").val("");
 				alert("허용되지 않는 파일형식입니다.");
+			}
+*/
+			// 파일형식 화이트리스트. 배열에 들어있는 확장자만 파일등록이 ㅌ되도록.
+			// inArray : 배열 내의 값을 찾아서 인덱스를 반환합니다.(요소가 없을 경우 -1을 반환).
+			let ext = $("#file").val().split(".").pop().toLowerCase();
+			if ($.inArray(ext, ["zip", "hwp", "xls", "xlsx", "docx", "doc", "pdf"]) == -1) {
+				$(".fileSelector").text("제출 파일");
+				$("#file").val("");
+				alert("파일은 [zip, hwp, xlsx, docx, pdf] 형식만 가능합니다.");
+			}
+			// 50MB 이상일 경우 파일 업로드를 제한
+			if (file.size >= 52428800) {
+				$(".fileSelector").text("제출 파일");
+				$("#file").val("");
+				alert("용량은 50MB 이하로 업로드하여 주기시 바랍니다.");
 			}
 		});
 	});

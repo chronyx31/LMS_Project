@@ -145,3 +145,6 @@
   margin-left: -10px;
   margin-right: -10px;
 }
+.field-error {
+	color: red;
+}
