@@ -57,8 +57,8 @@ public class AssignmentController {
 	private final FileService fileService;
 	private final MylectureMapper mylectureMapper;
 	
-	final int countPerPage = 5;//한 페이지에 표시될 게시글 숫자
-	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
+	final int countPerPage = 15; // 한 페이지에 표시될 게시글 숫자
+	final int pagePerGroup = 5; // 한번에 표시될 페이지의 수
 	
 	@Value("${file.upload.path}")
 	private String uploadPath;	// 업드로 했을 때 저장될 위치 지정
@@ -136,35 +136,36 @@ public class AssignmentController {
 	public String write(@PathVariable("subject_no") Long subject_no,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@Validated @ModelAttribute("write") AssignmentWriteForm write, BindingResult result, 
-			@RequestParam(name="file", required = false) MultipartFile file, Model model) throws IOException {
+			MultipartFile file, Model model){
 		
-		// 유효성 검사
-			// 사이드바에 있는 과목을 받아옴
+	// 유효성 검사
+		log.info("file:{}", file);
+		if (file.isEmpty()) {
+			result.rejectValue("file", "fileError", "첨부 파일이 없습니다.");
+		}
+		
+		// 사이드바에 있는 과목을 받아옴(일회성)
 		if (result.hasErrors()) {
 			Subject subject = subjectMapper.findSubjectByNo(subject_no);
 			model.addAttribute("subject", subject);
+			log.info("result: {}", result);
 			return "subject/assignment/write";
 		}
 		
-		// 파일 업로드
-		AttachedFile savedFile = fileService.saveFile(file);
 		Subject subject = subjectMapper.findSubjectByNo(subject_no);
 
-		// 파일을 등록하지 않으면 리스트로 리턴처리
-		if(file.isEmpty()) {
-			log.info("file:{}", file);
-			log.info("file.getOriginalFileName():{}", file.getOriginalFilename());
-			log.info("file.getSize():{}", file.getSize());		
-			return "redirect:/subject/" + subject_no + "/assignment";
-		} else {			
-			//DTO를 Entity로 변환
-			write.setWriter(loginMember.getMember_id());
-			Assignment assignment = write.toAssignment(write);
-			assignment.setOriginalfile(savedFile.getOriginalfile()); // 업로드 했던 것을 담아줘야 한다.
-			assignment.setSavedfile(savedFile.getSavedfile());
-			assignmentMapper.writeAssignment(assignment);
-			log.info("assignment:{}", assignment);
-		}
+	// 파일 업로드
+		write.setWriter(loginMember.getMember_id());
+		Assignment assignment = write.toAssignment(write);
+		AttachedFile savedFile = fileService.saveFile(file);
+
+		// DTO를 Entity로 변환
+		assignment.setOriginalfile(savedFile.getOriginalfile()); // 업로드 했던 것을 담아줘야 한다.
+		assignment.setSavedfile(savedFile.getSavedfile());
+		assignmentMapper.writeAssignment(assignment);
+		log.info("assignment:{}", assignment);
+
+		
 		return "redirect:/subject/" + subject_no + "/assignment";
 	}
 
@@ -232,40 +233,24 @@ public class AssignmentController {
 		@PostMapping("{subject_no}/assignment/update/{assignment_no}")
 		public String update(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 				@PathVariable Long subject_no, @PathVariable Long assignment_no, Model model,
-				@Validated @ModelAttribute("updateAssign") Assignment assignment, MultipartFile file, BindingResult result) {
+				@Validated @ModelAttribute("updateAssign") Assignment assignment, BindingResult result) {
 
 			if (result.hasErrors()) {
 				return "subject/assignment/update";
 			}
-			
-			// 파일을 등록하지 않으면 과제게시판으로 리턴되도록 처리.
-			if (file.isEmpty()) {
-				return "redirect:/subject/" + subject_no + "/assignment";
-			}
 		
 			Assignment findAssignment = assignmentMapper.findAssignmentByNo(assignment.getAssignment_no());
-			AttachedFile savedFile = fileService.saveFile(file);
 			
 			// 작성자 = 로그인 멤버가 같은 경우 set
 			if (loginMember.getMember_id().equals(findAssignment.getWriter())) {
 				findAssignment.setAssignment_title(assignment.getAssignment_title());
 				findAssignment.setAssignment_contents(assignment.getAssignment_contents());
 				findAssignment.setScore(assignment.getScore());
-				findAssignment.setOriginalfile(savedFile.getOriginalfile());
-				findAssignment.setSavedfile(savedFile.getSavedfile());
 				assignmentMapper.updateAssignment(findAssignment);
 				log.info("수정 성공");
 				return "redirect:/subject/" + subject_no + "/assignment";
 			}
 			
-			// 수정 중에 파일이 업로드 되지 않았을 때
-			if(!file.isEmpty()) {
-				assignment.setSavedfile(savedFile.getSavedfile());	
-				assignment.setOriginalfile(savedFile.getOriginalfile()); // 업로드 했던 것을 담아줘야 한다.			
-				assignmentMapper.writeAssignment(assignment);
-				return "subject/assignment/update";
-			}
-
 			return "redirect:/subject/" + subject_no + "/assignment/read/" + assignment_no; // 수정 실패시 수정 전 페이지로
 		}
 

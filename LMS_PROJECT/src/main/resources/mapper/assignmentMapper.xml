@@ -71,9 +71,7 @@
 			<if test='assignment_title != null and assignment_title != ""'>
 				assignment_title = #{assignment_title},
 			</if>
-				assignment_contents = #{assignment_contents},
-				originalfile = #{originalfile},
-				savedfile = #{savedfile}
+				assignment_contents = #{assignment_contents}
 		</set>
 		where assignment_no = #{assignment_no}
 	</update>
