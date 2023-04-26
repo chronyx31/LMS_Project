@@ -206,3 +206,16 @@ header, footer, body {margin:0;}
 img{
 	width:7%;
 }
+.img{
+	width: 100%;
+	border: 1px solid;
+}
+.sub_container a{
+    		text-decoration: none;
+    		display:grid;
+    		margin: 5%;
+    	}
+ .sub_banner{
+	display:inline-block;
+	margin: 0px;
+}

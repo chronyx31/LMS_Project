@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/board.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -19,20 +20,13 @@
     		text-decoration: none;
     	}
     	.sub_container{
-    		display: flex;
-    		flex-wrap: wrap;
+    		display: inline-flex;
     	}
     	
     	.sub_container a{
     		text-decoration: none;
     	}
-    	.sub_banner{
-    		border: 1px solid;
-    		background-color: blue;
-    		color: white;
-    		width: 100px;
-    		height: 150px;
-    	}
+    	
     </style>
 </head>
 <header>
@@ -107,23 +101,24 @@
 			<div class="sub_container">
 				<div th:each="subject : ${subjects}">
 					<a th:href="@{/subject/{subject_no}/notification(subject_no=${subject.subject_no})}">
-						<div class="sub_banner" th:text="${subject.subject_title}">
+						 <img class="img" th:src="${subject.subject_img}">
+						<p class="sub_banner" th:text="${subject.subject_title}">
 							과목 배너 부분 타임리프로 처리를 한다.
-						</div>
+						</p>
 					</a>
 				</div>
 			</div>
-				 <div>
+				 <div class="page-box">
 					<th:block th:if="${navi.currentPage} > 1">
-						<a th:href="@{subject(page=${navi.currentPage - navi.pagePerGroup}, title_part=${title_part}, category_name=${category_name})}"><<</a>&nbsp;&nbsp;
-						<a th:href="@{subject(page=${navi.currentPage - 1}, title_part=${title_part}, category_name=${category_name})}"><</a>&nbsp;&nbsp;
+						<a class="btn" th:href="@{subject(page=${navi.currentPage - navi.pagePerGroup}, title_part=${title_part}, category_name=${category_name})}"><<</a>&nbsp;&nbsp;
+						<a class="btn" th:href="@{subject(page=${navi.currentPage - 1}, title_part=${title_part}, category_name=${category_name})}"><</a>&nbsp;&nbsp;
 					</th:block>
 					<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-						<a class="pageCounter" th:href="@{subject(page=${counter}, title_part=${title_part}, category_name=${category_name})}" th:text="${counter}" th:classappend="${counter}==${navi.currentPage} ? 'active' : ''"></a>
+						<a class="btn number" th:href="@{subject(page=${counter}, title_part=${title_part}, category_name=${category_name})}" th:text="${counter}" th:classappend="${counter}==${navi.currentPage} ? 'active' : ''"></a>
 					</th:block>&nbsp;&nbsp;
 					<th:block th:if="${navi.currentPage} < ${navi.totalPageCount}">
-						<a th:href="@{subject(page=${navi.currentPage + 1}, title_part=${title_part}, category_name=${category_name})}">></a>&nbsp;&nbsp;
-						<a th:href="@{subject(page=${navi.currentPage + navi.pagePerGroup}, title_part=${title_part}, category_name=${category_name})}">>></a>&nbsp;&nbsp;
+						<a class="btn" th:href="@{subject(page=${navi.currentPage + 1}, title_part=${title_part}, category_name=${category_name})}">></a>&nbsp;&nbsp;
+						<a class="btn" th:href="@{subject(page=${navi.currentPage + navi.pagePerGroup}, title_part=${title_part}, category_name=${category_name})}">>></a>&nbsp;&nbsp;
 					</th:block>
 				 </div>
 		</div>
