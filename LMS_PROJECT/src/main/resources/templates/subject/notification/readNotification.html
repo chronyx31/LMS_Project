@@ -83,7 +83,7 @@
 					
 					<th:block th:if="${applyLecture == null}">
 					<dt>
-						<a th:href="@{/subject/{subject_no}/apply(subject_no=${subject.subject_no})}">수강신청</a>
+						<a th:href="@{/subject/{subject_no}/apply(subject_no=${subject.subject_no})}" onclick="return confirm('이 강의를 수강신청 하시겠습니까?')">수강신청</a>
 					</dt>
 					</th:block>
 				</dl>
