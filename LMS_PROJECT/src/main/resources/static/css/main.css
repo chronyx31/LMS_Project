@@ -207,7 +207,8 @@ img{
 	width:7%;
 }
 .img{
-	width: 100%;
+	width: 220px;
+	margin: 10px;
 	border: 1px solid;
 }
 .sub_container a{
@@ -218,4 +219,5 @@ img{
  .sub_banner{
 	display:inline-block;
 	margin: 0px;
+	text-align: center;
 }
