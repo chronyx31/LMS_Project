@@ -208,6 +208,7 @@ img{
 }
 .img{
 	width: 220px;
+	height: 160px;
 	margin: 10px;
 	border: 1px solid;
 }

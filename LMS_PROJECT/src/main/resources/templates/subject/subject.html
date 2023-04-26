@@ -20,6 +20,7 @@
     		text-decoration: none;
     	}
     	.sub_container{
+    		width: 1000px;
     		display: inline-flex;
     		border-top:2px solid #8DAB9F;
     		flex-wrap: wrap;
@@ -29,7 +30,7 @@
     		text-decoration: none;
     	}
     	.inner_content {
-    	padding-left: 15px;
+    	padding-left: 50px;
     	padding-right: 15px;
     	margin: 0 auto;
     	margin-top:20px;
@@ -117,7 +118,7 @@
 			<div class="sub_container">
 				<div th:each="subject : ${subjects}">
 					<a th:href="@{/subject/{subject_no}/notification(subject_no=${subject.subject_no})}">
-						 <img class="img" th:src="${subject.subject_img}">
+						 <img class="img" th:src="${subject.subject_img}" th:alt="${subject.subject_title}">
 						<p class="sub_banner" th:text="${subject.subject_title}">
 							과목 배너 부분 타임리프로 처리를 한다.
 						</p>
