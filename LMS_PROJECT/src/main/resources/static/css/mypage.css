@@ -9,11 +9,12 @@ h2{
   text-align: center;
   letter-spacing: 1px;
 }
-	img{
+	.mypageicon img{
         width:65%;
         padding: 5px 15px 0px 15px;
         margin: 5px 15px 0px 15px;
       }
+     
       table{
         margin: auto;
         text-align: center;
