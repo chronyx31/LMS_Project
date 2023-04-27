@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class SubjectController {
 	private final SubjectMapper subjectMapper;
-	final int countPerPage = 5;//한 페이지에 표시될 게시글 숫자
+	final int countPerPage = 8;//한 페이지에 표시될 게시글 숫자
 	final int pagePerGroup = 5;//한번에 표시될 페이지의 수
 	
 	// 과목 보기
