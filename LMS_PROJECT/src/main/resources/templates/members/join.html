@@ -16,13 +16,18 @@
         
         let isIdChecked = false;
         function formCheck(){
-        	checkId();
-        	
         	if(!isIdChecked){
         		alert("아이디 중복 확인을 해주세요");
         		return false;
         	}
-        	
+
+			checkId();
+
+			if(!isIdChecked){
+        		alert("사용할 수 없는 아이디 입니다.\n다시한번 확인해 주시기 바랍니다.");
+        		return false;
+        	}
+
         	let member_id = $("#member_id").val();
         	if(member_id.length < 4 || member_id.length > 20){
         		alert("아이디는 4 ~ 20 사이여야 합니다");
@@ -46,6 +51,18 @@
         		alert("이메일은 4 ~ 50자리 사이여야 합니다");
         		return false;
         	}
+
+        	let password_question = $("#password_question").val();
+        	if(password_question.length == 0){
+        		alert("비밀번호 찾기 질문은 공백일 수 없습니다.");
+        		return false;
+        	}
+
+        	let password_answer = $("#password_answer").val();
+        	if(password_answer.length == 0){
+        		alert("비밀번호 찾기 질문의 답은 공백일 수 없습니다.");
+        		return false;
+        	}
         	return true;
         }
         
@@ -61,13 +78,25 @@
     				console.log(success);
     				console.log(xhr);
     				console.log(typeof(data));
-    				if (data != "") {
-    					console.log("이미 사용중인 아이디 입니다.");
+    				if (member_id.length < 4) {
+						console.log("ID는 4자 이상이여야 합니다.");
+						isIdChecked = false;
+						$("#checkId").css("color","red");
+						$("#checkId").text("ID는 4자 이상이여야 합니다.");
+    				} else if (member_id.length > 20) {
+    					console.log("ID는 20자 미만이여야 합니다.");
     					isIdChecked = false;
-    					$("#checkId").text("이미 사용중인 아이디 입니다.");
+    					$("#checkId").css("color","red");
+    					$("#checkId").text("ID는 20자 미만이여야 합니다.");
+    				} else if (data != "") {
+    					console.log("이미 사용중인 아이디입니다.");
+    					isIdChecked = false;
+    					$("#checkId").css("color","red");
+    					$("#checkId").text("이미 사용중인 아이디입니다.");
     				} else {
     					console.log("사용 가능한 아이디 입니다.");
     					isIdChecked = true;
+    					$("#checkId").css("color","black");
     					$("#checkId").text("사용 가능한 아이디 입니다.");
     				}
     			},
