@@ -76,11 +76,12 @@
 		    </div>
 	    
 	    <p class="script" th:text="*{qna_contents}"></p>
-	    	<div class="linka">
-	        	<a target="_blank">
-	          		<h5 th:text="*{writer}"></h5>
-	        	</a>
-	      	</div>
+			<div class="linka">
+				<a target="_blank">
+					<h5>작성일 : [[*{#temporals.format(qna_date, 'yyyy-MM-dd &nbsp HH:mm')}]]</h5>
+					<h5>작성자 : [[*{writer}]]</h5>
+				</a>
+			</div>
 	  </div>
   </div>
 	<div class="buttonOutForm">	
