@@ -147,6 +147,9 @@ public class MypageController {
 			@RequestParam(defaultValue = "1") int page,
 			HttpServletRequest request,
 			Model model) {
+		
+		final int countPerPage_mylec = 10;//한 페이지에 표시될 게시글 숫자
+		final int pagePerGroup_mylec = 5;//한번에 표시될 페이지의 수
 		// 세션 가져오기
 		HttpSession session = request.getSession();
 		Member member = (Member) session.getAttribute("loginMember");
@@ -158,7 +161,7 @@ public class MypageController {
 			total = 1;
 		}
 		//페이징 처리를 위한 객체 생성
-		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		PageNavigator navi = new PageNavigator(countPerPage_mylec, pagePerGroup_mylec, page, total);
 		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
 		
 		//내 강의 목록 불러오기

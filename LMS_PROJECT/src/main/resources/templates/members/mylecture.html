@@ -7,6 +7,7 @@
     <title>[ SUBJECT ]</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/board.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -75,36 +76,46 @@
         </ul>
       </nav>
 </header>
+<body>
+<br><br><br><br>
+<div id="skybox"></div>
+<div style="margin-top: 15px; margin-left: 8%; font-size: 1.5em"><b>[[${session.loginMember.member_id}]]</b></div>
+<h1 class="Montserrat" style="margin-top: 5px; font-size: 3em">내 강의 목록</h1>
 
 	<div class="container">
 		<div class="contents">
-			<h1> 내 강의 </h1>
+
+
 			
 
 			
-			<div class="sub_container">
+			<div class="sub_container" style="width: 80%; margin: 5px auto; text-align: center;">
 				<div th:each="mylecture : ${mylectures}">
 					<a th:href="@{/members/{subject_no}/myattendance(subject_no=${mylecture.subject_no})}">
-						<div class="sub_banner" th:text="${mylecture.subject_title}">
+					<img class="img" th:src="${mylecture.subject_img}" th:alt="${mylecture.subject_title}">
+						<p th:text="${mylecture.subject_title}" style="text-align: center;">
 							과목 배너 부분 타임리프로 처리를 한다.
-						</div>
+						</p>
 					</a>
 				</div>
 			</div>
 			
-				 <div>
-					<th:block th:if="${navi.currentPage} > 1">
-						<a th:href="@{mylecture(page=${navi.currentPage - navi.pagePerGroup}, subject_name=${subject_name})}"><<</a>&nbsp;&nbsp;
-						<a th:href="@{mylecture(page=${navi.currentPage - 1}, subject_name=${subject_name})}"><</a>&nbsp;&nbsp;
-					</th:block>
-					<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-						<a class="pageCounter" th:href="@{mylecture(page=${counter}, subject_name=${subject_name})}" th:text="${counter}" th:classappend="${counter}==${navi.currentPage} ? 'active' : ''"></a>
-					</th:block>&nbsp;&nbsp;
-					<th:block th:if="${navi.currentPage} < ${navi.totalPageCount}">
-						<a th:href="@{mylecture(page=${navi.currentPage + 1}, subject_name=${subject_name})}">></a>&nbsp;&nbsp;
-						<a th:href="@{mylecture(page=${navi.currentPage + navi.pagePerGroup}, subject_name=${subject_name})}">>></a>&nbsp;&nbsp;
-					</th:block>
-				 </div> 
+			
+			
+			
+			<div class="page-box">
+				<th:block th:if="${navi.currentPage > 1}">
+					<a class="btn" th:href="@{mylecture(page=${navi.currentPage - navi.pagePerGroup}, subject_name=${subject_name})}">&lt;&lt;</a>
+				  	<a class="btn" th:href="@{mylecture(page=${navi.currentPage - 1}, subject_name=${subject_name})}">&lt;</a>
+				</th:block>
+				<th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+			  		<a class="btn number" th:href="@{mylecture(page=${counter}, subject_name=${subject_name})}" th:text="${counter}" th:classappend="${navi.currentPage == counter} ? 'current btn number on' : 'btn number'"></a>
+			  	</th:block>
+			  	<th:block th:if="${navi.currentPage < navi.totalPageCount}">
+			  		<a class="btn" th:href="@{mylecture(page=${navi.currentPage + 1}, subject_name=${subject_name})}">&gt;</a>
+			  		<a class="btn" th:href="@{mylecture(page=${navi.currentPage + navi.pagePerGroup}, subject_name=${subject_name})}">&gt;&gt;</a>
+			  	</th:block>
+			</div>
 		</div>
 	</div>
 
