@@ -115,7 +115,7 @@
 							<td th:text="${assignmentStat.count}+${navi.countPerPage*(navi.currentPage-1)}"></td>
 							<td style="text-align:left;"><a th:text="${assignment.assignment_title}" th:href="@{/subject/{subject_no}/assignment/read/{assignment_no}(subject_no=${assignment.subject_no}, assignment_no=${assignment.assignment_no})}"></a></td>
 							<td th:text="${assignment.writer}"></td>
-							<td th:text="${assignment.assignment_date}"></td>
+							<td th:text="${#temporals.format(assignment.assignment_date, 'yyyy-MM-dd &nbsp HH:mm')}"></td>
 						</tr>
 					</tbody>
 					</table>

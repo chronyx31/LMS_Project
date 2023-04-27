@@ -98,7 +98,7 @@
     <td th:text="${qnaStat.count + (navi.countPerPage * (navi.currentPage-1))}"></td>
     <td style="text-align:left;"><a th:text="${qna.qna_title}" th:href="@{/readqna/{qna_no}(qna_no=${qna.qna_no})}"></a></td>
     <td th:text="${qna.writer}"></td>
-    <td th:text="${qna.qna_date}"></td>
+    <td th:text="${#temporals.format(qna.qna_date, 'yyyy-MM-dd &nbsp HH:mm')}"></td>
   </tr>
 </tbody>
 </table>
