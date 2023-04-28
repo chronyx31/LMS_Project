@@ -93,7 +93,7 @@
 						<h1 th:text="*{assignment_title}"></h1>
 					</a>
 				</div>
-				<p class="script" th:text="*{assignment_contents}"></p>
+				<pre><p class="script" th:text="*{assignment_contents}"></p></pre>
 				<div class="linka">
 				<div style="width:90%; overflow:hidden;" class="outerComment">
 					<div class="comment" th:each="file : ${files}">
