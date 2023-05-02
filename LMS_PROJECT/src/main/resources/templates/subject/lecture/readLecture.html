@@ -231,7 +231,6 @@
 		function loginfo(){
 			console.log(vid.currentTime);
 			saveContinuePoint();
-			attendCheck();
 		}
 		// 시간이 바뀌면 자동으로 supposedCurrentTime 도 갱신
 		vid.addEventListener('timeupdate', function() {
@@ -251,7 +250,8 @@
 			supposedCurrentTime = 0;
 			// interval 함수 중지
 			clearInterval(interval);
-			// 출석체크 기능을 할 수도 있다고 생각함
+			// 출석체크 기능
+			attendCheck();
 		});
 		// 영상 전체길이를 구하기 위해 필요한 함수
 		// html이 로딩되면서 작동하면 동영상 정보가 로딩되지 않은 상황이므로 제대로 동작하지 않음.
