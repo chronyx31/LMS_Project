@@ -231,6 +231,7 @@
 		function loginfo(){
 			console.log(vid.currentTime);
 			saveContinuePoint();
+			attendCheck();
 		}
 		// 시간이 바뀌면 자동으로 supposedCurrentTime 도 갱신
 		vid.addEventListener('timeupdate', function() {
@@ -273,6 +274,7 @@
 						alert('수강시간이 정상적으로 처리되지 않았습니다.\r다시 확인하여 주시기 바랍니다.');
 					} else if (success=='success') {
 						alert('정상적으로 출석체크 되었습니다.');
+						location.reload();
 					}
 				}
 			})
