@@ -71,15 +71,15 @@
 		<form action="" method="post" th:object=${modify}>
 			<input type="hidden" name="member_no" th:value="${session.loginMember.member_no}" />
 			<div>
-				<input type="password" th:field="*{member_password}" placeholder="패스워드" />
+				<input type="password" th:field="*{member_password}" placeholder="변경할 패스워드" />
 				<div th:errorClass="error" th:errors="*{member_password}" />
 			</div>
 			<div>
-				<input type="text" th:field="*{password_question}" placeholder="패스워드 찾기 질문" />
+				<input type="text" th:field="*{password_question}" placeholder="변경할 패스워드 찾기 질문" />
 				<div th:errorClass="error" th:errors="*{password_question}" />
 			</div>
 			<div>
-				<input type="text" th:field="*{password_answer}" placeholder="패스워드 찾기 질문 답" />
+				<input type="text" th:field="*{password_answer}" placeholder="변경할 패스워드 찾기 질문 답" />
 				<div th:errorClass="error" th:errors="*{password_answer}" />
 			</div>
 			<button type="submit">등록</button>
