@@ -146,6 +146,10 @@ public class LectureController {
 			log.info("attend : {}", createAttendance);
 			model.addAttribute("attendance", createAttendance);
 		} else {
+			if (checkAttendance.getVideo_length() == null) {
+				checkAttendance.setVideo_length(lengthInSeconds);
+				attendanceMapper.setContinuePoint(checkAttendance);
+			}
 			model.addAttribute("attendance", checkAttendance);
 		}
 

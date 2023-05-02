@@ -53,7 +53,10 @@
 		update attendance
 		<set>
 			accumulate_time = #{accumulate_time},
-			video_point = #{video_point}
+			video_point = #{video_point},
+			<if test='video_length != null and video_length != ""'>
+				video_length = #{video_length}
+			</if>
 		</set>
 		where attendance_no = #{attendance_no}
 	</update>
