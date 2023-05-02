@@ -98,7 +98,14 @@
 				<div style="width:90%; overflow:hidden;" class="outerComment">
 					<div class="comment" th:each="file : ${files}">
 						<div class="comment-author"> 제출파일 </div>
-						<div class="comment-text"><a th:text="${file.originalfile}" th:href="@{/subject/{subject_no}/assignment/read/{assignment_no}/download(subject_no=${subject_no}, assignment_no=${assignment_no})}">다운로드</a></div>
+						<div class="comment-text">
+						<th:block th:if="${session.loginMember.member_id == readAssign.writer}">
+							<a th:text="${file.originalfile}" th:href="@{/subject/{subject_no}/assignment/read/{assignment_no}/download(subject_no=${subject_no}, assignment_no=${assignment_no})}">다운로드</a>
+						</th:block>
+						<th:block th:unless="${session.loginMember.member_id == readAssign.writer}">
+							<a th:text="${file.originalfile}">다운로드</a>
+						</th:block>
+						</div>
 					</div>
 					<div class="comment" style="float:right;">
 						<div class="comment-author"> 점수 </div>
