@@ -109,7 +109,7 @@
     				<td style="text-align:left;"><a th:text="${myassignment.assignment_title}" th:href="@{/subject/{subject_no}/assignment/read/{assignment_no}(subject_no=${myassignment.subject_no}, assignment_no=${myassignment.assignment_no})}"></a></td>
     				<td th:text="${myassignment.originalfile}"></td>
     				<td th:text="${myassignment.score}"></td>
-    				<td th:text="${myassignment.assignment_date}"></td>
+    				<td th:text="${#temporals.format(myassignment.assignment_date, 'yyyy-MM-dd &nbsp HH:mm')}"></td>
  		 		</tr>
  		 	</tbody>
  		 </table>
