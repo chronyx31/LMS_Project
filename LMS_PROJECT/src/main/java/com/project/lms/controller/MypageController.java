@@ -74,7 +74,7 @@ public class MypageController {
 	
 	@GetMapping("modifyinfo")
 	public String goToModifyInfo(HttpServletResponse response, HttpServletRequest request, Model model) {
-		log.info("123");
+		log.info("정보수정페이지 이동");
 		// 세션 가져오기
 		HttpSession session = request.getSession();
 		Member member = (Member) session.getAttribute("loginMember");
@@ -85,13 +85,23 @@ public class MypageController {
 	
 	@PostMapping("modifyinfo")
 	public String modifyInfo(@Validated @ModelAttribute("modifyinfo") MemberModifyInfo modify,
-			BindingResult result, HttpServletResponse response, HttpServletRequest request) {
+			BindingResult result, HttpServletResponse response, HttpServletRequest request,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember) {
 		if(result.hasErrors()) {
 			return "members/modifyinfo";
-		}Member member = modify.toMember(modify);
+		}
+		// 정보 수정
+		Member member = modify.toMember(modify);
 		log.info("membermodify: {}", modify);
 		int complete = memberMapper.modifyMember(member);
-		log.info("complete : {}", complete);
+		log.info("complete:{}", complete);
+		// 세션 갱신
+		Member findMember = memberMapper.findMemberById(loginMember.getMember_id());
+		log.info("findMember:{}", findMember);
+		HttpSession session = request.getSession();
+		session.setAttribute("loginMember", findMember);
+		session.setMaxInactiveInterval(3000);
+
 		return "redirect:/members/mypage";
 	}
 	
@@ -109,14 +119,23 @@ public class MypageController {
 
 	@PostMapping("modifypass")
 	public String modifyPasswordPost(@Validated @ModelAttribute("modify")MemberModifyPass modify,
-			BindingResult result, HttpServletResponse response, HttpServletRequest request) {
+			BindingResult result, HttpServletResponse response, HttpServletRequest request,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember) {
 		if (result.hasErrors()) {
 			return "members/modifypass";
 		}
+		// 정보 수정
 		Member member = modify.toMember(modify);
 		log.info("membermodify: {}", modify);
 		int complete = memberMapper.modifyMember(member);
 		log.info("complete:{}", complete);
+		// 세션 갱신
+		Member findMember = memberMapper.findMemberById(loginMember.getMember_id());
+		log.info("findMember:{}", findMember);
+		HttpSession session = request.getSession();
+		session.setAttribute("loginMember", findMember);
+		session.setMaxInactiveInterval(3000);
+		
 		return "redirect:/members/mypage";
 	}
 
